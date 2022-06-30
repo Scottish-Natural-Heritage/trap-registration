@@ -1,6 +1,4 @@
 import express from 'express';
-const router = express.Router();
-
 // Import all the controllers.
 import {Page} from './controllers/_base.js';
 import StartController from './controllers/start.js';
@@ -14,6 +12,8 @@ import DetailsController from './controllers/details.js';
 import ConfirmController from './controllers/confirm.js';
 
 // Configure all of the pages and routes.
+
+const router = express.Router();
 
 router.use(
   Page({
