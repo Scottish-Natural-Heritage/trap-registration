@@ -1,6 +1,5 @@
-import {ReturnState} from './_base.js';
-
 import utils from 'naturescot-utils';
+import {ReturnState} from './_base.js';
 
 /**
  * Clean the incoming POST request body to make it more compatible with the

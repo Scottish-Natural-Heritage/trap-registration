@@ -23,9 +23,9 @@
     "node": ">=16.0.0"
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "express": "^4.17.1",
-    "express-session": "^1.17.1",
+    "axios": "^0.27.2",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
     "govuk-frontend": "3.6.0",
     "jimp": "^0.13.0",
     "memorystore": "^1.6.2",
@@ -33,18 +33,18 @@
     "naturescot-frontend": "^2.0.2",
     "naturescot-utils": "^1.2.0",
     "node-sass-package-importer": "^5.3.2",
-    "nunjucks": "^3.2.1",
-    "sass": "^1.26.8",
-    "winston": "^3.2.1"
+    "nunjucks": "^3.2.3",
+    "sass": "^1.53.0",
+    "winston": "^3.8.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
+    "@babel/eslint-parser": "^7.5.4",
     "cypress": "^5.0.0",
     "eslint-plugin-cypress": "^2.11.2",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.18",
     "prettier": "^2.0.5",
-    "start-server-and-test": "^1.11.0",
-    "xo": "^0.32.0"
+    "start-server-and-test": "^1.14.0",
+    "xo": "^0.50.0"
   },
   "xo": {
     "space": 2,
@@ -52,7 +52,11 @@
     "plugins": [
       "cypress"
     ],
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+      "requireConfigFile": false,
+      "ecmaVersion": 8
+    },
     "rules": {
       "import/extensions": 0,
       "new-cap": 0

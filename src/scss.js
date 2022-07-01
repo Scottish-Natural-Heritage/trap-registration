@@ -1,6 +1,4 @@
-'use strict';
-
-import {readFileSync, writeFileSync} from 'fs';
+import {readFileSync, writeFileSync} from 'node:fs';
 import sass from 'sass';
 import packageImporter from 'node-sass-package-importer';
 
