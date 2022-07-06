@@ -1,5 +1,5 @@
-import {fileURLToPath} from 'url';
-import path from 'path';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
 import express from 'express';
 import morgan from 'morgan';
 import nunjucks from 'nunjucks';
