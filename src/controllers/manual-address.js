@@ -1,7 +1,6 @@
 import {ReturnState} from './_base.js';
 
-const manualAddressController = (request) => {
-
+const manualAddressController = () => {
   // The only way out of the manual address page is onwards, so return success and begin
   // the form.
   return ReturnState.Positive;
