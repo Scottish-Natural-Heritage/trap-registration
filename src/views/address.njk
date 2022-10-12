@@ -1,0 +1,45 @@
+{% extends "_base.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+
+{% block content %}
+
+  <h1 class="govuk-heading-xl">This is a address page</h1>
+
+  <form method="post">
+    {{ govukRadios({
+        classes: "govuk-radios--inline",
+        idPrefix: "manualAddress",
+        name: "manualAddress",
+        fieldset: {
+            legend: {
+                text: "Do you want to enter the address manually",
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--xl"
+            }
+        },
+        errorMessage: {
+            text: "You must select manual or not"
+        } if model.convictionError,
+        items: [
+            {
+                value: "yes",
+                text: "Yes"
+            },
+            {
+                value: "no",
+                text: "No"
+            }
+        ]
+    }) }}
+
+  <form method="post">
+    {{ govukButton({
+      text: "Continue",
+      classes: "naturescot-forward-button"
+    }) }}
+
+  </form>
+{% endblock %}

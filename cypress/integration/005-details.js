@@ -13,30 +13,16 @@ describe('Details page ', function () {
     // POST `/start`
     cy.get('#main-content form button.naturescot-forward-button').click();
 
-    // ~GET `/gdpr`~
-    // POST `/gdpr`
-    cy.get('#main-content form button.naturescot-forward-button').click();
-
     // ~GET `/conviction`~
     // CLICK no
     cy.get('#main-content form input[type="radio"][value="no"]').click();
     // POST `/conviction`
     cy.get('#main-content form button.naturescot-forward-button').click();
 
-    // ~GET `/eligible`~
-    // POST `/eligible`
-    cy.get('#main-content form button.naturescot-forward-button').click();
-
     // ~GET `/general`~
     // CLICK GLO1
     cy.get('#main-content form input[type="checkbox"]#general').click();
     // POST `/general`
-    cy.get('#main-content form button.naturescot-forward-button').click();
-
-    // ~GET `/comply`~
-    // CLICK yes
-    cy.get('#main-content form input[type="checkbox"]#comply').click();
-    // POST `/comply`
     cy.get('#main-content form button.naturescot-forward-button').click();
 
     // ~GET `/meat-bait`~
@@ -87,6 +73,6 @@ describe('Details page ', function () {
 
     cy.get('#main-content form button.naturescot-forward-button').click();
 
-    cy.url().should('include', '/confirm');
+    cy.url().should('include', '/postcode');
   });
 });
