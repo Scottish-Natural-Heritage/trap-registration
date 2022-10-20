@@ -117,4 +117,10 @@ router.use(
   })
 );
 
+router.use(
+  Page({
+    path: 'privacy-policy'
+  })
+);
+
 export {router as default};
