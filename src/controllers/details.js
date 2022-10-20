@@ -63,10 +63,7 @@ const detailsController = (request) => {
   }
 
   // Check that any of the fields are invalid.
-  request.session.detailsError =
-    request.session.nameError ||
-    request.session.phoneError ||
-    request.session.emailError;
+  request.session.detailsError = request.session.nameError || request.session.phoneError || request.session.emailError;
 
   // If we've seen an error in any of the fields, our visitor needs to go back
   // and fix them.
