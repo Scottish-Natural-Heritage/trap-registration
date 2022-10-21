@@ -9,7 +9,7 @@ const postcodeController = async (request) => {
   request.session.missingPostcodeError = false;
   request.session.invalidPostcodeError = false;
 
-  // Clean the request by trim leading and trailing whitespace.
+  // Clean the request by trimming leading and trailing whitespace.
   const postcode = request.body.addressPostcode === undefined ? undefined : request.body.addressPostcode.trim();
 
   // Check for any errors.

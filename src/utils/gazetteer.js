@@ -3,6 +3,7 @@ import axios from 'axios';
 /**
  * Find addresses by postcode.
  *
+ * @param {any} config The application's configuration.
  * @param {string} postcode The postcode to find addresses by.
  * @returns {Promise<any[]>} The list of matching addresses.
  */
@@ -38,6 +39,7 @@ const findAddressesByPostcode = async (config, postcode) => {
 /**
  * Find addresses by UPRN number.
  *
+ * @param {any} config The application's configuration.
  * @param {number} uprn The UPRN to find addresses by.
  * @returns {Promise<any[]>} The list of matching addresses.
  */
@@ -73,6 +75,7 @@ const findAddressesByUprn = async (config, uprn) => {
 /**
  * Find Full address object by UPRN number.
  *
+ * @param {any} config The application's configuration.
  * @param {number} uprn The UPRN to find addresses by.
  * @returns {Promise<any[]>} The list of matching addresses.
  */

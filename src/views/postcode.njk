@@ -4,7 +4,31 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
+{% set postcodeErrorsHtml %}
+  {% if model.missingPostcodeError %}
+    <p>Enter your postcode</p>
+  {% elif model.invalidPostcodeError %}
+    <p>Enter a valid postcode</p>
+  {% endif %}
+{% endset %}
+
 {% block content %}
+
+  {% if model.postcodeError %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [
+        {
+          text: "Enter your postcode",
+          href: "#address-postcode-error"
+        } if model.missingPostcodeError,
+        {
+          text: "Enter a valid postcode",
+          href: "#address-postcode-error"
+        } if model.invalidPostcodeError
+      ]
+    }) }}
+  {% endif %}
 
   <form method="post">
 
@@ -19,7 +43,7 @@
       name: "addressPostcode",
       value: model.addressPostcode,
       errorMessage: {
-        text: "Enter your postcode"
+        html: postcodeErrorsHtml
       } if model.postcodeError,
       autocomplete: "postal-code"
     }) }}
