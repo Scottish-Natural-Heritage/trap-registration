@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.5.4",
+    "axios-mock-adapter": "^1.21.2",
     "cypress": "^5.0.0",
     "eslint-plugin-cypress": "^2.11.2",
     "nodemon": "^2.0.18",

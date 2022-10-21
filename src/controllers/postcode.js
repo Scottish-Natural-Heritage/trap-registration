@@ -13,8 +13,9 @@ const postcodeController = async (request) => {
   const postcode = request.body.addressPostcode === undefined ? undefined : request.body.addressPostcode.trim();
 
   // Check for any errors.
-  request.session.missingPostcodeError = postcode === undefined;
-  request.session.invalidPostcodeError = !utils.postalAddress.isaRealUkPostcode(postcode);
+  request.session.missingPostcodeError = postcode === undefined || postcode === null || postcode === '';
+  request.session.invalidPostcodeError =
+    !request.session.missingPostcodeError && !utils.postalAddress.isaRealUkPostcode(postcode);
 
   request.session.postcodeError = request.session.missingPostcodeError || request.session.invalidPostcodeError;
 
@@ -22,6 +23,9 @@ const postcodeController = async (request) => {
   if (request.session.postcodeError) {
     return ReturnState.Error;
   }
+
+  // No errors so save the postcode the the request's session.
+  request.session.addressPostcode = postcode;
 
   // If we make it here then make the postcode lookup call.
   try {
@@ -33,7 +37,7 @@ const postcodeController = async (request) => {
       return {
         value: address.uprn,
         text: address.summary_address,
-        selected: address.uprn === request.session.uprn,
+        selected: address.uprn === request.session.uprn
       };
     });
   } catch (error) {
@@ -41,7 +45,7 @@ const postcodeController = async (request) => {
     request.session.uprnAddresses = [{value: 0, text: 'No addresses found.', selected: true}];
   }
 
-  // No errors? Then proceed to the next page.
+  // Proceed to the next page.
   return ReturnState.Positive;
 };
 
