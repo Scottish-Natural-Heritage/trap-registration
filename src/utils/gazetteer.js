@@ -1,4 +1,3 @@
-import config from '../config';
 import axios from 'axios';
 
 /**
@@ -7,7 +6,7 @@ import axios from 'axios';
  * @param {string} postcode The postcode to find addresses by.
  * @returns {Promise<any[]>} The list of matching addresses.
  */
-const findAddressesByPostcode = async (postcode) => {
+const findAddressesByPostcode = async (config, postcode) => {
   // Lookup the postcode in our Gazetteer API.
   const apiResponse = await axios.get(config.gazetteerApiEndpoint, {
     params: {
@@ -42,7 +41,7 @@ const findAddressesByPostcode = async (postcode) => {
  * @param {number} uprn The UPRN to find addresses by.
  * @returns {Promise<any[]>} The list of matching addresses.
  */
-const findAddressesByUprn = async (uprn) => {
+const findAddressesByUprn = async (config, uprn) => {
   // Lookup the postcode in our Gazetteer API.
   const apiResponse = await axios.get(config.gazetteerApiEndpoint, {
     params: {
@@ -77,7 +76,7 @@ const findAddressesByUprn = async (uprn) => {
  * @param {number} uprn The UPRN to find addresses by.
  * @returns {Promise<any[]>} The list of matching addresses.
  */
-const findFullAddressesByUprn = async (uprn) => {
+const findFullAddressesByUprn = async (config, uprn) => {
   // Lookup the postcode in our Gazetteer API.
   const apiResponse = await axios.get(config.gazetteerApiEndpoint, {
     params: {
@@ -113,4 +112,3 @@ const findFullAddressesByUprn = async (uprn) => {
 const Gazetteer = {findAddressesByPostcode, findAddressesByUprn, findFullAddressesByUprn};
 
 export default Gazetteer;
-export {GazetteerAddress};
