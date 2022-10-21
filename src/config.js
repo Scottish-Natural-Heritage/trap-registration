@@ -9,7 +9,7 @@ const config = Object.freeze({
   pathPrefix: process.env.TR_PATH_PREFIX ? `/${process.env.TR_PATH_PREFIX}` : '/trap-registration',
   cookiePrefix: process.env.COOKIE_PREFIX || '',
   gazetteerApiEndpoint: 'https://cagmap.snh.gov.uk/gazetteer',
-  gazetteerApiKey: process.env.PC_LOOKUP_API_KEY ?? '',
+  gazetteerApiKey: process.env.PC_LOOKUP_API_KEY ?? ''
 });
 
 export {config as default};
