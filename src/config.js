@@ -8,7 +8,7 @@ const config = Object.freeze({
   hostPrefix: process.env.TR_HOST_PREFIX || `http://localhost:${process.env.TR_PORT}`,
   pathPrefix: process.env.TR_PATH_PREFIX ? `/${process.env.TR_PATH_PREFIX}` : '/trap-registration',
   cookiePrefix: process.env.COOKIE_PREFIX || '',
-  gazetteerApiEndpoint: 'https://cagmap.snh.gov.uk/gazetteer',
+  gazetteerApiEndpoint: process.env.PC_LOOKUP_API_URL || 'https://cagmap.snh.gov.uk/gazetteer',
   gazetteerApiKey: process.env.PC_LOOKUP_API_KEY ?? ''
 });
 
