@@ -7,7 +7,9 @@ const config = Object.freeze({
   apiEndpoint: process.env.TR_API_URL || 'http://localhost:3001/trap-registration-api/v1/registrations',
   hostPrefix: process.env.TR_HOST_PREFIX || `http://localhost:${process.env.TR_PORT}`,
   pathPrefix: process.env.TR_PATH_PREFIX ? `/${process.env.TR_PATH_PREFIX}` : '/trap-registration',
-  cookiePrefix: process.env.COOKIE_PREFIX || ''
+  cookiePrefix: process.env.COOKIE_PREFIX || '',
+  gazetteerApiEndpoint: 'https://cagmap.snh.gov.uk/gazetteer',
+  gazetteerApiKey: process.env.PC_LOOKUP_API_KEY ?? '',
 });
 
 export {config as default};
