@@ -16,7 +16,7 @@ const addressController = async (request) => {
   // manual details page.
   if (invalidUprn || request.body.addressFound === 'no') {
     // Continue to manual address page.
-    return ReturnState.Secondary;
+    return ReturnState.Negative;
   }
 
   try {

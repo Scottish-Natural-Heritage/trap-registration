@@ -44,8 +44,9 @@ describe('Confirm page ', function () {
     cy.get('#main-content form button.naturescot-forward-button').click();
 
     // ~GET `/address`~
+    cy.get('select[name=address]').select('10092032547');
     // POST `/address`
-    cy.get('#main-content form button.naturescot-forward-button').click();
+    cy.get('button.govuk-button[name=addressFound][value=yes]').click();
   });
 
   it('should allow access if the user visits all the pages in order', function () {
