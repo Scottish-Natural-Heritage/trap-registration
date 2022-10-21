@@ -1,16 +1,34 @@
 {% extends "_base.njk" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
 
 {% block content %}
 
-  <h1 class="govuk-heading-xl">This is a postcode page</h1>
-
   <form method="post">
+
+    {{ govukInput({
+      label: {
+        text: "What is your postcode?",
+        classes: "govuk-label--l",
+        isPageHeading: true
+      },
+      classes: "govuk-!-width-three-quarters",
+      id: "address-postcode",
+      name: "addressPostcode",
+      value: model.addressPostcode,
+      errorMessage: {
+        text: "Enter your postcode"
+      } if model.postcodeError,
+      autocomplete: "postal-code"
+    }) }}
+
     {{ govukButton({
       text: "Continue",
       classes: "naturescot-forward-button"
     }) }}
 
   </form>
+
 {% endblock %}
