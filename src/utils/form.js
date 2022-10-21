@@ -6,7 +6,7 @@
  * @returns {boolean | undefined} True if dirty is 'yes', false if dirty is
  * 'no', undefined otherwise.
  */
- const cleanRadioBoolean = (dirty) => {
+const cleanRadioBoolean = (dirty) => {
   if (dirty === 'yes') {
     return true;
   }

@@ -1,7 +1,7 @@
 import Gazetteer from '../utils/gazetteer.js';
+import config from '../config.js';
 import {cleanNonNegativeInteger} from '../utils/form.js';
 import {ReturnState} from './_base.js';
-import config from '../config.js';
 
 const addressController = async (request) => {
   // Grab the form as a json object.
