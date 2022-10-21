@@ -1,45 +1,45 @@
 {% extends "_base.njk" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
-
+{% from "govuk/components/select/macro.njk" import govukSelect %}
 
 {% block content %}
 
-  <h1 class="govuk-heading-xl">This is a address page</h1>
+  <h1 class="govuk-heading-xl">Select your address</h1>
 
   <form method="post">
-    {{ govukRadios({
-        classes: "govuk-radios--inline",
-        idPrefix: "manualAddress",
-        name: "manualAddress",
-        fieldset: {
-            legend: {
-                text: "Do you want to enter the address manually",
-                isPageHeading: true,
-                classes: "govuk-fieldset__legend--xl"
-            }
-        },
-        errorMessage: {
-            text: "You must select manual or not"
-        } if model.convictionError,
-        items: [
-            {
-                value: "yes",
-                text: "Yes"
-            },
-            {
-                value: "no",
-                text: "No"
-            }
-        ]
+
+    {{ govukSelect({
+      id: "address",
+      name: "address",
+      classes: "govuk-!-width-three-quarters",
+      label: {
+        text: "Address"
+      },
+      items: model.uprnAddresses
     }) }}
 
-  <form method="post">
     {{ govukButton({
       text: "Continue",
-      classes: "naturescot-forward-button"
+      classes: "naturescot-forward-button",
+      name:"addressFound",
+      value:"yes",
+      preventDoubleClick: true
     }) }}
 
   </form>
+
+  <form method="post">
+
+    <input type="hidden" name="address" value="0">
+    {{ govukButton({
+      text: "Address not found",
+      classes: "govuk-button--secondary",
+      name:"addressFound",
+      value:"no",
+      preventDoubleClick: true
+    }) }}
+
+  </form>
+
 {% endblock %}
