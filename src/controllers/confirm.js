@@ -6,12 +6,16 @@ const confirmController = async (request) => {
   // Grab the form as a json object.
   const formData = request.body;
 
+  // Get any data from the posted form.
+  request.session.confirmDeclaration = formData.confirmDeclaration === 'yes';
+
   // Assume no errors at first.
   request.session.confirmErrors = false;
   request.session.missingConfirmValue = false;
+  request.session.apiError = false;
 
   // Check the user has checked the confirmation declaration checkbox.
-  request.session.missingConfirmValue = !(formData.confirmDeclaration === 'yes');
+  request.session.missingConfirmValue = !(request.session.confirmDeclaration);
 
   // If we have any errors return the error state.
   if (request.session.missingConfirmValue) {
@@ -20,12 +24,11 @@ const confirmController = async (request) => {
   }
 
   try {
-    const newRegResponse = await axios.post(config.apiEndpoint);
     const newReg = {
       convictions: request.session.conviction,
       usingGL01: request.session.general1,
       usingGL02: request.session.general2,
-      complyWithTerms: request.session.comply === 'yes',
+      confirmDeclaration: request.session.confirmDeclaration,
       meatBaits: request.session.meatBait,
       fullName: request.session.fullName,
       addressLine1: request.session.addressLine1,
@@ -34,19 +37,24 @@ const confirmController = async (request) => {
       addressCounty: request.session.addressCounty,
       addressPostcode: request.session.addressPostcode,
       phoneNumber: request.session.phoneNumber,
-      emailAddress: request.session.emailAddress
+      emailAddress: request.session.emailAddress,
+      uprn: request.session.uprn
     };
-    const newRegUrl = newRegResponse.headers.location;
-    const updatedRegResponse = await axios.put(newRegUrl, newReg);
 
-    request.session.regNo = updatedRegResponse.data.regNo;
-    request.session.expiryDate = updatedRegResponse.data.expiryDate;
+    const newRegResponse = await axios.post(config.apiEndpoint, newReg);
+
+    request.session.regNo = newRegResponse.data.regNo;
+    request.session.expiryDate = newRegResponse.data.expiryDate;
 
     // Let them know it all went well.
     return ReturnState.Positive;
   } catch (error) {
     // TODO: Do something useful with this error.
-    console.log(error);
+    console.log("Error creating registration: " + error);
+
+    // Set the API error boolean.
+    request.session.confirmErrors = true;
+    request.session.apiError = true;
 
     // Let the user know it went wrong, and to 'probably' try again?
     return ReturnState.Error;

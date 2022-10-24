@@ -23,7 +23,11 @@
         {
           text: "You must confirm the information you have provided is up-to-date and correct and you agree with the privacy policy",
           href: "#confirm-declaration"
-        } if model.missingConfirmValue
+        } if model.missingConfirmValue,
+        {
+          text: "An error has occurred creating the registration - please try again",
+          href: "#"
+        } if model.apiError
       ]
     }) }}
   {% endif %}
