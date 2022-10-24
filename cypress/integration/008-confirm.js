@@ -51,6 +51,17 @@ describe('Confirm page ', function () {
 
   it('should allow access if the user visits all the pages in order', function () {
     cy.visit('/confirm');
-    cy.get('h1').should('contain', 'answers before sending');
+    cy.get('h1').should('contain', 'Check your answers');
+  });
+
+  it('should display an error if the user does not click the confirm declaration checkbox', function () {
+    cy.visit('/confirm');
+    cy.get('h1').should('contain', 'Check your answers');
+
+    cy.get('#main-content form button.naturescot-forward-button').click();
+
+    cy.get('h2#error-summary-title').should('contain', 'There is a problem');
+
+    cy.get('.govuk-error-summary ul li a').should('contain', 'You must confirm the information');
   });
 });
