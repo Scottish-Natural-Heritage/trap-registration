@@ -22,6 +22,64 @@
       rows: [
         {
           key: {
+            text: "Name"
+          },
+          value: {
+            text: model.fullName
+          },
+          actions: {
+            items: [
+              {
+                href: pathPrefix + "/details#full-name",
+                text: "Change",
+                visuallyHiddenText: "name"
+              }
+            ]
+          }
+        },
+        {
+          key: {
+            text: "Address"
+          },
+          value: {
+            html: model.displayAddress
+          },
+          actions: {
+            items: [
+              {
+                href: pathPrefix + "/details#address-line-1",
+                text: "Change",
+                visuallyHiddenText: "contact information"
+              }
+            ]
+          }
+        },
+        {
+          key: {
+            text: "Contact details"
+          },
+          value: {
+            html: model.displayContact
+          },
+          actions: {
+            items: [
+              {
+                href: pathPrefix + "/details#phone-number",
+                text: "Change",
+                visuallyHiddenText: "contact details"
+              }
+            ]
+          }
+        }
+      ]
+    }) }}
+
+    <h2 class="govuk-heading-m">Registration details</h2>
+
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
             text: "Criminal Convictions"
           },
           value: {
@@ -107,64 +165,6 @@
         }
       ]
     })}}
-
-    <h2 class="govuk-heading-m">Registration details</h2>
-
-    {{ govukSummaryList({
-      rows: [
-        {
-          key: {
-            text: "Name"
-          },
-          value: {
-            text: model.fullName
-          },
-          actions: {
-            items: [
-              {
-                href: pathPrefix + "/details#full-name",
-                text: "Change",
-                visuallyHiddenText: "name"
-              }
-            ]
-          }
-        },
-        {
-          key: {
-            text: "Address"
-          },
-          value: {
-            html: model.displayAddress
-          },
-          actions: {
-            items: [
-              {
-                href: pathPrefix + "/details#address-line-1",
-                text: "Change",
-                visuallyHiddenText: "contact information"
-              }
-            ]
-          }
-        },
-        {
-          key: {
-            text: "Contact details"
-          },
-          value: {
-            html: model.displayContact
-          },
-          actions: {
-            items: [
-              {
-                href: pathPrefix + "/details#phone-number",
-                text: "Change",
-                visuallyHiddenText: "contact details"
-              }
-            ]
-          }
-        }
-      ]
-    }) }}
 
     {# Confirm declaration #}
 
