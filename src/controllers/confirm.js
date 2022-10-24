@@ -15,7 +15,7 @@ const confirmController = async (request) => {
   request.session.apiError = false;
 
   // Check the user has checked the confirmation declaration checkbox.
-  request.session.missingConfirmValue = !(request.session.confirmDeclaration);
+  request.session.missingConfirmValue = !request.session.confirmDeclaration;
 
   // If we have any errors return the error state.
   if (request.session.missingConfirmValue) {
@@ -50,7 +50,7 @@ const confirmController = async (request) => {
     return ReturnState.Positive;
   } catch (error) {
     // TODO: Do something useful with this error.
-    console.log("Error creating registration: " + error);
+    console.log('Error creating registration: ' + error);
 
     // Set the API error boolean.
     request.session.confirmErrors = true;
