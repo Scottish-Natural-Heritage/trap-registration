@@ -28,7 +28,7 @@ const confirmController = async (request) => {
       convictions: request.session.conviction,
       usingGL01: request.session.general1,
       usingGL02: request.session.general2,
-      confirmDeclaration: request.session.confirmDeclaration,
+      complyWithTerms: request.session.confirmDeclaration,
       meatBaits: request.session.meatBait,
       fullName: request.session.fullName,
       addressLine1: request.session.addressLine1,
