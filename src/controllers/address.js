@@ -62,7 +62,7 @@ const addressController = async (request) => {
       address.push(request.session.addressPostcode);
     }
 
-    // Create the display versions of the visitors address and contact info.
+    // Create the display versions of the visitors address.
     request.session.displayAddress = address.join('<br>');
   } catch (error) {
     console.log('Error finding address: ' + error);
