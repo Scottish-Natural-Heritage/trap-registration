@@ -3,6 +3,22 @@ import config from '../config.js';
 import {ReturnState} from './_base.js';
 
 const confirmController = async (request) => {
+  // Grab the form as a json object.
+  const formData = request.body;
+
+  // Assume no errors at first.
+  request.session.confirmErrors = false;
+  request.session.missingConfirmValue = false;
+
+  // Check the user has checked the confirmation declaration checkbox.
+  request.session.missingConfirmValue = !(formData.confirmDeclaration === 'yes');
+
+  // If we have any errors return the error state.
+  if (request.session.missingConfirmValue) {
+    request.session.confirmErrors = true;
+    return ReturnState.Error;
+  }
+
   try {
     const newRegResponse = await axios.post(config.apiEndpoint);
     const newReg = {
