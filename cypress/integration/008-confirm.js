@@ -39,6 +39,7 @@ describe('Confirm page ', function () {
     cy.get('#main-content form button.naturescot-forward-button').click();
 
     // ~GET `/postcode`~
+    cy.get('input[type="text"]#address-postcode').type('IV3 8NW', {delay: 1});
     // POST `/postcode`
     cy.get('#main-content form button.naturescot-forward-button').click();
 
