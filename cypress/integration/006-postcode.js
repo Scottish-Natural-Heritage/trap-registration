@@ -77,6 +77,6 @@ describe('Postcode page ', function () {
 
     cy.get('#main-content form button.naturescot-forward-button').click();
 
-    cy.get('h1').should('contain', 'This is a address page');
+    cy.get('h1').should('contain', 'Select your address');
   });
 });
