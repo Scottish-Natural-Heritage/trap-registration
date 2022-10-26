@@ -39,6 +39,31 @@ const addressController = async (request) => {
     request.session.addressLine2 = gazetteerAddresses[0].street_description;
     request.session.addressTown = gazetteerAddresses[0].post_town;
     request.session.addressCounty = gazetteerAddresses[0].administrative_area;
+
+    // Build the address array, ignoring any blank fields.
+    const address = [];
+    if (request.session.addressLine1 !== undefined && request.session.addressLine1.trim() !== '') {
+      address.push(request.session.addressLine1);
+    }
+
+    if (request.session.addressLine2 !== undefined && request.session.addressLine2.trim() !== '') {
+      address.push(request.session.addressLine2);
+    }
+
+    if (request.session.addressTown !== undefined && request.session.addressTown.trim() !== '') {
+      address.push(request.session.addressTown);
+    }
+
+    if (request.session.addressCounty !== undefined && request.session.addressCounty.trim() !== '') {
+      address.push(request.session.addressCounty);
+    }
+
+    if (request.session.addressPostcode !== undefined && request.session.addressPostcode.trim() !== '') {
+      address.push(request.session.addressPostcode);
+    }
+
+    // Create the display versions of the visitors address.
+    request.session.displayAddress = address.join('<br>');
   } catch (error) {
     console.log('Error finding address: ' + error);
   }
