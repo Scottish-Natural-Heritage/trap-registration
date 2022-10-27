@@ -1,54 +1,49 @@
-{% extends "templates/base.njk" %}
+{% extends "_base.njk" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
 {% set postcodeErrors %}
-  {% if error.noPostcodeError %}
+  {% if model.postcodeError %}
     <p>Enter the postcode</p>
-  {% elif error.invalidPostcodeError %}
+  {% elif model.invalidPostcodeError %}
     <p>Enter a valid postcode</p>
   {% endif %}
 {% endset -%}
 
-{% block pageTitle %}Gulls Health and Safety - Manual Address{% endblock %}
-
 {% block content %}
 
-  {% if error %}
+  {% if model.addressError %}
     {{ govukErrorSummary({
       titleText: "There is a problem",
       errorList: [
         {
           text: "Enter the building and street",
           href: "#addressLine1"
-        } if error.noAddressLine1Error,
+        } if model.addressError,
         {
           text: "Enter the town or city",
           href: "#addressTown"
-        } if error.noAddressTownError,
+        } if model.townError,
         {
           text: "Enter the county",
           href: "#addressCounty"
-        } if error.noAddressCountyError,
+        } if model.countyError,
         {
           text: "Enter the postcode",
           href: "#postcode"
-        } if error.noPostcodeError,
+        } if model.postcodeError,
         {
           text: "Enter a valid postcode",
           href: "#postcode"
-        } if error.invalidPostcodeError
+        } if model.invalidPostcodeError
       ]
     })}}
   {% endif %}
 
-  {% if onBehalf %}
-    <h1 class="govuk-heading-l">What is the licence holder&#39;s address?</h1>
-  {% else %}
-    <h1 class="govuk-heading-l">What is your address?</h1>
-  {% endif %}
+
+  <h1 class="govuk-heading-xl">What is your address</h1>
 
   <form method="post">
 
@@ -64,7 +59,7 @@
       autocomplete: "address-line1",
       errorMessage: {
         text: "Enter the building and street"
-      } if error.noAddressLine1Error
+      } if model.addressError
     }) }}
 
     {{ govukInput({
@@ -91,7 +86,7 @@
       autocomplete: "address-level2",
       errorMessage: {
         text: "Enter the town or city"
-      } if error.noAddressTownError
+      } if model.townError
     }) }}
 
     {{ govukInput({
@@ -106,7 +101,7 @@
       autocomplete: "address-level1",
       errorMessage: {
         text: "Enter the county"
-      } if error.noAddressCountyError
+      } if model.countyError
     }) }}
 
     {{ govukInput({
@@ -121,16 +116,13 @@
       autocomplete: "postal-code",
       errorMessage: {
         html: postcodeErrors
-      } if error.noPostcodeError or error.invalidPostcodeError
+      } if model.postcodeError or model.invalidPostcodeError
     }) }}
 
     {{ govukButton({
       text: "Continue",
-      preventDoubleClick: true
+      classes: "naturescot-forward-button"
     }) }}
 
   </form>
-
 {% endblock %}
-
-
