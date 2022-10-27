@@ -8,7 +8,8 @@ import {ReturnState} from './_base.js';
  * @param {any} body the incoming request's body
  * @returns {any} a json object that's just got our cleaned up fields on it
  */
- const cleanInput = (body) => {
+
+const cleanInput = (body) => {
   return {
     // The strings are trimmed for leading and trailing whitespace and then
     // copied across if they're in the POST body or are set to undefined if
@@ -31,42 +32,40 @@ const manualAddressController = (request) => {
   request.session.postcode = cleanForm.postcode;
 
   // Clear the errors
-  request.session.addressError = false;
+  request.session.addressLine1Error = false;
   request.session.townError = false;
   request.session.countyError = false;
   request.session.postcodeError = false;
   request.session.invalidPostcodeError = false;
 
+  // Build the address array, ignoring any blank fields.
+  const address = [];
+  if (request.session.addressLine1 !== undefined && request.session.addressLine1.trim() !== '') {
+    address.push(request.session.addressLine1);
+  }
 
+  if (request.session.addressLine2 !== undefined && request.session.addressLine2.trim() !== '') {
+    address.push(request.session.addressLine2);
+  }
 
-    // Build the address array, ignoring any blank fields.
-    const address = [];
-    if (request.session.addressLine1 !== undefined && request.session.addressLine1.trim() !== '') {
-      address.push(request.session.addressLine1);
-    }
+  if (request.session.addressTown !== undefined && request.session.addressTown.trim() !== '') {
+    address.push(request.session.addressTown);
+  }
 
-    if (request.session.addressLine2 !== undefined && request.session.addressLine2.trim() !== '') {
-      address.push(request.session.addressLine2);
-    }
+  if (request.session.addressCounty !== undefined && request.session.addressCounty.trim() !== '') {
+    address.push(request.session.addressCounty);
+  }
 
-    if (request.session.addressTown !== undefined && request.session.addressTown.trim() !== '') {
-      address.push(request.session.addressTown);
-    }
+  if (request.session.postcode !== undefined && request.session.postcode.trim() !== '') {
+    address.push(request.session.postcode);
+  }
 
-    if (request.session.addressCounty !== undefined && request.session.addressCounty.trim() !== '') {
-      address.push(request.session.addressCounty);
-    }
+  // Create the display versions of the visitors address.
+  request.session.displayAddress = address.join('<br>');
 
-    if (request.session.postcode !== undefined && request.session.postcode.trim() !== '') {
-      address.push(request.session.postcode);
-    }
-
-    // Create the display versions of the visitors address.
-    request.session.displayAddress = address.join('<br>');
-
-    // Check if each of the fields is invalid.
+  // Check if each of the fields is invalid.
   if (request.body.addressLine1 === undefined || request.body.addressLine1.trim() === '') {
-    request.session.addressError = true;
+    request.session.addressLine1Error = true;
   }
 
   if (request.body.addressTown === undefined || request.body.addressTown.trim() === '') {
@@ -83,15 +82,13 @@ const manualAddressController = (request) => {
 
   // Call natureScot utils to check validity of postcode
   request.session.invalidPostcodeError =
-    request.body.postcode === undefined
-      ? true
-      : !utils.postalAddress.isaRealUkPostcode(request.body.postcode);
+    request.body.postcode === undefined ? true : !utils.postalAddress.isaRealUkPostcode(request.body.postcode);
 
   // Check that any of the fields are invalid.
   request.session.addressError =
     request.session.addressLine1Error ||
-    request.session.addressTownError ||
-    request.session.addressCountyError ||
+    request.session.townError ||
+    request.session.countyError ||
     request.session.postcodeError ||
     request.session.invalidPostcodeError;
 

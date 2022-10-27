@@ -21,7 +21,7 @@
         {
           text: "Enter the building and street",
           href: "#addressLine1"
-        } if model.addressError,
+        } if model.addressLine1Error,
         {
           text: "Enter the town or city",
           href: "#addressTown"
@@ -43,7 +43,7 @@
   {% endif %}
 
 
-  <h1 class="govuk-heading-xl">What is your address</h1>
+  <h1 class="govuk-heading-xl">What is your address?</h1>
 
   <form method="post">
 
@@ -59,7 +59,7 @@
       autocomplete: "address-line1",
       errorMessage: {
         text: "Enter the building and street"
-      } if model.addressError
+      } if model.addressLine1Error
     }) }}
 
     {{ govukInput({
