@@ -38,31 +38,6 @@ const manualAddressController = (request) => {
   request.session.postcodeError = false;
   request.session.invalidPostcodeError = false;
 
-  // Build the address array, ignoring any blank fields.
-  const address = [];
-  if (request.session.addressLine1 !== undefined && request.session.addressLine1.trim() !== '') {
-    address.push(request.session.addressLine1);
-  }
-
-  if (request.session.addressLine2 !== undefined && request.session.addressLine2.trim() !== '') {
-    address.push(request.session.addressLine2);
-  }
-
-  if (request.session.addressTown !== undefined && request.session.addressTown.trim() !== '') {
-    address.push(request.session.addressTown);
-  }
-
-  if (request.session.addressCounty !== undefined && request.session.addressCounty.trim() !== '') {
-    address.push(request.session.addressCounty);
-  }
-
-  if (request.session.postcode !== undefined && request.session.postcode.trim() !== '') {
-    address.push(request.session.postcode);
-  }
-
-  // Create the display versions of the visitors address.
-  request.session.displayAddress = address.join('<br>');
-
   // Check if each of the fields is invalid.
   if (request.body.addressLine1 === undefined || request.body.addressLine1.trim() === '') {
     request.session.addressLine1Error = true;
@@ -97,6 +72,31 @@ const manualAddressController = (request) => {
   if (request.session.addressError) {
     return ReturnState.Error;
   }
+
+  // Build the address array, ignoring any blank fields.
+  const address = [];
+  if (request.session.addressLine1 !== undefined && request.session.addressLine1.trim() !== '') {
+    address.push(request.session.addressLine1);
+  }
+
+  if (request.session.addressLine2 !== undefined && request.session.addressLine2.trim() !== '') {
+    address.push(request.session.addressLine2);
+  }
+
+  if (request.session.addressTown !== undefined && request.session.addressTown.trim() !== '') {
+    address.push(request.session.addressTown);
+  }
+
+  if (request.session.addressCounty !== undefined && request.session.addressCounty.trim() !== '') {
+    address.push(request.session.addressCounty);
+  }
+
+  if (request.session.postcode !== undefined && request.session.postcode.trim() !== '') {
+    address.push(request.session.postcode);
+  }
+
+  // Create the display versions of the visitors address.
+  request.session.displayAddress = address.join('<br>');
 
   // The request passed all our validation, we've stored copies of everything we
   // need, so it's time to go on.
