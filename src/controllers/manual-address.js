@@ -57,7 +57,9 @@ const manualAddressController = (request) => {
 
   // Call natureScot utils to check validity of postcode
   request.session.invalidPostcodeError =
-    request.body.addressPostcode === undefined ? true : !utils.postalAddress.isaRealUkPostcode(request.body.addressPostcode);
+    request.body.addressPostcode === undefined
+      ? true
+      : !utils.postalAddress.isaRealUkPostcode(request.body.addressPostcode);
 
   // Check that any of the fields are invalid.
   request.session.addressError =
