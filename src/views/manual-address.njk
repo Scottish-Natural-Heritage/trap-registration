@@ -32,11 +32,11 @@
         } if model.countyError,
         {
           text: "Enter the postcode",
-          href: "#postcode"
+          href: "#addressPostcode"
         } if model.postcodeError,
         {
           text: "Enter a valid postcode",
-          href: "#postcode"
+          href: "#addressPostcode"
         } if model.invalidPostcodeError
       ]
     })}}
@@ -108,10 +108,10 @@
       label: {
         text: "Postcode"
       },
-      id: "postcode",
-      name: "postcode",
+      id: "addressPostcode",
+      name: "addressPostcode",
       classes: "govuk-!-width-one-quarter",
-      value: model.postcode,
+      value: model.addressPostcode,
       spellcheck: false,
       autocomplete: "postal-code",
       errorMessage: {

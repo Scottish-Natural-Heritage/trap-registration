@@ -62,15 +62,12 @@ describe('Manual address page ', function () {
     cy.get('.govuk-error-summary ul li a')
       .should('contain', 'Enter the building and street')
       .and('contain', 'Enter the town or city')
-      .and('contain', 'Enter the county')
-      .and('contain', 'Enter the postcode')
-      .and('contain', 'Enter a valid postcode');
+      .and('contain', 'Enter the county');
 
     cy.get('.govuk-form-group--error .govuk-error-message')
       .and('contain', 'Enter the building and street')
       .and('contain', 'Enter the town or city')
-      .and('contain', 'Enter the county')
-      .and('contain', 'Enter the postcode');
+      .and('contain', 'Enter the county');
   });
 
   it('filled-out entries + main button should navigate to site location page', function () {
@@ -78,7 +75,6 @@ describe('Manual address page ', function () {
     cy.get('input[type="text"]#addressLine1').type('Great Glen House');
     cy.get('input[type="text"]#addressTown').type('Inverness');
     cy.get('input[type="text"]#addressCounty').type('Highlands');
-    cy.get('input[type="text"]#postcode').type('IV3 8NW');
 
     cy.get('#main-content form button.naturescot-forward-button').click();
 
