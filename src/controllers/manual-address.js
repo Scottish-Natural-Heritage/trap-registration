@@ -18,7 +18,7 @@ const cleanInput = (body) => {
     addressLine2: body.addressLine2 === undefined ? undefined : body.addressLine2.trim(),
     addressTown: body.addressTown === undefined ? undefined : body.addressTown.trim(),
     addressCounty: body.addressCounty === undefined ? undefined : body.addressCounty.trim(),
-    postcode: body.postcode === undefined ? undefined : body.postcode.trim()
+    addressPostcode: body.addressPostcode === undefined ? undefined : body.addressPostcode.trim()
   };
 };
 
@@ -29,7 +29,7 @@ const manualAddressController = (request) => {
   request.session.addressLine2 = cleanForm.addressLine2;
   request.session.addressTown = cleanForm.addressTown;
   request.session.addressCounty = cleanForm.addressCounty;
-  request.session.postcode = cleanForm.postcode;
+  request.session.addressPostcode = cleanForm.addressPostcode;
 
   // Clear the errors
   request.session.addressLine1Error = false;
@@ -51,13 +51,13 @@ const manualAddressController = (request) => {
     request.session.countyError = true;
   }
 
-  if (request.body.postcode === undefined || request.body.postcode.trim() === '') {
+  if (request.body.addressPostcode === undefined || request.body.addressPostcode.trim() === '') {
     request.session.postcodeError = true;
   }
 
   // Call natureScot utils to check validity of postcode
   request.session.invalidPostcodeError =
-    request.body.postcode === undefined ? true : !utils.postalAddress.isaRealUkPostcode(request.body.postcode);
+    request.body.addressPostcode === undefined ? true : !utils.postalAddress.isaRealUkPostcode(request.body.addressPostcode);
 
   // Check that any of the fields are invalid.
   request.session.addressError =
@@ -91,8 +91,8 @@ const manualAddressController = (request) => {
     address.push(request.session.addressCounty);
   }
 
-  if (request.session.postcode !== undefined && request.session.postcode.trim() !== '') {
-    address.push(request.session.postcode);
+  if (request.session.addressPostcode !== undefined && request.session.addressPostcode.trim() !== '') {
+    address.push(request.session.addressPostcode);
   }
 
   // Create the display versions of the visitors address.
