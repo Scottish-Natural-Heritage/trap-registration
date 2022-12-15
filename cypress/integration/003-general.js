@@ -41,17 +41,17 @@ describe('General page ', function () {
     cy.get('span#general-error').should('contain', 'You must confirm');
   });
 
-  it('"GL01" checkbox + main button should navigate to comply page', function () {
+  it('"GL01" checkbox + main button should navigate to meat-bait page', function () {
     cy.visit('/general');
     cy.get('#main-content form input[type="checkbox"]#general').click();
     cy.get('#main-content form button.naturescot-forward-button').click();
-    cy.url().should('include', '/comply');
+    cy.url().should('include', '/meat-bait');
   });
 
-  it('"GL02" checkbox + main button should navigate to comply page', function () {
+  it('"GL02" checkbox + main button should navigate to meat-baits page', function () {
     cy.visit('/general');
     cy.get('#main-content form input[type="checkbox"]#general-2').click();
     cy.get('#main-content form button.naturescot-forward-button').click();
-    cy.url().should('include', '/comply');
+    cy.url().should('include', '/meat-bait');
   });
 });

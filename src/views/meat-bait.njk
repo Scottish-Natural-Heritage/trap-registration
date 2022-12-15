@@ -51,28 +51,19 @@
           ]
         }) }}
 
-        {{ govukWarningText({
-          text: "You need to be registered to use meat baits in Larsen mate and Larsen pod traps.",
-          iconFallbackText: "Warning"
-        }) }}
-
-        <p class="govuk-body">We will ask you every year what non-target species you have caught using <a href="https://licensing.nature.scot/trap-registration-return/start">the online return form</a>.</p>
-        <p class="govuk-body">Please make sure you keep a record of:</p>
+        <p class="govuk-body">You must provide an annual return on or before 31 January each year and tell us:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li>the location of the trap</li>
-          <li>what non-target species are caught</li>
-          <li>how many of each non-target species are trapped</li>
-          <li>the trap type that was used</li>
+          <li>if you used meat baits</li>
+          <li>if you caught any non-target species</li>
+          <li>what target species you caught and how many</li>
+          <li>the trap location</li>
+          <li>the type of trap used</li>
         </ul>
-        <p class="govuk-body">
-          We will contact you by email one month before the expiry of the
-          General Licences to remind you to submit your meat bait return. Please
-          submit a return, even if you have not caught anything, on or before
-          31 January.
-        </p>
+
+        <p class="govuk-body">You must provide an annual return even if you have not used meat baits or caught any non-target species.</p>
 
         {{ govukWarningText({
-      text: "If you fail to complete a return we will remove or suspend your right to use meat baits.",
+      text: "If you fail to provide a return we will remove or suspend your right to use meat baits",
       iconFallbackText: "Warning"
     }) }}
 
@@ -95,13 +86,11 @@
               '<img src="/assets/traps-larsen-mate.jpg" alt="A Larsen mate trap">' +
               '<p class="govuk-body-s">&copy; The Game &amp; Wildlife Conservation Trust</p>' +
               '<p class="govuk-body">' +
-              '  "Larsen mate trap" means a portable spring-operated cage-trap comprising' +
-              '  two shell sections hinged along one edge connected by one or more springs' +
-              '  and kept open by a split-rod/trip-perch (as manufactured by Elgeeco; or any' +
-              '  trap which is equivalent to it in all relevant respects). When open (set)' +
-              '  the minimum distance between any two corners of the trap must be 39 cm. The' +
-              '  trap must not shut tightly along the majority of the length of the meeting' +
-              '  edges.' +
+              '  A portable spring-operated cage-trap made up of two shell sections hinged along one' +
+              ' edge. It sections are connected by one or more springs kept open by a split-rod/trip-perch' +
+              ' (as made by Elgeeco, or an equivalent). When open (set) the minimum distance between two' +
+              ' corners of the trap must be 39 cm. The trap must not shut tightly along the majority of' +
+              '  its meeting edges.' +
               '</p>'          },
           expanded: false
         },
@@ -114,9 +103,9 @@
               '<img src="/assets/traps-larsen-pod.jpg" alt="A Larsen pod trap">' +
               '<p class="govuk-body-s">&copy; The Game &amp; Wildlife Conservation Trust</p>' +
               '<p class="govuk-body">' +
-              '  "Larsen pod trap" means a portable spring or gravity operated cage-trap' +
-              '  which has a single compartment with either one or two side or top-mounted,' +
-              '  spring activated trap-doors which can be set independently.' +
+              '  A portable spring or gravity operated cage-trap. It has a single compartment with either' +
+              ' one or two side or top-mounted, spring activated trap-doors that can be set ' +
+              ' independently.' +
               '</p>'
           },
           expanded: false

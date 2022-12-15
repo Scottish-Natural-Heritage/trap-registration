@@ -27,7 +27,7 @@ describe('Conviction page ', function () {
     cy.visit('/conviction');
     cy.get('#main-content form input[type="radio"][value="no"]').click();
     cy.get('#main-content form button.naturescot-forward-button').click();
-    cy.url().should('include', '/eligible');
+    cy.url().should('include', '/general');
     cy.url().should('not.include', '/conviction-stop');
   });
 
@@ -36,6 +36,6 @@ describe('Conviction page ', function () {
     cy.get('#main-content form input[type="radio"][value="yes"]').click();
     cy.get('#main-content form button.naturescot-forward-button').click();
     cy.url().should('include', '/conviction-stop');
-    cy.url().should('not.include', '/eligible');
+    cy.url().should('not.include', '/general');
   });
 });
