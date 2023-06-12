@@ -13,9 +13,6 @@ const findAddressesByPostcode = async (config, postcode) => {
     params: {
       postcode
     },
-    headers: {
-      'User-Agent': 'NatureScotGullsApplybot/1.0'
-    },
     timeout: 10_000
   });
 
@@ -47,9 +44,6 @@ const findAddressesByUprn = async (config, uprn) => {
   const apiResponse = await axios.get(config.gazetteerApiEndpoint, {
     params: {
       uprn
-    },
-    headers: {
-      'User-Agent': 'NatureScotGullsApplybot/1.0'
     },
     timeout: 10_000
   });
@@ -83,9 +77,6 @@ const findFullAddressesByUprn = async (config, uprn) => {
     params: {
       uprn,
       fieldset: 'all'
-    },
-    headers: {
-      'User-Agent': 'NatureScotGullsApplybot/1.0'
     },
     timeout: 10_000
   });
