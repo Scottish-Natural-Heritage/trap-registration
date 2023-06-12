@@ -14,7 +14,6 @@ const findAddressesByPostcode = async (config, postcode) => {
       postcode
     },
     headers: {
-      Authorization: `Bearer ${config.gazetteerApiKey}`,
       'User-Agent': 'NatureScotGullsApplybot/1.0'
     },
     timeout: 10_000
@@ -50,7 +49,6 @@ const findAddressesByUprn = async (config, uprn) => {
       uprn
     },
     headers: {
-      Authorization: `Bearer ${config.gazetteerApiKey}`,
       'User-Agent': 'NatureScotGullsApplybot/1.0'
     },
     timeout: 10_000
@@ -87,7 +85,6 @@ const findFullAddressesByUprn = async (config, uprn) => {
       fieldset: 'all'
     },
     headers: {
-      Authorization: `Bearer ${config.gazetteerApiKey}`,
       'User-Agent': 'NatureScotGullsApplybot/1.0'
     },
     timeout: 10_000
