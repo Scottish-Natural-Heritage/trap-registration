@@ -1,0 +1,51 @@
+{% extends "_base.njk" %}
+
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% block content %}
+  {% if model.generalError %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [
+        {
+          text: "You must confirm which General Licence or Licences you intend to trap under.",
+          href: "#general-error"
+        }
+      ]
+    }) }}
+  {% endif %}
+
+<form method="post">
+{{ govukRadios({
+  name: "applyFor",
+  fieldset: {
+    legend: {
+      text: "What do you want to apply for?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  hint: {
+    text: "Something here maybe."
+  },
+  items: [
+    {
+      value: "new",
+      text: "New registration"
+    },
+    {
+      value: "renewal",
+      text: "Renewal of expired or soon to expire registration"
+    }
+  ]
+}) }}
+
+    {{ govukButton({
+      text: "Continue",
+      classes: "naturescot-forward-button"
+    }) }}
+
+  </form>
+
+{% endblock %}

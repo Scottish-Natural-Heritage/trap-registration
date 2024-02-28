@@ -2,6 +2,8 @@ import express from 'express';
 // Import all the controllers.
 import {Page} from './controllers/_base.js';
 import StartController from './controllers/start.js';
+import ApplyController from './controllers/apply.js';
+import RegistrationController from './controllers/registration.js';
 import ConvictionController from './controllers/conviction.js';
 import GeneralController from './controllers/general.js';
 import MeatbaitController from './controllers/meat-bait.js';
@@ -18,15 +20,34 @@ const router = express.Router();
 router.use(
   Page({
     path: 'start',
-    positiveForward: 'conviction',
+    positiveForward: 'apply',
     controller: StartController
   })
 );
 
 router.use(
   Page({
-    path: 'conviction',
+    path: 'apply',
     back: 'start',
+    positiveForward: 'conviction',
+    negativeForward: 'registration',
+    controller: ApplyController
+  })
+);
+
+router.use(
+  Page({
+    path: 'registration',
+    back: 'apply',
+    positiveForward: '',
+    controller: RegistrationController
+  })
+);
+
+router.use(
+  Page({
+    path: 'conviction',
+    back: 'apply',
     positiveForward: 'general',
     negativeForward: 'conviction-stop',
     controller: ConvictionController
