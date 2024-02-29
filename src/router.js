@@ -4,6 +4,8 @@ import {Page} from './controllers/_base.js';
 import StartController from './controllers/start.js';
 import ApplyController from './controllers/apply.js';
 import RegistrationController from './controllers/registration.js';
+import RegistrationPostcodeController from './controllers/registration-postcode.js';
+import RegistrationSuccessController from './controllers/registration-success.js';
 import ConvictionController from './controllers/conviction.js';
 import GeneralController from './controllers/general.js';
 import MeatbaitController from './controllers/meat-bait.js';
@@ -39,8 +41,26 @@ router.use(
   Page({
     path: 'registration',
     back: 'apply',
-    positiveForward: '',
+    positiveForward: 'registration-postcode',
     controller: RegistrationController
+  })
+);
+
+router.use(
+  Page({
+    path: 'registration-postcode',
+    back: 'registration',
+    positiveForward: 'registration-success',
+    controller: RegistrationPostcodeController
+  })
+);
+
+router.use(
+  Page({
+    path: 'registration-success',
+    back: 'registration-postcode',
+    positiveForward: '',
+    controller: RegistrationSuccessController
   })
 );
 

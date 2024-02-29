@@ -4,13 +4,14 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% block content %}
-  {% if model.generalError %}
+
+  {% if model.applyError %}
     {{ govukErrorSummary({
       titleText: "There is a problem",
       errorList: [
         {
-          text: "You must confirm which General Licence or Licences you intend to trap under.",
-          href: "#general-error"
+          text: "You must select if its a new registration or a renewal.",
+          href: "#apply-error"
         }
       ]
     }) }}
