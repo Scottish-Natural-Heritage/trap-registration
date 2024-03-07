@@ -2,10 +2,6 @@ import express from 'express';
 // Import all the controllers.
 import {Page} from './controllers/_base.js';
 import StartController from './controllers/start.js';
-import ApplyController from './controllers/apply.js';
-import RegistrationController from './controllers/registration.js';
-import RegistrationPostcodeController from './controllers/registration-postcode.js';
-import RegistrationSuccessController from './controllers/registration-success.js';
 import ConvictionController from './controllers/conviction.js';
 import GeneralController from './controllers/general.js';
 import MeatbaitController from './controllers/meat-bait.js';
@@ -14,6 +10,13 @@ import ConfirmController from './controllers/confirm.js';
 import PostcodeController from './controllers/postcode.js';
 import AddressController from './controllers/address.js';
 import ManualAddressController from './controllers/manual-address.js';
+import RenewalIntroController from './controllers/renewal-intro.js';
+import RenewalRegistrationController from './controllers/renewal-registration.js';
+import RenewalPostcodeController from './controllers/renewal-postcode.js';
+import RenewalEmailSuccessController from './controllers/renewal-email-success.js';
+import RenewalIntroSelectController from './controllers/renewal-intro-select.js';
+import RenewalCheckAnswersController from './controllers/renewal-check-answers.js';
+import RenewalSuccessController from './controllers/renewal-success.js';
 
 // Configure all of the pages and routes.
 
@@ -22,52 +25,15 @@ const router = express.Router();
 router.use(
   Page({
     path: 'start',
-    positiveForward: 'apply',
+    positiveForward: 'conviction',
     controller: StartController
   })
 );
 
 router.use(
   Page({
-    path: 'apply',
-    back: 'start',
-    positiveForward: 'conviction',
-    negativeForward: 'registration',
-    controller: ApplyController
-  })
-);
-
-router.use(
-  Page({
-    path: 'registration',
-    back: 'apply',
-    positiveForward: 'registration-postcode',
-    controller: RegistrationController
-  })
-);
-
-router.use(
-  Page({
-    path: 'registration-postcode',
-    back: 'registration',
-    positiveForward: 'registration-success',
-    controller: RegistrationPostcodeController
-  })
-);
-
-router.use(
-  Page({
-    path: 'registration-success',
-    back: 'registration-postcode',
-    positiveForward: '',
-    controller: RegistrationSuccessController
-  })
-);
-
-router.use(
-  Page({
     path: 'conviction',
-    back: 'apply',
+    back: 'start',
     positiveForward: 'general',
     negativeForward: 'conviction-stop',
     controller: ConvictionController
@@ -161,6 +127,67 @@ router.use(
 router.use(
   Page({
     path: 'privacy-policy'
+  })
+);
+
+// Renewal start pages
+
+router.use(
+  Page({
+    path: 'renewal-intro',
+    positiveForward: 'renewal-registration',
+    controller: RenewalIntroController
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-registration',
+    back: 'renewal-intro',
+    positiveForward: 'renewal-postcode',
+    controller: RenewalRegistrationController
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-postcode',
+    back: 'renewal-registration',
+    positiveForward: 'renewal-email-success',
+    controller: RenewalPostcodeController
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-email-success',
+    back: 'renewal-postcode',
+    controller: RenewalEmailSuccessController
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-intro-select',
+    positiveForward: 'renewal-check-answers',
+    controller: RenewalIntroSelectController
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-check-answers',
+    back: 'renewal-intro-select',
+    positiveForward: 'renewal-success',
+    controller: RenewalCheckAnswersController
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-success',
+    back: 'renewal-check-answers',
+    controller: RenewalSuccessController
   })
 );
 

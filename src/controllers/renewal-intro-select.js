@@ -1,8 +1,8 @@
 import {ReturnState} from './_base.js';
 
-const registrationPostcodeController = (_request) => {
+const renewalIntroSelectController = (_request) => {
   // Proceed to the next page.
   return ReturnState.Positive;
 };
 
-export {registrationPostcodeController as default};
+export {renewalIntroSelectController as default};
