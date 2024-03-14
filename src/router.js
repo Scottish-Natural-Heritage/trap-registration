@@ -162,6 +162,7 @@ router.use(
   Page({
     path: 'renewal-email-success',
     back: 'renewal-postcode',
+    positiveForward: 'renewal-intro-select',
     controller: RenewalEmailSuccessController
   })
 );
