@@ -10,6 +10,13 @@ import ConfirmController from './controllers/confirm.js';
 import PostcodeController from './controllers/postcode.js';
 import AddressController from './controllers/address.js';
 import ManualAddressController from './controllers/manual-address.js';
+import RenewalIntroController from './controllers/renewal-intro.js';
+import RenewalRegistrationController from './controllers/renewal-registration.js';
+import RenewalPostcodeController from './controllers/renewal-postcode.js';
+import RenewalEmailSuccessController from './controllers/renewal-email-success.js';
+import RenewalIntroSelectController from './controllers/renewal-intro-select.js';
+import RenewalCheckAnswersController from './controllers/renewal-check-answers.js';
+import RenewalSuccessController from './controllers/renewal-success.js';
 
 // Configure all of the pages and routes.
 
@@ -120,6 +127,68 @@ router.use(
 router.use(
   Page({
     path: 'privacy-policy'
+  })
+);
+
+// Renewal start pages
+
+router.use(
+  Page({
+    path: 'renewal-intro',
+    positiveForward: 'renewal-registration',
+    controller: RenewalIntroController
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-registration',
+    back: 'renewal-intro',
+    positiveForward: 'renewal-postcode',
+    controller: RenewalRegistrationController
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-postcode',
+    back: 'renewal-registration',
+    positiveForward: 'renewal-email-success',
+    controller: RenewalPostcodeController
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-email-success',
+    back: 'renewal-postcode',
+    positiveForward: 'renewal-intro-select',
+    controller: RenewalEmailSuccessController
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-intro-select',
+    positiveForward: 'renewal-check-answers',
+    controller: RenewalIntroSelectController
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-check-answers',
+    back: 'renewal-intro-select',
+    positiveForward: 'renewal-success',
+    controller: RenewalCheckAnswersController
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-success',
+    back: 'renewal-check-answers',
+    controller: RenewalSuccessController
   })
 );
 
