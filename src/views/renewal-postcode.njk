@@ -1,12 +1,52 @@
 {% extends "_base.njk" %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
 
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% set renewalPostcodeErrorsHtml %}
+  {% if model.missingPostcodeError %}
+    <p>Enter your postcode</p>
+  {% elif model.invalidPostcodeError %}
+    <p>Enter a valid postcode</p>
+  {% endif %}
+{% endset %}
 
 {% block content %}
 
-  <h1 class="govuk-heading-xl">Renewal postcode</h1>
+  {% if model.renewalPostcodeError %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [
+        {
+          text: "Enter your postcode",
+          href: "#renewal-postcode-error"
+        } if model.missingRenewalPostcodeError,
+        {
+          text: "Enter a valid postcode",
+          href: "#renewal-postcode-error"
+        } if model.invalidRenewalPostcodeError
+      ]
+    }) }}
+  {% endif %}
 
-<form method="post">
+  <form method="post">
+
+    {{ govukInput({
+      label: {
+        text: "What is your postcode?",
+        classes: "govuk-label--l",
+        isPageHeading: true
+      },
+      classes: "govuk-!-width-three-quarters",
+      id: "renewal-postcode",
+      name: "renewalPostcode",
+      value: model.renewalPostcode,
+      errorMessage: {
+        html: renewalPostcodeErrorsHtml
+      } if model.renewalPostcodeError,
+      autocomplete: "postal-code"
+    }) }}
 
     {{ govukButton({
       text: "Continue",
