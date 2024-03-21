@@ -4,7 +4,7 @@ import {ReturnState} from './_base.js';
 const cleanInput = (body) => {
   return {
     renewalRegistrationNumber:
-      body.renewalRegistrationNumber === undefined ? undefined : body.renewalRegistrationNumber.trim()
+      body?.renewalRegistrationNumber === undefined ? undefined : body.renewalRegistrationNumber.trim()
   };
 };
 
