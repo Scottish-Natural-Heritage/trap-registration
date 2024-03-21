@@ -1,53 +1,48 @@
 import utils from 'naturescot-utils';
-import Gazetteer from '../utils/gazetteer.js';
 import config from '../config.js';
 import {ReturnState} from './_base.js';
+import axios from '../http-request.js';
+
+
+const cleanInput = (body) => {
+  return {
+    renewalPostcode: body.renewalPostcode === undefined ? undefined : body.renewalPostcode.trim()
+  };
+};
 
 const renewalPostcodeController = async (request) => {
-  // Set the errors to false.
+  // The renewalPostcode page is where the user will enter their postcode
+  const cleanForm = cleanInput(request.body);
+  request.session.renewalPostcode = cleanForm.renewalPostcode;
+
+  // Clear error state
   request.session.renewalPostcodeError = false;
-  request.session.missingRenewalPostcodeError = false;
-  request.session.invalidRenewalPostcodeError = false;
 
-  // Clean the request by trimming leading and trailing whitespace.
-  const renewalPostcode = request.body.renewalPostcode === undefined ? undefined : request.body.renewalPostcode.trim();
-
-  // Check for any errors.
-  request.session.missingRenewalPostcodeError =
-    renewalPostcode === undefined || renewalPostcode === null || renewalPostcode === '';
-  request.session.invalidRenewalPostcodeError =
-    !request.session.missingRenewalPostcodeError && !utils.postalAddress.isaRealUkPostcode(renewalPostcode);
-
+  // Call natureScot utils to check validity of renewalPostcode
   request.session.renewalPostcodeError =
-    request.session.missingRenewalPostcodeError || request.session.invalidRenewalPostcodeError;
+    request.session.renewalPostcode === undefined ? true : !utils.postalAddress.isaRealUkPostcode(request.session.renewalPostcode);
 
-  // If we have any errors return the error state.
+  // Set error state
   if (request.session.renewalPostcodeError) {
     return ReturnState.Error;
   }
 
-  // No errors so save the renewalPostcode the the request's session.
-  request.session.renewalPostcode = renewalPostcode;
-
-  // If we make it here then make the renewalPostcode lookup call.
+  // We wrap the http request in a try/catch block so that we don't crash the
+  // client-response if something goes wrong. They should always just get the OK
+  // page anyway. We'll log the error for review later.
   try {
-    const gazetteerAddresses = await Gazetteer.findAddressesByPostcode(config, renewalPostcode ?? '');
-
-    request.session.uprnAddresses = [];
-
-    request.session.uprnAddresses = gazetteerAddresses.map((address) => {
-      return {
-        value: address.uprn,
-        text: address.summary_address,
-        selected: address.uprn === request.session.uprn
-      };
+    await axios.get(`${config.apiEndpoint}/registrations/${request.session.renewalRegistrationNumber}/renewal-intro`, {
+      params: {
+        renewalPostcode: request.session.renewalPostcode,
+        redirectBaseUrl: `${config.hostPrefix}${config.pathPrefix}/renewal-intro?token=`
+      }
     });
   } catch (error) {
-    console.log('Error finding addresses: ' + error);
-    request.session.uprnAddresses = [{value: 0, text: 'No addresses found.', selected: true}];
+    console.error({error});
   }
 
-  // Proceed to the next page.
+  // The only way out of the usage page for now is onwards, so return success and continue
+  // the form
   return ReturnState.Positive;
 };
 
