@@ -1,8 +1,7 @@
 import utils from 'naturescot-utils';
 import config from '../config.js';
-import {ReturnState} from './_base.js';
 import axios from '../http-request.js';
-
+import {ReturnState} from './_base.js';
 
 const cleanInput = (body) => {
   return {
@@ -20,7 +19,9 @@ const renewalPostcodeController = async (request) => {
 
   // Call natureScot utils to check validity of renewalPostcode
   request.session.renewalPostcodeError =
-    request.session.renewalPostcode === undefined ? true : !utils.postalAddress.isaRealUkPostcode(request.session.renewalPostcode);
+    request.session.renewalPostcode === undefined
+      ? true
+      : !utils.postalAddress.isaRealUkPostcode(request.session.renewalPostcode);
 
   // Set error state
   if (request.session.renewalPostcodeError) {
@@ -31,10 +32,10 @@ const renewalPostcodeController = async (request) => {
   // client-response if something goes wrong. They should always just get the OK
   // page anyway. We'll log the error for review later.
   try {
-    await axios.get(`${config.apiEndpoint}/registrations/${request.session.renewalRegistrationNumber}/renewal-intro`, {
+    await axios.get(`${config.apiEndpoint}/registrations/${request.session.renewalRegistrationNumber}/renewal`, {
       params: {
         renewalPostcode: request.session.renewalPostcode,
-        redirectBaseUrl: `${config.hostPrefix}${config.pathPrefix}/renewal-intro?token=`
+        redirectBaseUrl: `${config.hostPrefix}${config.pathPrefix}/renewal?token=`
       }
     });
   } catch (error) {
