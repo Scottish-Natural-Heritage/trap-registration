@@ -1,18 +1,50 @@
 {% extends "_base.njk" %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
 
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block content %}
+  {% if model.renewalRegistrationNumberError %}
+    {{ govukErrorSummary({
+        titleText: "There is a problem",
+        errorList: [{
+          text: "Enter the registration number",
+          href: "#renewal-registration-number-error"
+        }]
+      }) }}
+  {% endif %}
 
-  <h1 class="govuk-heading-xl">Renewal registration number</h1>
-
-<form method="post">
-
-    {{ govukButton({
-      text: "Continue",
-      classes: "naturescot-forward-button"
-    }) }}
-
-  </form>
+  <form method="post">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        {{ govukInput({
+      id: "renewal-registration-number",
+      name: "renewalRegistrationNumber",
+      value: model.renewalRegistrationNumber,
+      label: {
+      text: "What is the registration number?",
+      classes: "govuk-label--l",
+      isPageHeading: true
+      },
+      hint: {
+      text: "For example, NS-TRP-00000"
+      },
+      errorMessage: {
+      text: "Enter the registration number"
+      }if model.renewalRegistrationNumberError,
+      prefix: {
+      text: "NS-TRP-"
+      },
+      classes: "govuk-input--width-5",
+      spellcheck: false
+}) }}
+        {{ govukButton({
+              text: "Continue",
+              classes: "naturescot-forward-button"
+            }) }}
+      </form>
+    </div>
+  </div>
 
 {% endblock %}
