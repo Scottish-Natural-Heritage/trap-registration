@@ -9,10 +9,10 @@ describe('Move to next page', function () {
   beforeEach(() => {
     cy.visit('/renewal-intro');
 
-    cy.get('h1').should('contain', 'Renewal intro');
+    cy.get('h1').should('contain', 'Renew a trap registration');
     cy.get('#main-content form button.naturescot-forward-button').click();
 
-    cy.get('h1').should('contain', 'Renewal registration number');
+    cy.get('h1').should('contain', 'What is the registration number?');
     cy.get('#main-content form button.naturescot-forward-button').click();
   });
 
@@ -36,20 +36,20 @@ describe('Move to next page', function () {
     cy.visit('/renewal-postcode');
     cy.get('h1').should('contain', 'What is your postcode?');
 
-    cy.get('input[type="text"]#renewal-postcode').type('NOTAVALIDPOSTCODE', {delay: 1});
+    cy.get('input[type="text"]#postcode').type('NOTAVALIDPOSTCODE', {delay: 1});
 
     cy.get('#main-content form button.naturescot-forward-button').click();
 
     cy.get('h2#error-summary-title').should('contain', 'There is a problem');
 
-    cy.get('.govuk-error-summary ul li a').should('contain', 'Enter a valid postcode');
+    cy.get('.govuk-error-summary ul li a').should('contain', 'Enter your postcode');
   });
 
   it('should navigate to address page on valid form submission', function () {
     cy.visit('/renewal-postcode');
     cy.get('h1').should('contain', 'What is your postcode?');
 
-    cy.get('input[type="text"]#renewal-postcode').type('IV3 8NW', {delay: 1});
+    cy.get('input[type="text"]#postcode').type('IV3 8NW', {delay: 1});
 
     cy.get('#main-content form button.naturescot-forward-button').click();
 

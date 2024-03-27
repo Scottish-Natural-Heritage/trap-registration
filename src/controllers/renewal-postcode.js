@@ -5,26 +5,24 @@ import {ReturnState} from './_base.js';
 
 const cleanInput = (body) => {
   return {
-    renewalPostcode: body.renewalPostcode === undefined ? undefined : body.renewalPostcode.trim()
+    postcode: body.postcode === undefined ? undefined : body.postcode.trim()
   };
 };
 
 const renewalPostcodeController = async (request) => {
-  // The renewalPostcode page is where the user will enter their postcode
+  // The postcode page is where the user will enter their postcode
   const cleanForm = cleanInput(request.body);
-  request.session.renewalPostcode = cleanForm.renewalPostcode;
+  request.session.postcode = cleanForm.postcode;
 
   // Clear error state
-  request.session.renewalPostcodeError = false;
+  request.session.postcodeError = false;
 
-  // Call natureScot utils to check validity of renewalPostcode
-  request.session.renewalPostcodeError =
-    request.session.renewalPostcode === undefined
-      ? true
-      : !utils.postalAddress.isaRealUkPostcode(request.session.renewalPostcode);
+  // Call natureScot utils to check validity of postcode
+  request.session.postcodeError =
+    request.session.postcode === undefined ? true : !utils.postalAddress.isaRealUkPostcode(request.session.postcode);
 
   // Set error state
-  if (request.session.renewalPostcodeError) {
+  if (request.session.postcodeError) {
     return ReturnState.Error;
   }
 
@@ -32,9 +30,9 @@ const renewalPostcodeController = async (request) => {
   // client-response if something goes wrong. They should always just get the OK
   // page anyway. We'll log the error for review later.
   try {
-    await axios.get(`${config.apiEndpoint}/registrations/${request.session.renewalRegistrationNumber}/renewal`, {
+    await axios.get(`${config.apiEndpoint}/registrations/${request.session.registrationNumber}/renewal`, {
       params: {
-        renewalPostcode: request.session.renewalPostcode,
+        postcode: request.session.postcode,
         redirectBaseUrl: `${config.hostPrefix}${config.pathPrefix}/renewal?token=`
       }
     });

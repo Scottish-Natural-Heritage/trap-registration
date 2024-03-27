@@ -1,58 +1,47 @@
 {% extends "_base.njk" %}
-
+{% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
-
-{% set renewalPostcodeErrorsHtml %}
-  {% if model.missingPostcodeError %}
-    <p>Enter your postcode</p>
-  {% elif model.invalidPostcodeError %}
-    <p>Enter a valid postcode</p>
-  {% endif %}
-{% endset %}
 
 {% block content %}
-
-  {% if model.renewalPostcodeError %}
+  {% if model.postcodeError %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
-      errorList: [
-        {
+        titleText: "There is a problem",
+        errorList: [{
           text: "Enter your postcode",
-          href: "#renewal-postcode-error"
-        } if model.missingRenewalPostcodeError,
-        {
-          text: "Enter a valid postcode",
-          href: "#renewal-postcode-error"
-        } if model.invalidRenewalPostcodeError
-      ]
-    }) }}
+          href: "#postcode-error"
+        }]
+      }) }}
   {% endif %}
 
   <form method="post">
-
-    {{ govukInput({
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        {{ govukInput({
+      id: "postcode",
+      name: "postcode",
+      value: model.postcode,
       label: {
-        text: "What is your postcode?",
-        classes: "govuk-label--l",
-        isPageHeading: true
+      text: "What is your postcode?",
+      classes: "govuk-label--l",
+      isPageHeading: true
       },
-      classes: "govuk-!-width-three-quarters",
-      id: "renewal-postcode",
-      name: "renewalPostcode",
-      value: model.renewalPostcode,
+      hint: {
+      text: "This should be the postcode you used to register."
+      },
       errorMessage: {
-        html: renewalPostcodeErrorsHtml
-      } if model.renewalPostcodeError,
+      text: "Enter your postcode"
+      }if model.postcodeError,
+      classes: "govuk-input--width-10",
+      spellcheck: false,
       autocomplete: "postal-code"
-    }) }}
-
-    {{ govukButton({
-      text: "Continue",
-      classes: "naturescot-forward-button"
-    }) }}
-
-  </form>
+}) }}
+        {{ govukButton({
+              text: "Continue",
+              classes: "naturescot-forward-button"
+            }) }}
+      </form>
+    </div>
+  </div>
 
 {% endblock %}
