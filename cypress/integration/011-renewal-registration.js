@@ -23,7 +23,7 @@ describe('Move to next page', function () {
     cy.get('input').type('12345');
     cy.get('#main-content form button.naturescot-forward-button').click();
     cy.url().should('include', '/renewal-postcode');
-    cy.get('h1').should('contain', 'Renewal postcode');
+    cy.get('h1').should('contain', 'What is your postcode?');
   });
 
   it('Empty input followed by continue button should present an error and ask user to re-enter', () => {

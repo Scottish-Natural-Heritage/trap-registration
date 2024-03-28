@@ -14,7 +14,7 @@ import RenewalIntroController from './controllers/renewal-intro.js';
 import RenewalRegistrationController from './controllers/renewal-registration.js';
 import RenewalPostcodeController from './controllers/renewal-postcode.js';
 import RenewalEmailSuccessController from './controllers/renewal-email-success.js';
-import RenewalIntroSelectController from './controllers/renewal-intro-select.js';
+import renewalLoginController from './controllers/renewal-login.js';
 import RenewalCheckAnswersController from './controllers/renewal-check-answers.js';
 import RenewalSuccessController from './controllers/renewal-success.js';
 
@@ -162,23 +162,23 @@ router.use(
   Page({
     path: 'renewal-email-success',
     back: 'renewal-postcode',
-    positiveForward: 'renewal-intro-select',
+    positiveForward: 'renewal-login',
     controller: RenewalEmailSuccessController
   })
 );
 
 router.use(
   Page({
-    path: 'renewal-intro-select',
+    path: 'renewal-login',
     positiveForward: 'renewal-check-answers',
-    controller: RenewalIntroSelectController
+    controller: renewalLoginController
   })
 );
 
 router.use(
   Page({
     path: 'renewal-check-answers',
-    back: 'renewal-intro-select',
+    back: 'renewal-login',
     positiveForward: 'renewal-success',
     controller: RenewalCheckAnswersController
   })
