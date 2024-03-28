@@ -33,7 +33,7 @@ const renewalPostcodeController = async (request) => {
     await axios.get(`${config.apiEndpoint}/registrations/${request.session.registrationNumber}/renewal`, {
       params: {
         postcode: request.session.postcode,
-        redirectBaseUrl: `${config.hostPrefix}${config.pathPrefix}/renewal?token=`
+        redirectBaseUrl: `${config.hostPrefix}${config.pathPrefix}/renewal-login?token=`
       }
     });
   } catch (error) {
