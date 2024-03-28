@@ -53,6 +53,6 @@ describe('Move to next page', function () {
 
     cy.get('#main-content form button.naturescot-forward-button').click();
 
-    cy.get('h1').should('contain', 'Renewal email success');
+    cy.get('h1').should('contain', 'secure link to renew');
   });
 });
