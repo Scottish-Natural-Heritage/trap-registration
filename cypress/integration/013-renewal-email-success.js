@@ -8,15 +8,15 @@ describe('Renewal email success page ', function () {
 describe('Move to next page', function () {
   beforeEach(() => {
     cy.visit('/renewal-intro');
-    cy.get('h1').should('contain', 'Renewal intro');
+    cy.get('h1').should('contain', 'Renew a trap registration');
     cy.get('#main-content form button.naturescot-forward-button').click();
 
-    cy.get('h1').should('contain', 'Renewal registration number');
+    cy.get('h1').should('contain', 'What is the registration number?');
     cy.get('#main-content form button.naturescot-forward-button').click();
 
-    cy.get('h1').should('contain', 'Renewal postcode');
+    cy.get('h1').should('contain', 'What is your postcode?');
     cy.get('#main-content form button.naturescot-forward-button').click();
 
-    cy.get('h1').should('contain', 'Renewal email success');
+    cy.get('h1').should('contain', 'Check your email');
   });
 });
