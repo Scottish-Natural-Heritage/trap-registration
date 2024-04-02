@@ -41,6 +41,12 @@ const saveVisitedPage = (session, page) => {
  * application.
  */
 const guardAllows = (session, options) => {
+  // Unless the user has a completed licence number they are not allowed to
+  // visit a success page.
+  if (session.loggedInRegNo === undefined && ['submitted-renewal-success'].includes(options.path)) {
+    return false;
+  }
+
   // If the current page has no 'back' page then we're on a 'first' page so the
   // visitors are always allowed access.
   if (options.back === undefined || options.back.length === 0) {
@@ -83,7 +89,7 @@ const renderPage = (request, response, options) => {
   // Handle un-session-ed accesses to '/success' a little differently. The
   // user may have bookmarked this page, thinking they could see their
   // registration code again. Give them an error page that says otherwise.
-  if (options.path === 'success') {
+  if (options.path === 'submitted-renewal-success') {
     response.status(403).render('error-success.njk', {hostPrefix: config.hostPrefix, pathPrefix: config.pathPrefix});
     return;
   }
@@ -99,6 +105,19 @@ const ReturnState = Object.freeze({
   Negative: 2,
   Error: 3
 });
+
+/**
+ * Save any login tokens to the user's session.
+ *
+ * @param {Request} request An express Request object.
+ * @param {any} request.session The visitor's session.
+ */
+const saveLoginToken = (request) => {
+  const {token} = request.query;
+  if (token !== undefined) {
+    request.session.token = token;
+  }
+};
 
 /**
  * A Router/Controller Factory returning an express Router based middleware that
@@ -119,7 +138,18 @@ const Page = (options) => {
   const router = express.Router();
 
   router.get(`${config.pathPrefix}/${options.path}`, (request, response) => {
+    // Save the user's login token.
+    if (options.path === 'renewal-login') {
+      saveLoginToken(request);
+    }
+
     renderPage(request, response, options);
+
+    // If we've just rendered a success page...
+    if (['verification-success', 'success'].includes(options.path)) {
+      // Kill the user session, so they cannot re-submit.
+      request.session.destroy();
+    }
   });
 
   router.post(`${config.pathPrefix}/${options.path}`, async (request, response) => {

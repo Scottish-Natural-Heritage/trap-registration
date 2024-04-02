@@ -10,7 +10,7 @@ import {ReturnState} from './_base.js';
  * @returns {any} JWK representation of our public key.
  */
 const getPublicKey = async () => {
-  const response = await axios.get(`${config.apiEndpoint}/public-key`);
+  const response = await axios.get(`${config.apiEndpoint}/v1/public-key`);
   return response.data;
 };
 
@@ -59,8 +59,9 @@ const renewalLoginController = async (request) => {
     return ReturnState.Positive;
   }
 
+  const tokenValid = await validateToken(request.session);
   // If we're not already logged in, try to validate the supplied token.
-  if (await validateToken(request.session)) {
+  if (tokenValid) {
     // If it validates, then we're golden!
     return ReturnState.Positive;
   }
