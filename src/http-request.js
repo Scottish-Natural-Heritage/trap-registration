@@ -63,7 +63,7 @@ const putRenewalResponse = {
 // app is started with TRR_TEST=true, then this token will validate as a 100
 // year long token for the trap registration number "-1".
 const counterpart100yearToken =
-  'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTIwNjY4OTYsInN1YiI6IjQ5NzIifQ.I_K92BdI_ZduGXTEtht8V8eJZo5lcRQS7ckFRwtNqrRo-vBEgisB5mzs59psiHDNIhxrKyHPEHns0AS6hOt9ng';
+  'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ3Njc2NzQ1NTgsInN1YiI6Ii0xIn0.XSHX6QB8robVaEuXVeHKbBed13uAdWvLBaNeGCYPAWWlw7Fm7bafXMPUQQE69TNc8DbjUgaRDxKvS2ju5uZziw';
 
 // A mock Axios implementation suitable for DI into the app during testing.
 const mockAxios = {

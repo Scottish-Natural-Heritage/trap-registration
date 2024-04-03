@@ -1,5 +1,5 @@
-import axios from './http-request.js';
-import config from './config.js';
+import axios from '../http-request.js';
+import config from '../config.js';
 import {ReturnState} from './_base.js';
 
 const renewalCheckAnswersController = async (request) => {
@@ -20,9 +20,8 @@ const renewalCheckAnswersController = async (request) => {
 
   // If we made it here the user has confirmed their return so get the data ready to send.
   const newRenewal = {
-    name: !request.session.name,
-    emailAddress: request.session.emailAddress,
-
+    name: request.session.name,
+    emailAddress: request.session.emailAddress
   };
 
   // And send the renewal data to the API.
