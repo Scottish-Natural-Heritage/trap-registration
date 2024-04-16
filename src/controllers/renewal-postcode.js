@@ -30,7 +30,7 @@ const renewalPostcodeController = async (request) => {
   // client-response if something goes wrong. They should always just get the OK
   // page anyway. We'll log the error for review later.
   try {
-    await axios.get(`${config.apiEndpoint}/registrations/${request.session.registrationNumber}/renewal`, {
+    await axios.get(`${config.apiEndpoint}/v1/registrations/${request.session.renewalRegistrationNumber}/renewal`, {
       params: {
         postcode: request.session.postcode,
         redirectBaseUrl: `${config.hostPrefix}${config.pathPrefix}/renewal-login?token=`

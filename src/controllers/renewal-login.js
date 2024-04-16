@@ -10,7 +10,7 @@ import {ReturnState} from './_base.js';
  * @returns {any} JWK representation of our public key.
  */
 const getPublicKey = async () => {
-  const response = await axios.get(`${config.apiEndpoint}/v1/public-key`);
+  const response = await axios.get(`${config.apiEndpoint}/public-key`);
   return response.data;
 };
 

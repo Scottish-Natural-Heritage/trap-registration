@@ -89,7 +89,7 @@ const renderPage = (request, response, options) => {
   // Handle un-session-ed accesses to '/success' a little differently. The
   // user may have bookmarked this page, thinking they could see their
   // registration code again. Give them an error page that says otherwise.
-  if (options.path === 'submitted-renewal-success') {
+  if (options.path === 'success') {
     response.status(403).render('error-success.njk', {hostPrefix: config.hostPrefix, pathPrefix: config.pathPrefix});
     return;
   }
