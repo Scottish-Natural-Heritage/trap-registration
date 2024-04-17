@@ -76,7 +76,7 @@ const mockAxios = {
    * @returns {Promise<any>} A fake response.
    */
   async get(url) {
-    if (url.endsWith('/trap-registration-api/v2/registrations/public-key')) {
+    if (url.endsWith('/trap-registration-api/v1/public-key')) {
       return publicKeyResponse;
     }
 
