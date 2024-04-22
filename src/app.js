@@ -57,7 +57,8 @@ app.use(
       httpOnly: true,
       // We need to set the secure attribute to true as Caddy doesn't
       // currently rewrite the attribute for us in the way Nginx did.
-      secure: true
+      // If we're running tests don't set it as it'll break Cypress.
+      secure: process.env.TRR_TEST ? false : true
     },
     store: new MemoryStore({
       checkPeriod: sessionDuration
