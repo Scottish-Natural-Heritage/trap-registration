@@ -1,0 +1,52 @@
+{% extends "_base.njk" %}
+
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% block content %}
+
+  {{ govukPanel({
+    titleText: "We've sent you a secure link to renew",
+    text: "Check your email"
+  }) }}
+
+<h2 class="govuk-heading-m">What happens next</h2>
+
+  <p class="govuk-body">Follow the secure link we've sent to your inbox to renew your authorisation.</p>
+
+  {{ govukWarningText({
+    text: "The secure link will expire in 30 minutes",
+    iconFallbackText: "Warning"
+  }) }}
+
+  <p class="govuk-body">If you don't receive an email, you may have entered your details incorrectly.</p>
+
+  <p class="govuk-body">Try again and get in touch if you need help.</p>
+
+  <h2 class="govuk-heading-m">Contact us</h2>
+
+  <h3 class="govuk-heading-s">Email</h3>
+
+  <ul class="govuk-list">
+    <li>
+      <a class="govuk-link" href="mailto:licensing@nature.scot">licensing@nature.scot</a>
+    </li>
+    <li>
+      We aim to respond within 2 working days.
+    </li>
+  </ul>
+
+  <h3 class="govuk-heading-s">Telephone</h3>
+
+  <ul class="govuk-list">
+    <li>
+      01463 725 364
+    </li>
+    <li>
+      Voicemail service. We aim to respond within 2 working days.
+    </li>
+  </ul>
+
+  <p class="govuk-body">
+    <a class="govuk-link" href="https://www.gov.uk/call-charges" target="_blank">Find out about call charges</a>
+  </p>
+{% endblock %}
