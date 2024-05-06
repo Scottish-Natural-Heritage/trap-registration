@@ -44,11 +44,11 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.5.4",
     "axios-mock-adapter": "^1.21.2",
-    "cypress": "^5.0.0",
+    "cypress": "^9.5.2",
     "eslint-plugin-cypress": "^2.11.2",
-    "nodemon": "^2.0.18",
+    "nodemon": "^3.1.0",
     "prettier": "^2.0.5",
-    "start-server-and-test": "^1.14.0",
+    "start-server-and-test": "^2.0.3",
     "xo": "^0.50.0"
   },
   "xo": {
