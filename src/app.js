@@ -55,9 +55,9 @@ app.use(
       maxAge: sessionDuration,
       path: `${config.pathPrefix}/`,
       httpOnly: true,
-      // We need to set the secure attribute to true as Caddy doesn't
-      // currently rewrite the attribute for us in the way Nginx did.
-      secure: true
+      // We're re-writing all cookies to be secure on the proxy, so between here
+      // and there it doesn't need to be.
+      secure: false
     },
     store: new MemoryStore({
       checkPeriod: sessionDuration
