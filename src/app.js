@@ -1,5 +1,6 @@
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
+import process from 'node:process';
 import express from 'express';
 import morgan from 'morgan';
 import nunjucks from 'nunjucks';
