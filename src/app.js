@@ -45,6 +45,9 @@ const sessionDuration = 20.1 * 60 * 60 * 1000;
 
 app.set('trust proxy', 1); // Trust first proxy
 
+// Disabling as makes the code's intention more obvious.
+/* eslint-disable no-unneeded-ternary */
+
 app.use(
   session({
     // Using the __Secure- prefix to protect our cookies as per
@@ -57,7 +60,7 @@ app.use(
       httpOnly: true,
       // We need to set the secure attribute to true as Caddy doesn't
       // currently rewrite the attribute for us in the way Nginx did.
-      secure: true
+      secure: process.env.TRR_TEST ? false : true
     },
     store: new MemoryStore({
       checkPeriod: sessionDuration
@@ -67,6 +70,8 @@ app.use(
     saveUninitialized: false
   })
 );
+
+/* eslint-enable no-unneeded-ternary */
 
 app.use(`${config.pathPrefix}/dist`, express.static(path.join(__dirname, '..', '/dist')));
 app.use(
