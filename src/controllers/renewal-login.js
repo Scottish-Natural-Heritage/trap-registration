@@ -53,6 +53,18 @@ const renewalLoginController = async (request) => {
   // don't need to show it again.
   request.session.seenCookie = true;
 
+  const allowedHostPrefixes = [
+    'https://uat-licensing.nature.scot',
+    'https://dev-licensing.nature.scot',
+    'http://localhost:3000',
+    'http://localhost:3999'
+  ];
+
+  // If the host prefix is not listed, then prevent user from progressing.
+  if (!allowedHostPrefixes.includes(config.hostPrefix)) {
+    return ReturnState.Negative;
+  }
+
   // First of all, check if we've already logged in.
   if (request.session.loggedInRegNo) {
     // If so, go right ahead!
