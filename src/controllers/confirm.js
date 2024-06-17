@@ -41,7 +41,7 @@ const confirmController = async (request) => {
       uprn: request.session.uprn
     };
 
-    const newRegResponse = await axios.post(config.apiEndpoint, newReg);
+    const newRegResponse = await axios.post(config.apiEndpoint + '/v2/registrations', newReg);
 
     request.session.regNo = `NS-TRP-${String(newRegResponse.data.id).padStart(5, '0')}`;
     request.session.expiryDate = newRegResponse.data.expiryDate;
