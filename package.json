@@ -6,7 +6,6 @@
   "repository": "github:Scottish-Natural-Heritage/trap-registration",
   "license": "(MIT OR OGL-UK-3.0 OR Apache-2.0)",
   "type": "module",
-
   "scripts": {
     "lint": "xo",
     "scss": "node --experimental-modules src/scss.js",
@@ -25,31 +24,31 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.7.2",
     "express": "^4.18.1",
     "express-session": "^1.17.3",
     "govuk-frontend": "3.6.0",
-    "jimp": "^0.13.0",
+    "jimp": "^0.22.12",
     "jsonwebtoken": "^8.5.1",
     "jwk-to-pem": "^2.0.4",
     "memorystore": "^1.6.2",
     "morgan": "^1.10.0",
     "naturescot-frontend": "^2.0.2",
     "naturescot-utils": "^1.2.0",
-    "node-sass-package-importer": "^5.3.2",
+    "node-sass-package-importer": "^5.3.3",
     "nunjucks": "^3.2.3",
-    "sass": "^1.53.0",
+    "sass": "^1.77.5",
     "winston": "^3.8.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.5.4",
     "axios-mock-adapter": "^1.21.2",
-    "cypress": "^9.5.2",
+    "cypress": "^13.11.0",
     "eslint-plugin-cypress": "^2.11.2",
     "nodemon": "^3.1.0",
     "prettier": "^2.0.5",
     "start-server-and-test": "^2.0.3",
-    "xo": "^0.50.0"
+    "xo": "^0.58.0"
   },
   "xo": {
     "space": 2,
@@ -65,7 +64,10 @@
     "rules": {
       "import/extensions": 0,
       "new-cap": 0,
-      "n/prefer-global/process": ["error", "always"]
+      "n/prefer-global/process": [
+        "error",
+        "always"
+      ]
     },
     "env": [
       "browser",
@@ -73,9 +75,12 @@
       "cypress/globals"
     ]
   },
-  "extends": ["eslint:recommended", "plugin:n/recommended"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:n/recommended"
+  ],
   "parserOptions": {
-      "ecmaVersion": 2020
+    "ecmaVersion": 2020
   },
   "prettier": {
     "printWidth": 120,
@@ -85,4 +90,3 @@
     "trailingComma": "none"
   }
 }
-
