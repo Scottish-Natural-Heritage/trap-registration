@@ -1,3 +1,4 @@
+// eslint-disable-next-line n/prefer-global/process
 import process from 'node:process';
 import axios from 'axios';
 import config from './config.js';

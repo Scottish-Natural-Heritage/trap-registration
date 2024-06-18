@@ -1,7 +1,6 @@
 // Load the config.
 import config from './config.js';
 import {counterpart100yearToken} from './http-request.js';
-
 // Load the app.
 import app from './app.js';
 
