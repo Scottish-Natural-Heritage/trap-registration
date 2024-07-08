@@ -78,7 +78,7 @@ const detailsController = (request) => {
     request.session.phoneError ||
     request.session.emailError ||
     request.session.invalidCharsName ||
-    invalidCharsPhoneNumber;
+    request.session.invalidCharsPhoneNumber;
 
   // If we've seen an error in any of the fields, our visitor needs to go back
   // and fix them.
