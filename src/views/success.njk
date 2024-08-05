@@ -2,11 +2,24 @@
 
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
 {% block content %}
-  {{ govukPanel({
-        titleText: "Registration complete",
-        html: "Your registration number is<br><strong>"+model.regNo+"</strong><br><br>" +
-              "Expiry date<br><strong>"+model.expiryDate+"</strong>"
-      }) }}
+
+  {% if not model.alreadyReceivedApplication %}
+
+    {{ govukPanel({
+      titleText: "Registration complete",
+      html: "Your registration number is<br><strong>"+model.regNo+"</strong><br><br>" +
+            "Expiry date<br><strong>"+model.expiryDate+"</strong>"
+    }) }}
+
+  {% endif %}
+
+  {% if model.alreadyReceivedApplication %}
+
+    {{ govukPanel({
+      titleText: "Registration complete"
+    }) }}
+
+  {% endif %}
 
   <p class="govuk-body">We've sent you a confirmation email with details of your registration.</p>
 

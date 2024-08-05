@@ -1,12 +1,10 @@
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
-import process from 'node:process';
 import express from 'express';
 import morgan from 'morgan';
 import nunjucks from 'nunjucks';
 import session from 'express-session';
 import memorystore from 'memorystore';
-
 import config from './config.js';
 import logger from './logger.js';
 import router from './router.js';
@@ -61,6 +59,7 @@ app.use(
       httpOnly: true,
       // We need to set the secure attribute to true as Caddy doesn't
       // currently rewrite the attribute for us in the way Nginx did.
+      // If we're running tests don't set it as it'll break Cypress.
       secure: process.env.TRR_TEST ? false : true
     },
     store: new MemoryStore({

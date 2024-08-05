@@ -1,3 +1,4 @@
+// eslint-disable-next-line n/prefer-global/process
 import process from 'node:process';
 
 // Grab our config from the env vars, or set some defaults if they're missing.

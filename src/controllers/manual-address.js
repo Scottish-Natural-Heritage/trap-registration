@@ -1,4 +1,5 @@
 import utils from 'naturescot-utils';
+import validation from '../utils/validation.js';
 import {ReturnState} from './_base.js';
 
 /**
@@ -37,6 +38,10 @@ const manualAddressController = (request) => {
   request.session.countyError = false;
   request.session.postcodeError = false;
   request.session.invalidPostcodeError = false;
+  request.session.invalidCharAddressLine1 = false;
+  request.session.invalidCharAddressLine2 = false;
+  request.session.invalidCharAddressTown = false;
+  request.session.invalidCharAddressCounty = false;
 
   // Check if each of the fields is invalid.
   if (request.body.addressLine1 === undefined || request.body.addressLine1.trim() === '') {
@@ -61,13 +66,35 @@ const manualAddressController = (request) => {
       ? true
       : !utils.postalAddress.isaRealUkPostcode(request.body.addressPostcode);
 
+  // Check for any forbidden characters in the user's input.
+  request.session.invalidCharAddressLine1 = validation.hasInvalidCharacters(
+    cleanForm.addressLine1,
+    validation.invalidCharacters
+  );
+  request.session.invalidCharAddressLine2 = validation.hasInvalidCharacters(
+    cleanForm.addressLine2,
+    validation.invalidCharacters
+  );
+  request.session.invalidCharAddressTown = validation.hasInvalidCharacters(
+    cleanForm.addressTown,
+    validation.invalidCharacters
+  );
+  request.session.invalidCharAddressCounty = validation.hasInvalidCharacters(
+    cleanForm.addressCounty,
+    validation.invalidCharacters
+  );
+
   // Check that any of the fields are invalid.
   request.session.addressError =
     request.session.addressLine1Error ||
     request.session.townError ||
     request.session.countyError ||
     request.session.postcodeError ||
-    request.session.invalidPostcodeError;
+    request.session.invalidPostcodeError ||
+    request.session.invalidCharAddressLine1 ||
+    request.session.invalidCharAddressLine2 ||
+    request.session.invalidCharAddressTown ||
+    request.session.invalidCharAddressCounty;
 
   // If we've seen an error in any of the fields, our visitor needs to go back
   // and fix them.

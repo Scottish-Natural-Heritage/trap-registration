@@ -38,13 +38,18 @@ const confirmController = async (request) => {
       addressPostcode: request.session.addressPostcode,
       phoneNumber: request.session.phoneNumber,
       emailAddress: request.session.emailAddress,
-      uprn: request.session.uprn
+      uprn: request.session.uprn,
+      uuid: request.session.uuid
     };
 
     const newRegResponse = await axios.post(config.apiEndpoint, newReg);
 
-    request.session.regNo = `NS-TRP-${String(newRegResponse.data.id).padStart(5, '0')}`;
-    request.session.expiryDate = newRegResponse.data.expiryDate;
+    if (newRegResponse.data) {
+      request.session.regNo = `NS-TRP-${String(newRegResponse.data.id).padStart(5, '0')}`;
+      request.session.expiryDate = newRegResponse.data.expiryDate;
+    } else {
+      request.session.alreadyReceivedApplication = true;
+    }
 
     // Let them know it all went well.
     return ReturnState.Positive;
