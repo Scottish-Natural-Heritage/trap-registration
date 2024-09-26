@@ -9,6 +9,12 @@
 
 {% set assetPath = pathPrefix + "/govuk-frontend/assets" %}
 
+{% set serviceRoot = pathPrefix if pathPrefix.length > 0 else "" %}
+{# The following allows the user to click on the header once they've logged in
+   and not be bounced back to the start of the login process, but the start of
+   the submit process. #}
+{% set servicePage = "/renewal-select" if model.loggedInRegNo !== undefined else "/" %}
+
 {% block pageTitle %}NatureScot - Licensing - Trap Registration{% endblock %}
 
 {% block headIcons %}
@@ -70,7 +76,7 @@
     homepageUrl: "https://www.nature.scot/professional-advice/safeguarding-protected-areas-and-species/licensing",
     containerClasses: "govuk-width-container",
     serviceName: "Trap Registration",
-    serviceUrl: pathPrefix if pathPrefix.length > 0 else "/",
+    serviceUrl: serviceRoot + servicePage,
     attributes: {
       id: "top-of-page"
     }

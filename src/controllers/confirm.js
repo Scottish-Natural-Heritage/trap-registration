@@ -42,7 +42,7 @@ const confirmController = async (request) => {
       uuid: request.session.uuid
     };
 
-    const newRegResponse = await axios.post(config.apiEndpoint, newReg);
+    const newRegResponse = await axios.post(config.apiEndpoint + '/v2/registrations', newReg);
 
     if (newRegResponse.data) {
       request.session.regNo = `NS-TRP-${String(newRegResponse.data.id).padStart(5, '0')}`;

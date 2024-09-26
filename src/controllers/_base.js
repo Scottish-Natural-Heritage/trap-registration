@@ -40,6 +40,12 @@ const saveVisitedPage = (session, page) => {
  * application.
  */
 const guardAllows = (session, options) => {
+  // Unless the user has a completed licence number they are not allowed to
+  // visit a success page.
+  if (session.loggedInRegNo === undefined && ['submitted-renewal-success'].includes(options.path)) {
+    return false;
+  }
+
   // If the current page has no 'back' page then we're on a 'first' page so the
   // visitors are always allowed access.
   if (options.back === undefined || options.back.length === 0) {
@@ -100,6 +106,19 @@ const ReturnState = Object.freeze({
 });
 
 /**
+ * Save any login tokens to the user's session.
+ *
+ * @param {Request} request An express Request object.
+ * @param {any} request.session The visitor's session.
+ */
+const saveLoginToken = (request) => {
+  const {token} = request.query;
+  if (token !== undefined) {
+    request.session.token = token;
+  }
+};
+
+/**
  * A Router/Controller Factory returning an express Router based middleware that
  * can render pages, handle links and process per-page controllers.
  *
@@ -118,7 +137,18 @@ const Page = (options) => {
   const router = express.Router();
 
   router.get(`${config.pathPrefix}/${options.path}`, (request, response) => {
+    // Save the user's login token.
+    if (options.path === 'renewal-login') {
+      saveLoginToken(request);
+    }
+
     renderPage(request, response, options);
+
+    // If we've just rendered a success page...
+    if (['verification-success', 'success'].includes(options.path)) {
+      // Kill the user session, so they cannot re-submit.
+      request.session.destroy();
+    }
   });
 
   router.post(`${config.pathPrefix}/${options.path}`, async (request, response) => {
