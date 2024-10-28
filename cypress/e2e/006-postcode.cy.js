@@ -39,14 +39,12 @@ describe('Postcode page ', function () {
     // POST `/details`
     cy.get('#main-content form button.naturescot-forward-button').click();
 
-		// ~GET `/confirm-email`~
+    // ~GET `/confirm-email`~
     // FILL the form
-		cy.get('input[type=radio][name=emailValidation][value="yes"]').click();
+    cy.get('input[type=radio][name=emailValidation][value="yes"]').click();
 
-		 // POST `/check-email`
-		 cy.get('#main-content form button.naturescot-forward-button').click();
-
-
+    // POST `/check-email`
+    cy.get('#main-content form button.naturescot-forward-button').click();
   });
 
   it('should allow access if the user visits all the pages in order', function () {

@@ -2,7 +2,6 @@ import {cleanRadioBoolean, cleanInputString} from '../utils/form.js';
 import validationUtils from '../utils/validation.js';
 import {ReturnState} from './_base.js';
 
-
 const confirmEmailErrorChecker = (request) => {
   const emailChange = cleanInputString(request.body.emailChange ?? undefined);
 
@@ -39,15 +38,15 @@ const confirmEmailErrorChecker = (request) => {
 const confirmEmailController = (request) => {
   // Clear the general error...
   request.session.emailConfirmError = false;
-	// Clear the specific errors too
-  request.session.missingConfirmEmailSelection = false;	
+  // Clear the specific errors too
+  request.session.missingConfirmEmailSelection = false;
   request.session.missingConfirmEmailAddressValue = false;
   request.session.invalidEmailAddressValue = false;
 
-	// If the user chooses to update the email address or not.
+  // If the user chooses to update the email address or not.
   const isEmailCorrect = cleanRadioBoolean(request.body.emailValidation ?? undefined);
 
-	// The users text input if they chose to update the email address.
+  // The users text input if they chose to update the email address.
   const emailChange = cleanInputString(request.body.emailChange ?? undefined);
 
   request.session.isEmailCorrect = isEmailCorrect;
@@ -59,7 +58,7 @@ const confirmEmailController = (request) => {
     return ReturnState.Error;
   }
 
-	if (!isEmailCorrect && isEmailCorrect !== undefined) {
+  if (!isEmailCorrect && isEmailCorrect !== undefined) {
     request.session.emailAddress = emailChange;
   }
 
