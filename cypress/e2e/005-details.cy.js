@@ -64,7 +64,7 @@ describe('Details page ', function () {
 
     cy.get('#main-content form button.naturescot-forward-button').click();
 
-    cy.url().should('include', '/postcode');
+    cy.url().should('include', '/check-email');
   });
 
   it('forbidden characters should generate errors', function () {

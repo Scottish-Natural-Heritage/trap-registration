@@ -38,6 +38,15 @@ describe('Postcode page ', function () {
     cy.get('input[type="text"]#email-address').type('licensing@nature.scot', {delay: 1});
     // POST `/details`
     cy.get('#main-content form button.naturescot-forward-button').click();
+
+		// ~GET `/check-email`~
+    // FILL the form
+		cy.get('input[type=radio][name=emailValidation][value="yes"]').click();
+
+		 // POST `/check-email`
+		 cy.get('#main-content form button.naturescot-forward-button').click();
+
+
   });
 
   it('should allow access if the user visits all the pages in order', function () {
