@@ -6,6 +6,7 @@ import ConvictionController from './controllers/conviction.js';
 import GeneralController from './controllers/general.js';
 import MeatbaitController from './controllers/meat-bait.js';
 import DetailsController from './controllers/details.js';
+import confirmEmailController from './controllers/confirm-email.js';
 import ConfirmController from './controllers/confirm.js';
 import PostcodeController from './controllers/postcode.js';
 import AddressController from './controllers/address.js';
@@ -64,15 +65,24 @@ router.use(
   Page({
     path: 'details',
     back: 'meat-bait',
-    positiveForward: 'postcode',
+    positiveForward: 'confirm-email',
     controller: DetailsController
   })
 );
 
 router.use(
   Page({
-    path: 'postcode',
+    path: 'confirm-email',
     back: 'details',
+    positiveForward: 'postcode',
+    controller: confirmEmailController
+  })
+);
+
+router.use(
+  Page({
+    path: 'postcode',
+    back: 'confirm-email',
     positiveForward: 'address',
     controller: PostcodeController
   })
