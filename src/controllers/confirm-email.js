@@ -1,26 +1,7 @@
-import utils from 'naturescot-utils';
 import {cleanRadioBoolean, cleanInputString} from '../utils/form.js';
 import validationUtils from '../utils/validation.js';
 import {ReturnState} from './_base.js';
 
-/**
- * Clean the incoming POST request body to make it more compatible with the
- * database and its validation rules.
- *
- * @param {any} body the incoming request's body
- * @returns {any} a json object that's just got our cleaned up fields on it
- */
-const cleanInput = (body) => {
-  return {
-    // The strings are trimmed for leading and trailing whitespace and then
-    // copied across if they're in the POST body or are set to undefined if
-    // they're missing.
-    emailAddress:
-      body.emailAddress === undefined
-        ? undefined
-        : utils.formatters.stripAndRemoveObscureWhitespace(body.emailAddress.toLowerCase())
-  };
-};
 
 const confirmEmailErrorChecker = (request) => {
   const emailChange = cleanInputString(request.body.emailChange ?? undefined);
@@ -56,18 +37,17 @@ const confirmEmailErrorChecker = (request) => {
 };
 
 const confirmEmailController = (request) => {
-  // Clean up the user's input before we store it in the session.
-  const cleanForm = cleanInput(request.body);
-  request.session.emailAddress = cleanForm.emailAddress;
-
   // Clear the general error...
   request.session.emailConfirmError = false;
-
-  request.session.missingConfirmEmailSelection = false;
+	// Clear the specific errors too
+  request.session.missingConfirmEmailSelection = false;	
   request.session.missingConfirmEmailAddressValue = false;
   request.session.invalidEmailAddressValue = false;
 
+	// If the user chooses to update the email address or not.
   const isEmailCorrect = cleanRadioBoolean(request.body.emailValidation ?? undefined);
+
+	// The users text input if they chose to update the email address.
   const emailChange = cleanInputString(request.body.emailChange ?? undefined);
 
   request.session.isEmailCorrect = isEmailCorrect;
@@ -77,6 +57,10 @@ const confirmEmailController = (request) => {
 
   if (hasErrors) {
     return ReturnState.Error;
+  }
+
+	if (!isEmailCorrect && isEmailCorrect !== undefined) {
+    request.session.emailAddress = emailChange;
   }
 
   // The request passed all our validation, we've stored copies of everything we
