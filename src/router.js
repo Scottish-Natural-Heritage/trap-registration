@@ -125,12 +125,6 @@ router.use(
   })
 );
 
-router.use(
-  Page({
-    path: 'privacy-policy'
-  })
-);
-
 // Renewal start pages
 
 const allowedHostPrefixes = [
