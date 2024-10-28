@@ -4,10 +4,10 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/accordion/macro.njk" import govukAccordion %}
 {% block content %}
-  <h1 class="govuk-heading-xl">Trap Registration</h1>
+  <h1 class="govuk-heading-xl">Trap registration</h1>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <p class="govuk-body">Use this service to register as a trap user and if you plan to use a:</p>
+      <p class="govuk-body">Use this service to register to use the following traps under general licence (GL01 and GL02):</p>
 
       <ul class="govuk-list govuk-list--bullet">
         <li>Larsen trap</li>
@@ -16,143 +16,138 @@
         <li>multi-catch cage trap</li>
       </ul>
 
-      <p class="govuk-body">under NatureScot's General Licences:</p>
+      <p class="govuk-body">
+        <a class="govuk-link" target="_blank" href="https://www.nature.scot/professional-advice/protected-areas-and-species/licensing/species-licensing-z-guide/birds/general-licences-birds">
+          View general licences for birds.
+        </a>
+      </p>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li>
-          <a class="govuk-link" href="https://gateway.snh.gov.uk/go/?id=18">GL01 - To kill or take certain birds for the conservation of wild birds</a>
-        </li>
-        <li>
-          <a class="govuk-link" href="https://gateway.snh.gov.uk/go/?id=19">GL02 - To kill or take certain birds for the prevention of serious damage</a>
-        </li>
-      </ul>
+      <h2 class="govuk-heading-m">Who can apply</h2>
 
-      <p class="govuk-body">Registration takes around 5 minutes.</p>
+      <p class="govuk-body">You need one registration per trap user. This registration will be valid for any property you have permission to set traps on.</p>
 
-      {{ govukWarningText({
-        text: '' +
-          'If you previously registered with Police Scotland, you must ' +
-          're-register with NatureScot to continue to use traps.',
-        iconFallbackText: "Warning"
-      }) }}
+      <p class="govuk-body">If you have an existing trap registration, you can <a class="govuk-link" href="/trap-registration/renewal-intro">apply for a renewal</a></p>
+
+      <h2 class="govuk-heading-m">Trap registrations are changing</h2>
+
+      <p class="govuk-body">In future, you will need to complete a training course before applying to use wildlife traps.</p>
+
+      <p class="govuk-body">Until these changes are in place, we will only issue registrations for up to 1 year.</p>
 
       <form method="post">
         {{ govukButton({
-        text: "Start now",
-        classes: "govuk-!-margin-top-2 govuk-!-margin-bottom-8 naturescot-forward-button",
-        isStartButton: true
+          text: "Start now",
+          classes: "govuk-!-margin-top-2 govuk-!-margin-bottom-8 naturescot-forward-button",
+          isStartButton: true
       }) }}
       </form>
 
-      <p class="govuk-body">
-        If you need assistance with this service, contact the NatureScot Licensing Team
-      </p>
+      <h2 class="govuk-heading-m">Contact us</h2>
+
+      <p class="govuk-body">Contact our licensing team if you need help completing this form.</p>
 
       <h3 class="govuk-heading-s">
         Email
       </h3>
 
-      <ul class="govuk-list">
-        <li>
-          <a class="govuk-link" href="mailto:licensing@nature.scot">
-            licensing@nature.scot
-          </a>
-        </li>
-        <li>
-          We aim to respond within 2 working days.
-        </li>
-      </ul>
+      <p class="govuk-body">
+        <a class="govuk-link" href="mailto:licensing@nature.scot">
+          licensing@nature.scot
+        </a>
+      </p>
 
       <h3 class="govuk-heading-s">
         Telephone
       </h3>
 
-      <ul class="govuk-list">
-        <li>
-          01463 725 364
-        </li>
-        <li>
-          Voicemail service. We aim to respond within 2 working days.
-        </li>
-      </ul>
+      <p class="govuk-body">01463 725 364</P>
+
+      <p class="govuk-body">Monday to Friday, 10am to 4pm (except public holidays)
+
 
       <p class="govuk-body">
-        <a class="govuk-link" href="https://www.gov.uk/call-charges">
+        <a class="govuk-link" target="_blank" href="https://www.gov.uk/call-charges">
           Find out about call charges
         </a>
       </p>
+
+      <p class="govuk-body">
+        <a class="govuk-link govuk-link--no-visited-state govuk-!-font-size-16" href="#top-of-page">Back to top</a>
+      </p>
+
     </div>
 
     <div class="govuk-grid-column-one-third">
+
       {{ govukAccordion({
-      id: "startTrapExplanations",
-      items: [
-        {
-          heading: {
-            text: "What is a Larsen trap?"
+        id: "startTrapExplanations",
+        items: [
+          {
+            heading: {
+              text: "What is a Larsen trap?"
+            },
+            content: {
+              html: '' +
+                '<img src="/assets/traps-larsen.jpg" alt="A Larsen trap">' +
+                '<p class="govuk-body-s">&copy; The Game &amp; Wildlife Conservation Trust</p>' +
+                '<p class="govuk-body">' +
+                '  A portable cage-trap with a closed compartment to confine a live bird as a decoy.' +
+                '  It has one or more capture compartments with spring or gravity activated trap-doors that are either top or side mounted.' +
+                '  Traps with one or more capture compartments mounted directly above the decoy compartment are excluded.' +
+                '</p>'
+            },
+            expanded: false
           },
-          content: {
-            html: '' +
-              '<img src="/assets/traps-larsen.jpg" alt="A Larsen trap">' +
-              '<p class="govuk-body-s">&copy; The Game &amp; Wildlife Conservation Trust</p>' +
-              '<p class="govuk-body">' +
-              '  A portable cage-trap with a closed compartment to confine a live bird as a decoy.' +
-              '  It has one or more capture compartments with spring or gravity activated trap-doors that are either top or side mounted.' +
-              '  Traps with one or more capture compartments mounted directly above the decoy compartment are excluded.' +
-              '</p>'
+          {
+            heading: {
+              text: "What is a Larsen mate trap?"
+            },
+            content: {
+              html: '' +
+                '<img src="/assets/traps-larsen-mate.jpg" alt="A Larsen mate trap">' +
+                '<p class="govuk-body-s">&copy; The Game &amp; Wildlife Conservation Trust</p>' +
+                '<p class="govuk-body">' +
+                '  A portable spring-operated cage-trap made up of two shell sections hinged along one edge.' +
+                "  It's sections are connected by one or more springs kept open by a split-rod/trip-perch (as made by Elgeeco, or an equivalent)." +
+                '  When open (set) the minimum distance between two corners of the trap must be 39 cm.' +
+                '  The trap must not shut tightly along the majority of its meeting edges.' +
+                '</p>'
+            },
+            expanded: false
           },
-          expanded: false
-        },
-        {
-          heading: {
-            text: "What is a Larsen mate trap?"
+          {
+            heading: {
+              text: "What is a Larsen pod trap?"
+            },
+            content: {
+              html: '' +
+                '<img src="/assets/traps-larsen-pod.jpg" alt="A Larsen pod trap">' +
+                '<p class="govuk-body-s">&copy; The Game &amp; Wildlife Conservation Trust</p>' +
+                '<p class="govuk-body">' +
+                '  A portable spring or gravity operated cage-trap.' +
+                '  It has a single compartment with either one or two side or top-mounted, spring activated trap-doors that can be set independently.' +
+                '</p>'
+            },
+            expanded: false
           },
-          content: {
-            html: '' +
-              '<img src="/assets/traps-larsen-mate.jpg" alt="A Larsen mate trap">' +
-              '<p class="govuk-body-s">&copy; The Game &amp; Wildlife Conservation Trust</p>' +
-              '<p class="govuk-body">' +
-              '  A portable spring-operated cage-trap made up of two shell sections hinged along one edge.' +
-              "  It's sections are connected by one or more springs kept open by a split-rod/trip-perch (as made by Elgeeco, or an equivalent)." +
-              '  When open (set) the minimum distance between two corners of the trap must be 39 cm.' +
-              '  The trap must not shut tightly along the majority of its meeting edges.' +
-              '</p>'
-          },
-          expanded: false
-        },
-        {
-          heading: {
-            text: "What is a Larsen pod trap?"
-          },
-          content: {
-            html: '' +
-              '<img src="/assets/traps-larsen-pod.jpg" alt="A Larsen pod trap">' +
-              '<p class="govuk-body-s">&copy; The Game &amp; Wildlife Conservation Trust</p>' +
-              '<p class="govuk-body">' +
-              '  A portable spring or gravity operated cage-trap.' +
-              '  It has a single compartment with either one or two side or top-mounted, spring activated trap-doors that can be set independently.' +
-              '</p>'
-          },
-          expanded: false
-        },
-        {
-          heading: {
-            text: "What is a multi-catch cage trap?"
-          },
-          content: {
-            html: '' +
-              '<img src="/assets/traps-multi-catch.jpg" alt="A multi-catch cage trap">' +
-              '<p class="govuk-body-s">&copy; The Game &amp; Wildlife Conservation Trust</p>' +
-              '<p class="govuk-body">' +
-              '  A cage large enough to be entered by the operator.' +
-              '  It is covered in mesh and has either a roof-funnel, ground-funnel or a ladder/letterbox entry point, for birds to gain access.' +
-              '</p>'
-          },
-          expanded: false
-        }
-      ]
-    })}}
-    <a class="govuk-link govuk-link--no-visited-state govuk-!-font-size-16" href="#top-of-page">Back to top</a>
+          {
+            heading: {
+              text: "What is a multi-catch cage trap?"
+            },
+            content: {
+              html: '' +
+                '<img src="/assets/traps-multi-catch.jpg" alt="A multi-catch cage trap">' +
+                '<p class="govuk-body-s">&copy; The Game &amp; Wildlife Conservation Trust</p>' +
+                '<p class="govuk-body">' +
+                '  A cage large enough to be entered by the operator.' +
+                '  It is covered in mesh and has either a roof-funnel, ground-funnel or a ladder/letterbox entry point, for birds to gain access.' +
+                '</p>'
+            },
+            expanded: false
+          }
+        ]
+      })}}
+
     </div>
   </div>
 
