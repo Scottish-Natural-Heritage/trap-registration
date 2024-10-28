@@ -39,11 +39,11 @@ describe('Address page valid postcode scenario', function () {
     // POST `/details`
     cy.get('#main-content form button.naturescot-forward-button').click();
 
-		// ~GET `/check-email`~
+		// ~GET `/confirm-email`~
     // FILL the form
 		cy.get('input[type=radio][name=emailValidation][value="yes"]').click();
 
-		 // POST `/check-email`
+		 // POST `/confirm-email`
 		 cy.get('#main-content form button.naturescot-forward-button').click();
 
     // ~GET `/postcode`~
@@ -105,6 +105,13 @@ describe('Address page invalid postcode scenario', function () {
     cy.get('input[type="text"]#email-address').type('licensing@nature.scot', {delay: 1});
     // POST `/details`
     cy.get('#main-content form button.naturescot-forward-button').click();
+
+		// ~GET `/confirm-email`~
+    // FILL the form
+		cy.get('input[type=radio][name=emailValidation][value="yes"]').click();
+
+		 // POST `/confirm-email`
+		 cy.get('#main-content form button.naturescot-forward-button').click();
 
     // ~GET `/postcode`~
     cy.get('input[type="text"]#address-postcode').type('XM4 5HQ', {delay: 1});

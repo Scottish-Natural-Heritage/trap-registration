@@ -39,7 +39,7 @@ describe('Manual address page ', function () {
     // POST `/details`
     cy.get('#main-content form button.naturescot-forward-button').click();
 
-		// ~GET `/check-email`~
+		// ~GET `/confirm-email`~
     // FILL the form
 		cy.get('input[type=radio][name=emailValidation][value="yes"]').click();
 
