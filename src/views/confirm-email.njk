@@ -1,0 +1,102 @@
+{% extends "_base.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% set emailAddressError %}
+{% if model.missingConfirmEmailAddressValue %}
+      Enter an email address
+    {% elif model.invalidEmailAddressValue %}
+      Enter an email address in the correct format, like name@example.com
+    {% else %}
+	{# Blank. Not an error. #}
+{% endif %}
+{% endset %}
+
+{% block content %}
+
+	{% if model.emailConfirmError %}
+		{{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [
+        {
+          text: "Confirm if the stated email is correct or not",
+          href: "#emailValidation"
+        } if model.missingConfirmEmailSelection,
+        {
+          text: "Enter an email address",
+          href: "#emailChange"
+        } if model.missingConfirmEmailAddressValue,
+        {
+          text: "Enter an email address in the correct format, like name@example.com",
+          href: "#emailChange"
+        } if model.invalidEmailAddressValue
+      ]
+    })}}
+	{% endif %}
+
+	{% set emailHtml %}
+	{{ govukInput({
+      id: "emailChange",
+      name: "emailChange",
+      value: model.changedEmailAddress,
+      type: "text",
+      spellcheck: false,
+      classes: "govuk-!-width-one-third",
+      label: {
+        text: "Enter the correct email address"
+      },
+      errorMessage: {
+        text: emailAddressError
+      } if model.missingConfirmEmailAddressValue or model.invalidEmailAddressValue
+    }) }}
+	{% endset -%}
+
+	<h1 class="govuk-heading-l">Is this email correct?</h1>
+
+	<p class="govuk-body">{{model.emailAddress}}</p>
+
+	<form method="post">
+
+		{{ govukRadios({
+      name: "emailValidation",
+      fieldset: {
+        legend: {
+          html: "<span>Is this email correct?</span>",
+          classes: "govuk-visually-hidden govuk-fieldset__legend--l"
+        }
+      },
+      id: "emailValidation",
+      hint: {
+        text: "Please select one."
+      },
+       errorMessage: {
+        text: "Select yes or no"
+      } if model.missingConfirmEmailSelection,
+      items: [
+        {
+          value: "yes",
+          text: "Yes, use this email address for the confirmation email",
+          checked: model.isEmailCorrect === true
+        },
+        {
+          value: "no",
+          text: "No, I need to change it",
+          checked: model.isEmailCorrect === false,
+          conditional: {
+            html: emailHtml
+          }
+        }
+      ]
+    }) }}
+
+		{{ govukButton({
+        text: "Continue",
+        classes: "naturescot-forward-button"
+    }) }}
+
+	</form>
+
+{% endblock %}
