@@ -38,7 +38,7 @@ const publicKeyResponse = {
 };
 
 // A created-ok response to a 'renewal' post made against a registration.
-const postReturnResponse = {
+const postRenewalResponse = {
   status: 201,
   statusText: 'OK',
   data: {},
@@ -50,8 +50,8 @@ const postReturnResponse = {
 };
 
 // A straight-up, OK response. Used by us for mocking 'put' calls against a
-// registration's return.
-const putReturnResponse = {
+// registration's renewal.
+const putRenewalResponse = {
   status: 200,
   statusText: 'OK',
   data: {},
@@ -61,7 +61,7 @@ const putReturnResponse = {
 };
 
 // This is unused, but is useful for building URLs for testing. As long as the
-// app is started with TRR_TEST=true, then this token will validate as a 100
+// app is started with TR_TEST=true, then this token will validate as a 100
 // year long token for the trap registration number "-1".
 const counterpart100yearToken =
   'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ3Njc2NzQ1NTgsInN1YiI6Ii0xIn0.XSHX6QB8robVaEuXVeHKbBed13uAdWvLBaNeGCYPAWWlw7Fm7bafXMPUQQE69TNc8DbjUgaRDxKvS2ju5uZziw';
@@ -87,8 +87,8 @@ const mockAxios = {
   /**
    * Mock the post method from the axios library.
    *
-   * This only supports posting to create a new return. Uses the hard-coded post
-   * response from above so the target registration is -1 and the created return
+   * This only supports posting to create a new renewal. Uses the hard-coded post
+   * response from above so the target registration is -1 and the created renewal
    * is -1.
    *
    * @param {string} url The url to post to.
@@ -96,7 +96,7 @@ const mockAxios = {
    */
   async post(url) {
     if (url.startsWith(config.apiEndpoint + '/registrations/') && url.endsWith('/renewal')) {
-      return postReturnResponse;
+      return postRenewalResponse;
     }
 
     return generalError;
@@ -116,7 +116,7 @@ const mockAxios = {
     if (url.startsWith(config.apiEndpoint + '/registrations/') && url.includes('/renewal/')) {
       // Copy the body back to the response so the linters don't complain about
       // unused parameters.
-      const response = putReturnResponse;
+      const response = putRenewalResponse;
       response.data = body;
 
       return response;
@@ -126,6 +126,6 @@ const mockAxios = {
   }
 };
 
-const httpRequest = process.env.TRR_TEST ? mockAxios : axios;
+const httpRequest = process.env.TR_TEST ? mockAxios : axios;
 
 export {httpRequest as default, counterpart100yearToken};
