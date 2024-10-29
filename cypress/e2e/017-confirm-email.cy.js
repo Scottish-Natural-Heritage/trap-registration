@@ -59,7 +59,7 @@ describe('Confirm email page ', function () {
 
     cy.get('h1').contains('Is this email correct?', {matchCase: false});
     cy.get('.govuk-error-summary__title').contains('There is a problem', {matchCase: false});
-    cy.get('.govuk-error-summary__body').contains('Confirm if the stated email is correct or not', {matchCase: false});
+    cy.get('.govuk-error-summary__body').contains('Check and confirm your email address', {matchCase: false});
     cy.get('#emailValidation-error').contains('Select yes or no', {matchCase: false});
   });
 
