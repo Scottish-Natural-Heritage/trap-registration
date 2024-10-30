@@ -18,7 +18,6 @@ import RenewalEmailSuccessController from './controllers/renewal-email-success.j
 import renewalLoginController from './controllers/renewal-login.js';
 import RenewalCheckAnswersController from './controllers/renewal-check-answers.js';
 import RenewalSuccessController from './controllers/renewal-success.js';
-import config from './config.js';
 
 // Configure all of the pages and routes.
 
