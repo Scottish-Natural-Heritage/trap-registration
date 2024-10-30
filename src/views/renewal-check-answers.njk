@@ -1,17 +1,232 @@
 {% extends "_base.njk" %}
 
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/accordion/macro.njk" import govukAccordion %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% set confirmationHtml %}
+  <ul class="govuk-list govuk-list--bullet">
+    <li>the information provided is correct and up to date</li>
+    <li>I will comply with the terms and conditions of the general licences</li>
+    <li>I agree with the <a class="govuk-link" href="/cross-service-pages/privacy-policy" target="_blank">privacy policy</a> of this service</li>
+  </ul>
+{% endset %}
+
 {% block content %}
-  <h1 class="govuk-heading-xl">Renewal check answers</h1>
 
+  {% if model.confirmErrors %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [
+        {
+          text: "You must confirm the information provided is correct and up to date and you agree with the privacy policy",
+          href: "#confirm-declaration"
+        } if model.missingConfirmValue,
+        {
+          text: "An error has occurred creating the application - please try again",
+          href: "#"
+        } if model.apiError
+      ]
+    }) }}
+  {% endif %}
 
-<form method="post">
+  <h1 class="govuk-heading-xl">Check your renewal details</h1>
+
+  <p class="govuk-body">We have pre-populated this page with details from your previous trap registration.</p>
+
+  <p class="govuk-body">You must check all the data is correct and make updates where necessary. For example, if you have changed address or require the trap for a different purpose.</p>
+
+  {{ govukWarningText({
+    text: "Check for errors before you submit this form. It will take us longer to process your application if you enter incorrect details.",
+    iconFallbackText: "Warning"
+  }) }}
+
+  <h2 class="govuk-heading-m">Your details</h2>
+
+  {{ govukSummaryList({
+    rows: [
+      {
+        key: {
+          text: "Full name"
+        },
+        value: {
+          text: model.fullName
+        },
+        actions: {
+          items: [
+            {
+              href: pathPrefix + "/details#full-name",
+              text: "Change",
+              visuallyHiddenText: "name"
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          text: "Email address"
+        },
+        value: {
+          html: model.emailAddress
+        },
+        actions: {
+          items: [
+            {
+              href: pathPrefix + "/details#email-address",
+              text: "Change",
+              visuallyHiddenText: "email address"
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          text: "Telephone number"
+        },
+        value: {
+          html: model.phoneNumber
+        },
+        actions: {
+          items: [
+            {
+              href: pathPrefix + "/details#phone-number",
+              text: "Change",
+              visuallyHiddenText: "telephone number"
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          text: "Address"
+        },
+        value: {
+          html: model.displayAddress
+        },
+        actions: {
+          items: [
+            {
+              href: pathPrefix + "/address#address",
+              text: "Change",
+              visuallyHiddenText: "postal address"
+            }
+          ]
+        }
+      }
+    ]
+  }) }}
+
+  <h2 class="govuk-heading-m">Registration details</h2>
+
+  {{ govukSummaryList({
+    rows: [
+      {
+        key: {
+          text: "Wildlife crime"
+        },
+        value: {
+          text: "I have not been convicted of a wildlife crime" if model.conviction === false
+        },
+        actions: {
+          items: [
+            {
+              href: pathPrefix + "/conviction#conviction",
+              text: "Change",
+              visuallyHiddenText: "convictions"
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          text: "General Licence 1"
+        },
+        value: {
+          text: 'I intend to trap under "GL01 - To kill or take certain birds for the conservation of wild birds"' if model.general1 else 'I do not intend to trap under "GL01 - To kill or take certain birds for the conservation of wild birds"'
+        },
+        actions: {
+          items: [
+            {
+              href: pathPrefix + "/general#general",
+              text: "Change",
+              visuallyHiddenText: "general licences"
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          text: "General Licence 2"
+        },
+        value: {
+          text: 'I intend to trap under "GL02 - To kill or take certain birds for the prevention of serious damage"' if model.general2 else 'I do not intend to trap under "GL02 - To kill or take certain birds for the prevention of serious damage"'
+        },
+        actions: {
+          items: [
+            {
+              href: pathPrefix + "/general#general",
+              text: "Change",
+              visuallyHiddenText: "general licences"
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          text: "Meat baits"
+        },
+        value: {
+          text: "I intend to use meat baits" if model.meatBait else "I do not intend to use meat baits"
+        },
+        actions: {
+          items: [
+            {
+              href: pathPrefix + "/meat-bait#meatbait",
+              text: "Change",
+              visuallyHiddenText: "intention to use meat baits in my traps"
+            }
+          ]
+        }
+      }
+    ]
+  })}}
+
+  <p class="govuk-body"><strong>Declaration</strong></p>
+
+  <form method="post">
+
+    {{ govukCheckboxes({
+      idPrefix: "confirm-declaration",
+      name: "confirmDeclaration",
+      fieldset: {
+        legend: {
+          text: "I confirm that:",
+          isPageHeading: false,
+          classes: "govuk-fieldset__legend--s"
+        }
+      },
+      hint: {
+        html: confirmationHtml
+      },
+      errorMessage: {
+        text: "You must confirm the information you have provided is up-to-date and correct and you agree with the privacy policy"
+      } if error.missingConfirmValue,
+      items: [
+        {
+          value: "yes",
+          text: "Yes, I confirm",
+          checked: confirmDeclaration === true
+        }
+      ]
+    }) }}
 
     {{ govukButton({
-      text: "Continue",
-      classes: "naturescot-forward-button"
+      text: "Accept and send",
+      classes: "naturescot-forward-button",
+      isStartButton: false,
+      preventDoubleClick: true
     }) }}
 
   </form>
