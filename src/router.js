@@ -137,73 +137,64 @@ router.use(
 
 // Renewal start pages
 
-const allowedHostPrefixes = [
-  'https://uat-licensing.nature.scot',
-  'https://dev-licensing.nature.scot',
-  'http://localhost:3000',
-  'http://localhost:3999'
-];
+router.use(
+  Page({
+    path: 'renewal-intro',
+    positiveForward: 'renewal-registration',
+    controller: RenewalIntroController
+  })
+);
 
-if (allowedHostPrefixes.includes(config.hostPrefix)) {
-  router.use(
-    Page({
-      path: 'renewal-intro',
-      positiveForward: 'renewal-registration',
-      controller: RenewalIntroController
-    })
-  );
+router.use(
+  Page({
+    path: 'renewal-registration',
+    back: 'renewal-intro',
+    positiveForward: 'renewal-postcode',
+    controller: RenewalRegistrationController
+  })
+);
 
-  router.use(
-    Page({
-      path: 'renewal-registration',
-      back: 'renewal-intro',
-      positiveForward: 'renewal-postcode',
-      controller: RenewalRegistrationController
-    })
-  );
+router.use(
+  Page({
+    path: 'renewal-postcode',
+    back: 'renewal-registration',
+    positiveForward: 'renewal-email-success',
+    controller: RenewalPostcodeController
+  })
+);
 
-  router.use(
-    Page({
-      path: 'renewal-postcode',
-      back: 'renewal-registration',
-      positiveForward: 'renewal-email-success',
-      controller: RenewalPostcodeController
-    })
-  );
+router.use(
+  Page({
+    path: 'renewal-email-success',
+    back: 'renewal-postcode',
+    positiveForward: 'renewal-login',
+    controller: RenewalEmailSuccessController
+  })
+);
 
-  router.use(
-    Page({
-      path: 'renewal-email-success',
-      back: 'renewal-postcode',
-      positiveForward: 'renewal-login',
-      controller: RenewalEmailSuccessController
-    })
-  );
+router.use(
+  Page({
+    path: 'renewal-login',
+    positiveForward: 'renewal-check-answers',
+    controller: renewalLoginController
+  })
+);
 
-  router.use(
-    Page({
-      path: 'renewal-login',
-      positiveForward: 'renewal-check-answers',
-      controller: renewalLoginController
-    })
-  );
+router.use(
+  Page({
+    path: 'renewal-check-answers',
+    back: 'renewal-login',
+    positiveForward: 'renewal-success',
+    controller: RenewalCheckAnswersController
+  })
+);
 
-  router.use(
-    Page({
-      path: 'renewal-check-answers',
-      back: 'renewal-login',
-      positiveForward: 'renewal-success',
-      controller: RenewalCheckAnswersController
-    })
-  );
-
-  router.use(
-    Page({
-      path: 'renewal-success',
-      back: 'renewal-check-answers',
-      controller: RenewalSuccessController
-    })
-  );
-}
+router.use(
+  Page({
+    path: 'renewal-success',
+    back: 'renewal-check-answers',
+    controller: RenewalSuccessController
+  })
+);
 
 export {router as default};
