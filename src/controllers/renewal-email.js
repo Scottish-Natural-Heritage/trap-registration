@@ -14,16 +14,18 @@ const renewalEmailController = async (request) => {
   const cleanForm = cleanInput(request.body);
   request.session.email = cleanForm.email;
 
-  console.log(request.session.email);
   // Clear error state
   request.session.renewalEmailError = false;
 
-  // Call natureScot utils to check validity of email
-  request.session.renewalEmailError =
-    request.session.email === undefined ? true : !utils.recipients.validateEmailAddress(request.session.email);
-
-  // Set error state
-  if (request.session.renewalEmailError) {
+  // Wrap error check in try/catch to catch error from validating email address.
+  try {
+    // Call natureScot utils to check validity of email
+    request.session.renewalEmailError =
+      request.session.email === undefined ? true : !utils.recipients.validateEmailAddress(request.session.email);
+  } catch (error) {
+    console.error({error});
+    request.session.renewalEmailError = true;
+    // Set error state
     return ReturnState.Error;
   }
 
@@ -31,9 +33,7 @@ const renewalEmailController = async (request) => {
   // client-response if something goes wrong. They should always just get the OK
   // page anyway. We'll log the error for review later.
   try {
-    const apiURL = config.apiEndpoint + '/v2/registrations/renewal';
-    console.log('api url', apiURL);
-    await axios.get(apiURL, {
+    await axios.post(config.apiEndpoint + '/v2/registrations/renewalEmailCheck', {
       params: {
         email: request.session.email,
         redirectBaseUrl: `${config.hostPrefix}${config.pathPrefix}/renewal-login?token=`
