@@ -64,6 +64,7 @@ router.use(
   Page({
     path: 'details',
     back: 'meat-bait',
+    backRenewal: 'renewal-check-answers',
     positiveForward: 'confirm-email',
     controller: DetailsController
   })
@@ -73,6 +74,7 @@ router.use(
   Page({
     path: 'confirm-email',
     back: 'details',
+    backRenewal: 'details',
     positiveForward: 'postcode',
     secondaryForward: 'renewal-check-answers',
     controller: confirmEmailController

@@ -54,7 +54,7 @@ const guardAllows = (session, options) => {
 
   // If they've previously visited our 'back' page, then they're allowed
   // access, if they haven't then they're blocked.
-  return session.visitedPages.includes(options.back);
+  return session.visitedPages.includes(options.back) || session.visitedPages.includes(options.backRenewal);
 };
 
 /**
@@ -73,7 +73,7 @@ const renderPage = (request, response, options) => {
     response.render(`${options.path}.njk`, {
       hostPrefix: config.hostPrefix,
       pathPrefix: config.pathPrefix,
-      backUrl: options.back,
+      backUrl: request.session.isRenewal ? options.backRenewal : options.back,
       model: request.session
     });
     return;
@@ -97,7 +97,7 @@ const ReturnState = Object.freeze({
   Positive: 1,
   Negative: 2,
   Error: 3,
-  Secondary: 4,
+  Secondary: 4
 });
 
 /**
@@ -144,14 +144,28 @@ const Page = (options) => {
     let decision;
     try {
       decision = await options.controller(request, options);
-      if (decision === ReturnState.Positive) {
-        response.redirect(`${config.pathPrefix}/${options.positiveForward}`);
-      } else if (decision === ReturnState.Negative) {
-        response.redirect(`${config.pathPrefix}/${options.negativeForward}`);
-      } else if (decision === ReturnState.Secondary) {
-        response.redirect(`${config.pathPrefix}/${options.secondaryForward}`);
-      } else {
-        renderPage(request, response, options);
+      switch (decision) {
+        case ReturnState.Positive: {
+          response.redirect(`${config.pathPrefix}/${options.positiveForward}`);
+
+          break;
+        }
+
+        case ReturnState.Negative: {
+          response.redirect(`${config.pathPrefix}/${options.negativeForward}`);
+
+          break;
+        }
+
+        case ReturnState.Secondary: {
+          response.redirect(`${config.pathPrefix}/${options.secondaryForward}`);
+
+          break;
+        }
+
+        default: {
+          renderPage(request, response, options);
+        }
       }
     } catch (error) {
       console.log(error);

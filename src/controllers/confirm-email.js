@@ -64,7 +64,7 @@ const confirmEmailController = (request) => {
 
   // If this is a renewal go back to check-answers page.
   if (request.session.isRenewal) {
-    return ReturnState.Secondary
+    return ReturnState.Secondary;
   }
 
   // The request passed all our validation, we've stored copies of everything we
