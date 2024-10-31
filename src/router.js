@@ -74,6 +74,7 @@ router.use(
     path: 'confirm-email',
     back: 'details',
     positiveForward: 'postcode',
+    secondaryForward: 'renewal-check-answers',
     controller: confirmEmailController
   })
 );
