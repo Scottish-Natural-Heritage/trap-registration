@@ -8,8 +8,8 @@
     {{ govukErrorSummary({
         titleText: "There is a problem",
         errorList: [{
-          text: "Enter your postcode",
-          href: "#postcode-error"
+          text: "Enter a valid email address",
+          href: "#email-error"
         }]
       }) }}
   {% endif %}
@@ -30,7 +30,7 @@
         text: "We'll use this to find your details."
         },
         errorMessage: {
-        text: "Enter an email address"
+        text: "Enter a valid email address"
         }if model.renewalEmailError,
         classes: "govuk-input--width-20",
         spellcheck: false,
