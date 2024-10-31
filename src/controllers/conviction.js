@@ -7,6 +7,12 @@ const convictionController = (request) => {
     request.session.convictionError = false;
     // Save the decision.
     request.session.conviction = false;
+
+    // If this is a renewal go back to the renewal-check-answers page.
+    if (request.session.isRenewal) {
+      return ReturnState.Secondary;
+    }
+
     // Follow the 'happy path'.
     return ReturnState.Positive;
   }

@@ -35,8 +35,10 @@ router.use(
   Page({
     path: 'conviction',
     back: 'start',
+    backRenewal: 'renewal-check-answers',
     positiveForward: 'general',
     negativeForward: 'conviction-stop',
+    secondaryForward: 'renewal-check-answers',
     controller: ConvictionController
   })
 );
@@ -85,6 +87,7 @@ router.use(
   Page({
     path: 'postcode',
     back: 'confirm-email',
+    backRenewal: 'renewal-check-answers',
     positiveForward: 'address',
     controller: PostcodeController
   })
@@ -94,8 +97,10 @@ router.use(
   Page({
     path: 'address',
     back: 'postcode',
+    backRenewal: 'postcode',
     positiveForward: 'confirm',
     negativeForward: 'manual-address',
+    secondaryForward: 'renewal-check-answers',
     controller: AddressController
   })
 );
@@ -104,7 +109,9 @@ router.use(
   Page({
     path: 'manual-address',
     back: 'address',
+    backRenewal: 'address',
     positiveForward: 'confirm',
+    secondaryForward: 'renewal-check-answers',
     controller: ManualAddressController
   })
 );
