@@ -47,7 +47,9 @@ router.use(
   Page({
     path: 'general',
     back: 'conviction',
+    backRenewal: 'renewal-check-answers',
     positiveForward: 'meat-bait',
+    secondaryForward: 'renewal-check-answers',
     controller: GeneralController
   })
 );
@@ -56,8 +58,10 @@ router.use(
   Page({
     path: 'meat-bait',
     back: 'general',
+    backRenewal: 'renewal-check-answers',
     positiveForward: 'details',
     negativeForward: 'details',
+    secondaryForward: 'renewal-check-answers',
     controller: MeatbaitController
   })
 );

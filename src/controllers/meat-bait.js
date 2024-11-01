@@ -7,6 +7,12 @@ const meatBaitController = (request) => {
     request.session.meatBaitError = false;
     // Save the decision.
     request.session.meatBait = false;
+
+    // If this is a renewal go back to the renewal-check-answers page.
+    if (request.session.isRenewal) {
+      return ReturnState.Secondary;
+    }
+
     // Follow the negative path (actually the same direction as positive).
     return ReturnState.Negative;
   }
@@ -17,6 +23,12 @@ const meatBaitController = (request) => {
     request.session.meatBaitError = false;
     // Save the decision.
     request.session.meatBait = true;
+
+    // If this is a renewal go back to the renewal-check-answers page.
+    if (request.session.isRenewal) {
+      return ReturnState.Secondary;
+    }
+
     // Follow the positive path (actually the same direction as negative).
     return ReturnState.Positive;
   }

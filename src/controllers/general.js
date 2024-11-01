@@ -28,6 +28,11 @@ const generalController = (request) => {
       request.session.general2 = true;
     }
 
+    // If this is a renewal go back to the renewal-check-answers page.
+    if (request.session.isRenewal) {
+      return ReturnState.Secondary;
+    }
+
     // Continue onwards.
     return ReturnState.Positive;
   }
@@ -51,6 +56,12 @@ const generalController = (request) => {
     if (atLeastOne) {
       // This is not an error.
       request.session.generalError = false;
+
+      // If this is a renewal go back to the renewal-check-answers page.
+      if (request.session.isRenewal) {
+        return ReturnState.Secondary;
+      }
+
       // So continue.
       return ReturnState.Positive;
     }
