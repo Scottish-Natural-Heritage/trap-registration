@@ -8,7 +8,7 @@ const renewalIntroController = (request) => {
 
   // The only way out of the renewal intro page is onwards, so return success and begin
   // the form.
-  return ReturnState.Positive;
+  return ReturnState.Primary;
 };
 
 export {renewalIntroController as default};

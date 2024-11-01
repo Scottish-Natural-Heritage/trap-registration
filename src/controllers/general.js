@@ -34,7 +34,7 @@ const generalController = (request) => {
     }
 
     // Continue onwards.
-    return ReturnState.Positive;
+    return ReturnState.Primary;
   }
 
   // The user submitted a number of values
@@ -63,7 +63,7 @@ const generalController = (request) => {
       }
 
       // So continue.
-      return ReturnState.Positive;
+      return ReturnState.Primary;
     }
 
     // The user submitted a list of values, but they didn't match any of

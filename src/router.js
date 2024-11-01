@@ -26,7 +26,7 @@ const router = express.Router();
 router.use(
   Page({
     path: 'start',
-    positiveForward: 'conviction',
+    primaryForward: 'conviction',
     controller: StartController
   })
 );
@@ -36,9 +36,9 @@ router.use(
     path: 'conviction',
     back: 'start',
     backRenewal: 'renewal-check-answers',
-    positiveForward: 'general',
-    negativeForward: 'conviction-stop',
-    secondaryForward: 'renewal-check-answers',
+    primaryForward: 'general',
+    secondaryForward: 'conviction-stop',
+    tertiaryForward: 'renewal-check-answers',
     controller: ConvictionController
   })
 );
@@ -48,7 +48,7 @@ router.use(
     path: 'general',
     back: 'conviction',
     backRenewal: 'renewal-check-answers',
-    positiveForward: 'meat-bait',
+    primaryForward: 'meat-bait',
     secondaryForward: 'renewal-check-answers',
     controller: GeneralController
   })
@@ -59,9 +59,9 @@ router.use(
     path: 'meat-bait',
     back: 'general',
     backRenewal: 'renewal-check-answers',
-    positiveForward: 'details',
-    negativeForward: 'details',
-    secondaryForward: 'renewal-check-answers',
+    primaryForward: 'details',
+    secondaryForward: 'details',
+    tertiaryForward: 'renewal-check-answers',
     controller: MeatbaitController
   })
 );
@@ -71,7 +71,7 @@ router.use(
     path: 'details',
     back: 'meat-bait',
     backRenewal: 'renewal-check-answers',
-    positiveForward: 'confirm-email',
+    primaryForward: 'confirm-email',
     controller: DetailsController
   })
 );
@@ -81,7 +81,7 @@ router.use(
     path: 'confirm-email',
     back: 'details',
     backRenewal: 'details',
-    positiveForward: 'postcode',
+    primaryForward: 'postcode',
     secondaryForward: 'renewal-check-answers',
     controller: confirmEmailController
   })
@@ -92,7 +92,7 @@ router.use(
     path: 'postcode',
     back: 'confirm-email',
     backRenewal: 'renewal-check-answers',
-    positiveForward: 'address',
+    primaryForward: 'address',
     controller: PostcodeController
   })
 );
@@ -102,9 +102,9 @@ router.use(
     path: 'address',
     back: 'postcode',
     backRenewal: 'postcode',
-    positiveForward: 'confirm',
-    negativeForward: 'manual-address',
-    secondaryForward: 'renewal-check-answers',
+    primaryForward: 'confirm',
+    secondaryForward: 'manual-address',
+    tertiaryForward: 'renewal-check-answers',
     controller: AddressController
   })
 );
@@ -114,7 +114,7 @@ router.use(
     path: 'manual-address',
     back: 'address',
     backRenewal: 'address',
-    positiveForward: 'confirm',
+    primaryForward: 'confirm',
     secondaryForward: 'renewal-check-answers',
     controller: ManualAddressController
   })
@@ -124,7 +124,7 @@ router.use(
   Page({
     path: 'confirm',
     back: 'address',
-    positiveForward: 'success',
+    primaryForward: 'success',
     controller: ConfirmController
   })
 );
@@ -153,7 +153,7 @@ router.use(
 router.use(
   Page({
     path: 'renewal-intro',
-    positiveForward: 'renewal-registration',
+    primaryForward: 'renewal-registration',
     controller: RenewalIntroController
   })
 );
@@ -162,7 +162,7 @@ router.use(
   Page({
     path: 'renewal-registration',
     back: 'renewal-intro',
-    positiveForward: 'renewal-postcode',
+    primaryForward: 'renewal-postcode',
     controller: RenewalRegistrationController
   })
 );
@@ -171,7 +171,7 @@ router.use(
   Page({
     path: 'renewal-postcode',
     back: 'renewal-registration',
-    positiveForward: 'renewal-email-success',
+    primaryForward: 'renewal-email-success',
     controller: RenewalPostcodeController
   })
 );
@@ -180,7 +180,7 @@ router.use(
   Page({
     path: 'renewal-email-success',
     back: 'renewal-postcode',
-    positiveForward: 'renewal-login',
+    primaryForward: 'renewal-login',
     controller: RenewalEmailSuccessController
   })
 );
@@ -188,7 +188,7 @@ router.use(
 router.use(
   Page({
     path: 'renewal-login',
-    positiveForward: 'renewal-check-answers',
+    primaryForward: 'renewal-check-answers',
     controller: renewalLoginController
   })
 );
@@ -197,7 +197,7 @@ router.use(
   Page({
     path: 'renewal-check-answers',
     back: 'renewal-login',
-    positiveForward: 'renewal-success',
+    primaryForward: 'renewal-success',
     controller: RenewalCheckAnswersController
   })
 );

@@ -46,7 +46,7 @@ const postcodeController = async (request) => {
   }
 
   // Proceed to the next page.
-  return ReturnState.Positive;
+  return ReturnState.Primary;
 };
 
 export {postcodeController as default};

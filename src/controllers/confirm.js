@@ -52,7 +52,7 @@ const confirmController = async (request) => {
     }
 
     // Let them know it all went well.
-    return ReturnState.Positive;
+    return ReturnState.Primary;
   } catch (error) {
     // TODO: Do something useful with this error.
     console.log('Error creating registration: ' + error);

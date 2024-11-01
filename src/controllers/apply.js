@@ -8,7 +8,7 @@ const applyController = (request) => {
     // Save the decision.
     request.session.applyFor = false;
     // Follow the 'happy path'.
-    return ReturnState.Positive;
+    return ReturnState.Primary;
   }
 
   // Did the user tell us they're have some convictions.
@@ -18,7 +18,7 @@ const applyController = (request) => {
     // Save the decision.
     request.session.applyFor = true;
     // Go down the 'STOP' path.
-    return ReturnState.Negative;
+    return ReturnState.Secondary;
   }
 
   // The user submitted the form without selecting an option, this is an error!

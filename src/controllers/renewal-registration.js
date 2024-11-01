@@ -29,9 +29,9 @@ const renewalRegistrationController = (request) => {
   if (request.session.renewalRegistrationNumberError) {
     return ReturnState.Error;
   }
-  // Return positive state for progression
+  // Return primary state for progression
 
-  return ReturnState.Positive;
+  return ReturnState.Primary;
 };
 
 export {renewalRegistrationController as default};

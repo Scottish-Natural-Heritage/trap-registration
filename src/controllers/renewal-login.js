@@ -56,7 +56,7 @@ const renewalLoginController = async (request) => {
   // First of all, check if we've already logged in.
   if (request.session.loggedInRegNo) {
     // If so, go right ahead!
-    return ReturnState.Positive;
+    return ReturnState.Primary;
   }
 
   // If we're not already logged in, try to validate the supplied token.
@@ -65,11 +65,11 @@ const renewalLoginController = async (request) => {
     request.session.isRenewal = true;
 
     // If the token validates, then we're golden!
-    return ReturnState.Positive;
+    return ReturnState.Primary;
   }
 
   // If it doesn't validate, or we've not got a token at all, then kick back.
-  return ReturnState.Negative;
+  return ReturnState.Secondary;
 };
 
 export {renewalLoginController as default};

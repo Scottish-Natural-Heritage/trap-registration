@@ -42,7 +42,7 @@ const renewalPostcodeController = async (request) => {
 
   // The only way out of the usage page for now is onwards, so return success and continue
   // the form
-  return ReturnState.Positive;
+  return ReturnState.Primary;
 };
 
 export {renewalPostcodeController as default};

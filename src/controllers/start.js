@@ -12,7 +12,7 @@ const startController = (request) => {
 
   // The only way out of the start page is onwards, so return success and begin
   // the form.
-  return ReturnState.Positive;
+  return ReturnState.Primary;
 };
 
 export {startController as default};

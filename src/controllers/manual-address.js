@@ -127,9 +127,14 @@ const manualAddressController = (request) => {
   // Create the display versions of the visitors address.
   request.session.displayAddress = address.join('<br>');
 
+  // If this is a renewal go back to the renewal-check-answers page.
+  if (request.session.isRenewal) {
+    return ReturnState.Secondary;
+  }
+
   // The request passed all our validation, we've stored copies of everything we
   // need, so it's time to go on.
-  return ReturnState.Positive;
+  return ReturnState.Primary;
 };
 
 export {manualAddressController as default};

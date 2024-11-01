@@ -69,7 +69,7 @@ const confirmEmailController = (request) => {
 
   // The request passed all our validation, we've stored copies of everything we
   // need, so it's time to go on.
-  return ReturnState.Positive;
+  return ReturnState.Primary;
 };
 
 export {confirmEmailController as default};

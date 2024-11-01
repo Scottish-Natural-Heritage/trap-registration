@@ -10,11 +10,11 @@ const convictionController = (request) => {
 
     // If this is a renewal go back to the renewal-check-answers page.
     if (request.session.isRenewal) {
-      return ReturnState.Secondary;
+      return ReturnState.Tertiary;
     }
 
     // Follow the 'happy path'.
-    return ReturnState.Positive;
+    return ReturnState.Primary;
   }
 
   // Did the user tell us they're have some convictions.
@@ -24,7 +24,7 @@ const convictionController = (request) => {
     // Save the decision.
     request.session.conviction = true;
     // Go down the 'STOP' path.
-    return ReturnState.Negative;
+    return ReturnState.Secondary;
   }
 
   // The user submitted the form without selecting an option, this is an error!

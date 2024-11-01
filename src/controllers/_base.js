@@ -94,10 +94,10 @@ const renderPage = (request, response, options) => {
  * An enum that represents the possible states out of a page.
  */
 const ReturnState = Object.freeze({
-  Positive: 1,
-  Negative: 2,
-  Error: 3,
-  Secondary: 4
+  Primary: 1,
+  Secondary: 2,
+  Tertiary: 3,
+  Error: 4
 });
 
 /**
@@ -123,8 +123,9 @@ const saveLoginToken = (request) => {
  * @param {Object} options
  * @param {String} options.path The path to this page.
  * @param {String} [options.back] The path to the previous page.
- * @param {String} [options.positiveForward] The path to the next page if the controller's opinion is positive.
- * @param {String} [options.negativeForward] The path to the next page if the controller's opinion is negative.
+ * @param {String} [options.primaryForward] The path to the next page if the controller's opinion is primary.
+ * @param {String} [options.secondaryForward] The path to the next page if the controller's opinion is secondary.
+ * * @param {String} [options.tertiaryForward] The path to the next page if the controller's opinion is tertiary.
  * @param {Function} [options.controller] The logic
  * @returns {Router} An express Router middleware.
  */
@@ -145,20 +146,20 @@ const Page = (options) => {
     try {
       decision = await options.controller(request, options);
       switch (decision) {
-        case ReturnState.Positive: {
-          response.redirect(`${config.pathPrefix}/${options.positiveForward}`);
-
-          break;
-        }
-
-        case ReturnState.Negative: {
-          response.redirect(`${config.pathPrefix}/${options.negativeForward}`);
+        case ReturnState.Primary: {
+          response.redirect(`${config.pathPrefix}/${options.primaryForward}`);
 
           break;
         }
 
         case ReturnState.Secondary: {
           response.redirect(`${config.pathPrefix}/${options.secondaryForward}`);
+
+          break;
+        }
+
+        case ReturnState.Tertiary: {
+          response.redirect(`${config.pathPrefix}/${options.tertiaryForward}`);
 
           break;
         }

@@ -10,11 +10,11 @@ const meatBaitController = (request) => {
 
     // If this is a renewal go back to the renewal-check-answers page.
     if (request.session.isRenewal) {
-      return ReturnState.Secondary;
+      return ReturnState.Tertiary;
     }
 
-    // Follow the negative path (actually the same direction as positive).
-    return ReturnState.Negative;
+    // Follow the secondary path (actually the same direction as primary).
+    return ReturnState.Secondary;
   }
 
   // Did the user tell us they are using meat baits.
@@ -26,11 +26,11 @@ const meatBaitController = (request) => {
 
     // If this is a renewal go back to the renewal-check-answers page.
     if (request.session.isRenewal) {
-      return ReturnState.Secondary;
+      return ReturnState.Tertiary;
     }
 
-    // Follow the positive path (actually the same direction as negative).
-    return ReturnState.Positive;
+    // Follow the primary path (actually the same direction as secondary).
+    return ReturnState.Primary;
   }
 
   // The user submitted the form without selecting an option, this is an error!

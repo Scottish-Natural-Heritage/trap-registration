@@ -16,7 +16,7 @@ const addressController = async (request) => {
   // manual details page.
   if (invalidUprn || request.body.addressFound === 'no') {
     // Continue to manual address page.
-    return ReturnState.Negative;
+    return ReturnState.Secondary;
   }
 
   try {
@@ -68,8 +68,13 @@ const addressController = async (request) => {
     console.log('Error finding address: ' + error);
   }
 
+  // If this is a renewal go back to the renewal-check-answers page.
+  if (request.session.isRenewal) {
+    return ReturnState.Tertiary;
+  }
+
   // Continue onwards.
-  return ReturnState.Positive;
+  return ReturnState.Primary;
 };
 
 export {addressController as default};
