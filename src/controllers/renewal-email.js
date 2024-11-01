@@ -33,7 +33,7 @@ const renewalEmailController = async (request) => {
   // client-response if something goes wrong. They should always just get the OK
   // page anyway. We'll log the error for review later.
   try {
-    await axios.post(config.apiEndpoint + '/v2/registrations/renewalEmailCheck', {
+    await axios.post(config.apiEndpoint + '/v2/registrations/renewal-email-check', {
       params: {
         email: request.session.email,
         redirectBaseUrl: `${config.hostPrefix}${config.pathPrefix}/renewal-login?token=`
