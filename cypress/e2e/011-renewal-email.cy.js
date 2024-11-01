@@ -1,6 +1,6 @@
-describe('Renewal postcode page ', function () {
+describe('Renewal email page ', function () {
   it('should prevent access', function () {
-    cy.visit('/renewal-postcode', {failOnStatusCode: false});
+    cy.visit('/renewal-email', {failOnStatusCode: false});
     cy.get('h1').should('contain', 'there is a problem with the service');
   });
 });
@@ -11,45 +11,42 @@ describe('Move to next page', function () {
 
     cy.get('h1').should('contain', 'Renew a trap registration');
     cy.get('#main-content form button.naturescot-forward-button').click();
-
-    cy.get('h1').should('contain', 'What is the registration number?');
-    cy.get('#main-content form button.naturescot-forward-button').click();
   });
 
   it('should allow access if the user visits all the pages in order', function () {
-    cy.visit('/renewal-postcode');
-    cy.get('h1').should('contain', 'What is your postcode?');
+    cy.visit('/renewal-email');
+    cy.get('h1').should('contain', 'What is your email address?');
   });
 
   it('should display error if the user submits an empty form', function () {
-    cy.visit('/renewal-postcode');
-    cy.get('h1').should('contain', 'What is your postcode?');
+    cy.visit('/renewal-email');
+    cy.get('h1').should('contain', 'What is your email address?');
 
     cy.get('#main-content form button.naturescot-forward-button').click();
 
     cy.get('h2#error-summary-title').should('contain', 'There is a problem');
 
-    cy.get('.govuk-error-summary ul li a').should('contain', 'Enter your postcode');
+    cy.get('.govuk-error-summary ul li a').should('contain', 'Enter a valid email address');
   });
 
-  it('should display error if the user submits an invalid postcode', function () {
-    cy.visit('/renewal-postcode');
-    cy.get('h1').should('contain', 'What is your postcode?');
+  it('should display error if the user submits an invalid email address', function () {
+    cy.visit('/renewal-email');
+    cy.get('h1').should('contain', 'What is your email address?');
 
-    cy.get('input[type="text"]#postcode').type('NOTAVALIDPOSTCODE', {delay: 1});
+    cy.get('input[type="text"]#email').type('NOTVALIDEMAIL', {delay: 1});
 
     cy.get('#main-content form button.naturescot-forward-button').click();
 
     cy.get('h2#error-summary-title').should('contain', 'There is a problem');
 
-    cy.get('.govuk-error-summary ul li a').should('contain', 'Enter your postcode');
+    cy.get('.govuk-error-summary ul li a').should('contain', 'Enter a valid email address');
   });
 
   it('should navigate to address page on valid form submission', function () {
-    cy.visit('/renewal-postcode');
-    cy.get('h1').should('contain', 'What is your postcode?');
+    cy.visit('/renewal-email');
+    cy.get('h1').should('contain', 'What is your email address?');
 
-    cy.get('input[type="text"]#postcode').type('IV3 8NW', {delay: 1});
+    cy.get('input[type="text"]#email').type('test@test.com', {delay: 1});
 
     cy.get('#main-content form button.naturescot-forward-button').click();
 
