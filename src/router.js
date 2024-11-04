@@ -201,7 +201,7 @@ router.use(
 router.use(
   Page({
     path: 'renewal-confirm-email',
-    back: 'details',
+    back: 'renewal-details',
     positiveForward: 'renewal-check-answers',
     controller: confirmEmailController,
     template: 'confirm-email'
