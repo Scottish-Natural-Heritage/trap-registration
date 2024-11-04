@@ -151,7 +151,7 @@ router.use(
 router.use(
   Page({
     path: 'renewal-intro',
-    positiveForward: 'renewal-email',
+    primaryForward: 'renewal-email',
     controller: RenewalIntroController
   })
 );
@@ -160,7 +160,7 @@ router.use(
   Page({
     path: 'renewal-email',
     back: 'renewal-intro',
-    positiveForward: 'renewal-email-success',
+    primaryForward: 'renewal-email-success',
     controller: RenewalEmailController
   })
 );
@@ -169,7 +169,7 @@ router.use(
   Page({
     path: 'renewal-email-success',
     back: 'renewal-email',
-    positiveForward: 'renewal-login',
+    primaryForward: 'renewal-login',
     controller: RenewalEmailSuccessController
   })
 );
