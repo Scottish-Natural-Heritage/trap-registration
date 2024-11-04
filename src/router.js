@@ -193,7 +193,8 @@ router.use(
     path: 'renewal-details',
     back: 'renewal-check-answers',
     positiveForward: 'renewal-confirm-email',
-    controller: DetailsController
+    controller: DetailsController,
+    template: 'details'
   })
 );
 
@@ -202,7 +203,8 @@ router.use(
     path: 'renewal-confirm-email',
     back: 'details',
     positiveForward: 'renewal-check-answers',
-    controller: confirmEmailController
+    controller: confirmEmailController,
+    template: 'confirm-email'
   })
 );
 
@@ -211,7 +213,8 @@ router.use(
     path: 'renewal-postcode',
     back: 'renewal-check-answers',
     positiveForward: 'renewal-address',
-    controller: PostcodeController
+    controller: PostcodeController,
+    template: 'postcode'
   })
 );
 
@@ -221,7 +224,8 @@ router.use(
     back: 'renewal-postcode',
     positiveForward: 'renewal-check-answers',
     negativeForward: 'renewal-manual-address',
-    controller: AddressController
+    controller: AddressController,
+    template: 'address'
   })
 );
 
@@ -230,7 +234,8 @@ router.use(
     path: 'renewal-manual-address',
     back: 'renewal-address',
     positiveForward: 'renewal-check-answers',
-    controller: ManualAddressController
+    controller: ManualAddressController,
+    template: 'manual-address'
   })
 );
 
@@ -240,7 +245,8 @@ router.use(
     back: 'renewal-check-answers',
     positiveForward: 'renewal-check-answers',
     negativeForward: 'renewal-conviction-stop',
-    controller: ConvictionController
+    controller: ConvictionController,
+    template: 'conviction'
   })
 );
 
@@ -249,7 +255,8 @@ router.use(
     path: 'renewal-general',
     back: 'renewal-check-answers',
     positiveForward: 'renewal-check-answers',
-    controller: GeneralController
+    controller: GeneralController,
+    template: 'general'
   })
 );
 
@@ -259,7 +266,8 @@ router.use(
     back: 'renewal-check-answers',
     positiveForward: 'renewal-check-answers',
     negativeForward: 'renewal-check-answers',
-    controller: MeatbaitController
+    controller: MeatbaitController,
+    template: 'meat-bait'
   })
 );
 

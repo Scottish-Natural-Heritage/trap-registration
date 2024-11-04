@@ -69,8 +69,8 @@ const guardAllows = (session, options) => {
  */
 const renderPage = (request, response, options) => {
   if (guardAllows(request.session, options)) {
-    saveVisitedPage(request.session, options.path);
-    response.render(`${options.path}.njk`, {
+    saveVisitedPage(request.session, options.template ?? options.path);
+    response.render(`${options.template ?? options.path}.njk`, {
       hostPrefix: config.hostPrefix,
       pathPrefix: config.pathPrefix,
       backUrl: options.back,
@@ -125,6 +125,7 @@ const saveLoginToken = (request) => {
  * @param {String} [options.positiveForward] The path to the next page if the controller's opinion is positive.
  * @param {String} [options.negativeForward] The path to the next page if the controller's opinion is negative.
  * @param {Function} [options.controller] The logic
+ * @param {String} [options.template] The template to use if not specified in path.
  * @returns {Router} An express Router middleware.
  */
 const Page = (options) => {
