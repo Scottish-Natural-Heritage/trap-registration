@@ -70,7 +70,7 @@ const guardAllows = (session, options) => {
 const renderPage = (request, response, options) => {
   if (guardAllows(request.session, options)) {
     saveVisitedPage(request.session, options.path);
-    response.render(`${options.path}.njk`, {
+    response.render(`${(options.path.replace(/(renewal-)$/), '')}.njk`, {
       hostPrefix: config.hostPrefix,
       pathPrefix: config.pathPrefix,
       backUrl: options.back,
@@ -100,6 +100,19 @@ const ReturnState = Object.freeze({
 });
 
 /**
+ * Save any login tokens to the user's session.
+ *
+ * @param {Request} request An express Request object.
+ * @param {any} request.session The visitor's session.
+ */
+const saveLoginToken = (request) => {
+  const {token} = request.query;
+  if (token !== undefined) {
+    request.session.token = token;
+  }
+};
+
+/**
  * A Router/Controller Factory returning an express Router based middleware that
  * can render pages, handle links and process per-page controllers.
  *
@@ -118,6 +131,11 @@ const Page = (options) => {
   const router = express.Router();
 
   router.get(`${config.pathPrefix}/${options.path}`, (request, response) => {
+    // Save the user's login token.
+    if (options.path === 'renewal-login') {
+      saveLoginToken(request);
+    }
+
     renderPage(request, response, options);
   });
 
