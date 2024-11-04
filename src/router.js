@@ -12,8 +12,7 @@ import PostcodeController from './controllers/postcode.js';
 import AddressController from './controllers/address.js';
 import ManualAddressController from './controllers/manual-address.js';
 import RenewalIntroController from './controllers/renewal-intro.js';
-import RenewalRegistrationController from './controllers/renewal-registration.js';
-import RenewalPostcodeController from './controllers/renewal-postcode.js';
+import RenewalEmailController from './controllers/renewal-email.js';
 import RenewalEmailSuccessController from './controllers/renewal-email-success.js';
 import renewalLoginController from './controllers/renewal-login.js';
 import RenewalCheckAnswersController from './controllers/renewal-check-answers.js';
@@ -149,38 +148,28 @@ router.use(
 );
 
 // Renewal start pages
-
 router.use(
   Page({
     path: 'renewal-intro',
-    primaryForward: 'renewal-registration',
+    positiveForward: 'renewal-email',
     controller: RenewalIntroController
   })
 );
 
 router.use(
   Page({
-    path: 'renewal-registration',
+    path: 'renewal-email',
     back: 'renewal-intro',
-    primaryForward: 'renewal-postcode',
-    controller: RenewalRegistrationController
-  })
-);
-
-router.use(
-  Page({
-    path: 'renewal-postcode',
-    back: 'renewal-registration',
-    primaryForward: 'renewal-email-success',
-    controller: RenewalPostcodeController
+    positiveForward: 'renewal-email-success',
+    controller: RenewalEmailController
   })
 );
 
 router.use(
   Page({
     path: 'renewal-email-success',
-    back: 'renewal-postcode',
-    primaryForward: 'renewal-login',
+    back: 'renewal-email',
+    positiveForward: 'renewal-login',
     controller: RenewalEmailSuccessController
   })
 );
