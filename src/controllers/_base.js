@@ -69,7 +69,7 @@ const guardAllows = (session, options) => {
  */
 const renderPage = (request, response, options) => {
   if (guardAllows(request.session, options)) {
-    saveVisitedPage(request.session, options.template ?? options.path);
+    saveVisitedPage(request.session, options.path);
     response.render(`${options.template ?? options.path}.njk`, {
       hostPrefix: config.hostPrefix,
       pathPrefix: config.pathPrefix,
