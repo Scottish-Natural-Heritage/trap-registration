@@ -65,6 +65,7 @@ const guardAllows = (session, options) => {
  * @param {Response} res An express Response object.
  * @param {Object} options An object containing this page's options.
  * @param {String} options.path The path to this page.
+ * @param {String} options.template An optional template to use.
  * @param {String} [options.back] The path to the previous page.
  */
 const renderPage = (request, response, options) => {
@@ -124,8 +125,7 @@ const saveLoginToken = (request) => {
  * @param {String} [options.back] The path to the previous page.
  * @param {String} [options.positiveForward] The path to the next page if the controller's opinion is positive.
  * @param {String} [options.negativeForward] The path to the next page if the controller's opinion is negative.
- * @param {Function} [options.controller] The logic
- * @param {String} [options.template] The template to use if not specified in path.
+ * @param {Function} [options.controller] The logic.
  * @returns {Router} An express Router middleware.
  */
 const Page = (options) => {

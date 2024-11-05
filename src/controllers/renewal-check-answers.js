@@ -42,8 +42,8 @@ const renewalCheckAnswersController = async (request) => {
       uuid: request.session.uuid
     };
 
-    // Not sure what the renewal endpoint is yet...
-    const newRenewalResponse = await axios.post(config.apiEndpoint + '/v2/renewal', renewal);
+    // Need to set the `registrationId`.
+    const newRenewalResponse = await axios.post(config.apiEndpoint + `/v2/registrations/${registrationId}/renew`, renewal);
 
     if (newRenewalResponse.data) {
       request.session.regNo = `NS-TRP-${String(newRenewalResponse.data.id).padStart(5, '0')}`;
