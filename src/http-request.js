@@ -44,7 +44,7 @@ const postReturnResponse = {
   statusText: 'OK',
   data: {},
   headers: {
-    location: config.apiEndpoint + '/registrations/-1/renewal/-1'
+    location: config.apiEndpoint + '/v2/registrations/-1/renewal/-1'
   },
   config: {},
   request: undefined
@@ -128,7 +128,7 @@ const mockAxios = {
    * @returns {Promise<any>} A fake response.
    */
   async post(url) {
-    if (url.startsWith(config.apiEndpoint + '/registrations/') && url.endsWith('/renewal')) {
+    if (url.startsWith(config.apiEndpoint + '/v2/registrations/') && url.endsWith('/renewal')) {
       return postReturnResponse;
     }
 
@@ -146,7 +146,7 @@ const mockAxios = {
    * @returns {Promise<any>} A fake response.
    */
   async put(url, body) {
-    if (url.startsWith(config.apiEndpoint + '/registrations/') && url.includes('/renewal/')) {
+    if (url.startsWith(config.apiEndpoint + '/v2/registrations/') && url.includes('/renewal/')) {
       // Copy the body back to the response so the linters don't complain about
       // unused parameters.
       const response = putReturnResponse;
