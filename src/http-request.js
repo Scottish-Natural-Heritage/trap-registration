@@ -2,7 +2,7 @@
 import process from 'node:process';
 import axios from 'axios';
 import config from './config.js';
-import { monthsFromNow } from './utils/dateUtils.js';
+import {monthsFromNow} from './utils/date-utils.js';
 
 const generalError = {
   status: 500,
@@ -62,7 +62,7 @@ const putReturnResponse = {
 };
 
 const registrationResponse = {
-  id: 79553,
+  id: 79_553,
   convictions: false,
   usingGL01: false,
   usingGL02: true,

@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import jwkToPem from 'jwk-to-pem';
 import config from '../config.js';
 import axios from '../http-request.js';
-import { monthsFromNow, yearsAgo } from '../utils/dateUtils.js';
+import {monthsFromNow, yearsAgo} from '../utils/date-utils.js';
 
 /**
  * Get the TR-API's public key.
@@ -59,13 +59,13 @@ const formatDateForDisplay = (date) => {
 };
 
 const getRenewalStatus = (date) => {
-  const renewLink = `${config.pathPrefix}/renewal-success`
+  const renewLink = `${config.pathPrefix}/renewal-success`;
 
   if (date < monthsFromNow(3) && date > yearsAgo(3)) {
     return `<a class="govuk-link" href="${renewLink}">Renew</a>`;
   }
 
-  return "Renewal unavailable"
+  return 'Renewal unavailable';
 };
 
 const getController = async (request) => {
@@ -76,7 +76,6 @@ const getController = async (request) => {
     const validatedToken = await validateToken(request.session, token);
     session.loggedInRegNo = validatedToken.sub;
   }
-
 
   try {
     const url = `${config.apiEndpoint}/v2/registrations/${session.loggedInRegNo}?idType=email`;
@@ -98,7 +97,7 @@ const getController = async (request) => {
   }
 };
 
-const postController = async (request) => {};
+const postController = async (_request) => {};
 
 const renewalLoginController = {
   get: getController,

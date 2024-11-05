@@ -70,13 +70,12 @@ const guardAllows = (session, options) => {
 const renderPage = (request, response, options, values) => {
   if (guardAllows(request.session, options)) {
     saveVisitedPage(request.session, options.path);
-    response.render(`${options.path}.njk`, 
-      {
-        ...values,
-        hostPrefix: config.hostPrefix,
-        pathPrefix: config.pathPrefix,
-        backUrl: options.back,
-        model: request.session
+    response.render(`${options.path}.njk`, {
+      ...values,
+      hostPrefix: config.hostPrefix,
+      pathPrefix: config.pathPrefix,
+      backUrl: options.back,
+      model: request.session
     });
     return;
   }
@@ -121,12 +120,12 @@ const Page = (options) => {
 
   router.get(`${config.pathPrefix}/${options.path}`, async (request, response) => {
     let values;
-    
-    if(options.getController) {
+
+    if (options.getController) {
       values = await options.getController(request);
     }
-    
-    console.log("🚀 ~ router.get ~ values:", values.registrations)
+
+    console.log('🚀 ~ router.get ~ values:', values.registrations);
     renderPage(request, response, options, values);
   });
 
