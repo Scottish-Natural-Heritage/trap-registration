@@ -125,7 +125,6 @@ const Page = (options) => {
       values = await options.getController(request);
     }
 
-    console.log('🚀 ~ router.get ~ values:', values.registrations);
     renderPage(request, response, options, values);
   });
 
