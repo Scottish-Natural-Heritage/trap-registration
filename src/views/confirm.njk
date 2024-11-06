@@ -8,9 +8,9 @@
 
 {% set confirmationHtml %}
   <ul class="govuk-list govuk-list--bullet">
-    <li>The information I've provided is up-to-date and correct</li>
-    <li>I agree to comply with the terms and conditions of the General Licences</li>
-    <li>I agree with the <a class="govuk-link" href="{{pathPrefix}}/privacy-policy" target="_blank">privacy policy</a> of this service</li>
+    <li>the information provided is correct and up to date</li>
+    <li>I will comply with the terms and conditions of the general licences</li>
+    <li>I agree with the <a class="govuk-link" href="/cross-service-pages/privacy-policy" target="_blank">privacy policy</a> of this service</li>
   </ul>
 {% endset %}
 
@@ -21,22 +21,21 @@
       titleText: "There is a problem",
       errorList: [
         {
-          text: "You must confirm the information you have provided is up-to-date and correct and you agree with the privacy policy",
+          text: "You must confirm the information provided is correct and up to date and you agree with the privacy policy",
           href: "#confirm-declaration"
         } if model.missingConfirmValue,
         {
-          text: "An error has occurred creating the registration - please try again",
+          text: "An error has occurred creating the application - please try again",
           href: "#"
         } if model.apiError
       ]
     }) }}
   {% endif %}
 
-  <h1 class="govuk-heading-xl">Check your answers before sending your registration</h1>
+  <h1 class="govuk-heading-xl">Check your answers before sending your application</h1>
 
   {{ govukWarningText({
-    text: "Check your answers carefully before submitting and ensure all contact details are correct. " +
-          "If any details are incorrect it will delay the processing of the application.",
+    text: "Check for errors before you submit this form. It will take us longer to process your application if you enter incorrect details.",
     iconFallbackText: "Warning"
   }) }}
 
@@ -46,7 +45,7 @@
     rows: [
       {
         key: {
-          text: "Name"
+          text: "Full name"
         },
         value: {
           text: model.fullName
@@ -80,7 +79,7 @@
       },
       {
         key: {
-          text: "Phone number"
+          text: "Telephone number"
         },
         value: {
           html: model.phoneNumber
@@ -121,7 +120,7 @@
     rows: [
       {
         key: {
-          text: "Criminal Convictions"
+          text: "Wildlife crime"
         },
         value: {
           text: "I have not been convicted of a wildlife crime" if model.conviction === false
@@ -172,7 +171,7 @@
       },
       {
         key: {
-          text: "Meat Baits"
+          text: "Meat baits"
         },
         value: {
           text: "I intend to use meat baits" if model.meatBait else "I do not intend to use meat baits"

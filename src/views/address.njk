@@ -14,7 +14,7 @@
       name: "address",
       classes: "govuk-!-width-three-quarters",
       label: {
-        text: "Address"
+        text: "We've found the following addresses at this postcode:"
       },
       items: model.uprnAddresses
     }) }}
@@ -33,7 +33,7 @@
 
     <input type="hidden" name="address" value="0">
     {{ govukButton({
-      text: "Address not found",
+      text: "Enter address manually",
       classes: "govuk-button--secondary",
       name:"addressFound",
       value:"no",

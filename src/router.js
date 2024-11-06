@@ -6,13 +6,13 @@ import ConvictionController from './controllers/conviction.js';
 import GeneralController from './controllers/general.js';
 import MeatbaitController from './controllers/meat-bait.js';
 import DetailsController from './controllers/details.js';
+import confirmEmailController from './controllers/confirm-email.js';
 import ConfirmController from './controllers/confirm.js';
 import PostcodeController from './controllers/postcode.js';
 import AddressController from './controllers/address.js';
 import ManualAddressController from './controllers/manual-address.js';
 import RenewalIntroController from './controllers/renewal-intro.js';
-import RenewalRegistrationController from './controllers/renewal-registration.js';
-import RenewalPostcodeController from './controllers/renewal-postcode.js';
+import RenewalEmailController from './controllers/renewal-email.js';
 import RenewalEmailSuccessController from './controllers/renewal-email-success.js';
 import renewalLoginController from './controllers/renewal-login.js';
 import RenewalCheckAnswersController from './controllers/renewal-check-answers.js';
@@ -64,15 +64,24 @@ router.use(
   Page({
     path: 'details',
     back: 'meat-bait',
-    positiveForward: 'postcode',
+    positiveForward: 'confirm-email',
     controller: DetailsController
   })
 );
 
 router.use(
   Page({
-    path: 'postcode',
+    path: 'confirm-email',
     back: 'details',
+    positiveForward: 'postcode',
+    controller: confirmEmailController
+  })
+);
+
+router.use(
+  Page({
+    path: 'postcode',
+    back: 'confirm-email',
     positiveForward: 'address',
     controller: PostcodeController
   })
@@ -125,12 +134,6 @@ router.use(
   })
 );
 
-router.use(
-  Page({
-    path: 'privacy-policy'
-  })
-);
-
 // Renewal start pages
 
 const allowedHostPrefixes = [
@@ -144,33 +147,24 @@ if (allowedHostPrefixes.includes(config.hostPrefix)) {
   router.use(
     Page({
       path: 'renewal-intro',
-      positiveForward: 'renewal-registration',
+      positiveForward: 'renewal-email',
       controller: RenewalIntroController
     })
   );
 
   router.use(
     Page({
-      path: 'renewal-registration',
+      path: 'renewal-email',
       back: 'renewal-intro',
-      positiveForward: 'renewal-postcode',
-      controller: RenewalRegistrationController
-    })
-  );
-
-  router.use(
-    Page({
-      path: 'renewal-postcode',
-      back: 'renewal-registration',
       positiveForward: 'renewal-email-success',
-      controller: RenewalPostcodeController
+      controller: RenewalEmailController
     })
   );
 
   router.use(
     Page({
       path: 'renewal-email-success',
-      back: 'renewal-postcode',
+      back: 'renewal-email',
       positiveForward: 'renewal-login',
       controller: RenewalEmailSuccessController
     })

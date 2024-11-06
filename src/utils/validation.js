@@ -1,3 +1,23 @@
+import {recipients} from 'naturescot-utils';
+
+/**
+ * Check whether a string looks like a valid email address.
+ *
+ * @param {string | undefined} emailAddress User input that should hopefully look like an email address.
+ * @returns {boolean} `true` if the email address looks fine, otherwise `false`.
+ */
+const validEmailAddress = (emailAddress) => {
+  // The validateEmailAddress method is a port from GDS' python library whose
+  // API returns if valid and throws if invalid. We wrap this here to return
+  // true or false instead.
+  try {
+    recipients.validateEmailAddress(emailAddress ?? '');
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 // A list of characters we do not allow the user to supply as input.
 const invalidCharacters = ['<', '>', '%', '/', '#', ':', '{', '}', '[', ']', '+', '=', '|', '*', '&'];
 
@@ -26,6 +46,6 @@ const hasInvalidCharacters = (userInput, invalidCharacters) => {
   return false;
 };
 
-const validationUtils = {hasInvalidCharacters, invalidCharacters};
+const validationUtils = {hasInvalidCharacters, invalidCharacters, validEmailAddress};
 
 export default validationUtils;

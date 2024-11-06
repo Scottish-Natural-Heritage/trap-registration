@@ -5,79 +5,77 @@
 {% from "govuk/components/accordion/macro.njk" import govukAccordion %}
 {% block content %}
 
-    <h1 class="govuk-heading-xl">Renew a trap registration</h1>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <p class="govuk-body">Use this service to renew an existing trap registration for:</p>
+	<h1 class="govuk-heading-xl">Apply for trap renewals</h1>
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<p class="govuk-body">Use this service to renew trap registration under general licence (GL01 and GLO2) for:</p>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li>Larsen trap</li>
-        <li>Larsen mate trap</li>
-        <li>Larsen pod trap</li>
-        <li>multi-catch cage trap</li>
-      </ul>
+			<ul class="govuk-list govuk-list--bullet">
+				<li>Larsen trap</li>
+				<li>Larsen mate trap</li>
+				<li>Larsen pod trap</li>
+				<li>multi-catch cage trap</li>
+			</ul>
 
-      <p class="govuk-body">These traps can be used under <a class="govuk-link" href="https://www.nature.scot/professional-advice/protected-areas-and-species/licensing/species-licensing-z-guide/birds/general-licences-birds">NatureScot's General Licences</a>:</p>
+			<p class="govuk-body">
+				<a class="govuk-link" href="https://www.nature.scot/professional-advice/protected-areas-and-species/licensing/species-licensing-z-guide/birds/general-licences-birds">View general licences for birds.</a>
+			</p>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li>GL01 - To kill or take certain birds for the conservation of wild birds</li>
-        <li>GL02 - To kill or take certain birds for the prevention of serious damage</li>
-      </ul>
+			<h2 class="govuk-heading-m">Who can apply</h2>
 
-      <p class="govuk-body">You must use a different service to <a class="govuk-link" href="https://licensing.nature.scot/trap-registration/start">apply for a new trap registration</a>.</p>
+			<p class="govuk-body">This service is for existing registration holders. You must use a different service to <a class="govuk-link" href="https://licensing.nature.scot/trap-registration/start">apply for a new trap registration</a>.</p>
 
-      <form method="post">
-        {{ govukButton({
+			<h2 class="govuk-heading-m">Trap registrations are changing</h2>
+
+			<p class="govuk-body">A new licence is being introduced by the Wildlife Management and Muirburn (Scotland) Act 2024.</p>
+
+			<p class="govuk-body">In future, you will need to complete a training course before applying for a wildlife trap licence to use traps to catch birds or spring traps to catch mammals.</p>
+
+			<p class="govuk-body">Until the new licence is launched (expected in 2025), we will only issue temporary trap registrations for the use of Larsen Traps, Larsen Mate Traps, Larsen Pod Traps and multi-catch crow traps under our General Licences.</p>
+
+			<p class="govuk-body">
+				<a href="https://www.nature.scot/professional-advice/protected-areas-and-species/licensing/trap-registration">
+        Find out more about trap registration</a>.
+    	</p>
+
+			<form method="post">
+				{{ govukButton({
         text: "Start now",
         classes: "govuk-!-margin-top-2 govuk-!-margin-bottom-8 naturescot-forward-button",
         isStartButton: true
       }) }}
-      </form>
+			</form>
 
-	  <h3 class="govuk-heading-s">
+			<h3 class="govuk-heading-s">
         Contact us
       </h3>
-      <p class="govuk-body">
-        If you need assistance with this service, contact the NatureScot Licensing Team
+			<p class="govuk-body">
+        Contact our Licensing team if you need help completing this form.
       </p>
 
-      <h3 class="govuk-heading-s">
+			<h3 class="govuk-heading-s">
         Email
       </h3>
 
-      <ul class="govuk-list">
-        <li>
-          <a class="govuk-link" href="mailto:licensing@nature.scot">
-            licensing@nature.scot
-          </a>
-        </li>
-        <li>
-          We aim to respond within 2 working days.
-        </li>
-      </ul>
+			<p class="govuk-body">licensing@nature.scot</p>
 
-      <h3 class="govuk-heading-s">
+			<h3 class="govuk-heading-s">
         Telephone
       </h3>
 
-      <ul class="govuk-list">
-        <li>
-          01463 725 364
-        </li>
-        <li>
-          Voicemail service. We aim to respond within 2 working days.
-        </li>
-      </ul>
+			<p class="govuk-body">01463 725 364</p>
 
-      <p class="govuk-body">
-        <a class="govuk-link" href="https://www.gov.uk/call-charges">
+			<p class="govuk-body">Monday to Friday, 10am to 4pm (except public holidays).</p>
+
+			<p class="govuk-body">
+				<a class="govuk-link" href="https://www.gov.uk/call-charges">
           Find out about call charges
         </a>
-      </p>
-    </div>
+			</p>
+		</div>
 
-    <div class="govuk-grid-column-one-third">
-      {{ govukAccordion({
+		<div class="govuk-grid-column-one-third">
+			{{ govukAccordion({
       id: "startTrapExplanations",
       items: [
         {
@@ -86,7 +84,7 @@
           },
           content: {
             html: '' +
-              '<img src="/assets/traps-larsen.jpg" alt="A Larsen trap">' +
+              '<img src="dist/traps-larsen.jpg" alt="A Larsen trap">' +
               '<p class="govuk-body-s">&copy; The Game &amp; Wildlife Conservation Trust</p>' +
               '<p class="govuk-body">' +
               '  A portable cage-trap with a closed compartment to confine a live bird as a decoy.' +
@@ -102,7 +100,7 @@
           },
           content: {
             html: '' +
-              '<img src="/assets/traps-larsen-mate.jpg" alt="A Larsen mate trap">' +
+              '<img src="dist/traps-larsen-mate.jpg" alt="A Larsen mate trap">' +
               '<p class="govuk-body-s">&copy; The Game &amp; Wildlife Conservation Trust</p>' +
               '<p class="govuk-body">' +
               '  A portable spring-operated cage-trap made up of two shell sections hinged along one edge.' +
@@ -119,7 +117,7 @@
           },
           content: {
             html: '' +
-              '<img src="/assets/traps-larsen-pod.jpg" alt="A Larsen pod trap">' +
+              '<img src="dist/traps-larsen-pod.jpg" alt="A Larsen pod trap">' +
               '<p class="govuk-body-s">&copy; The Game &amp; Wildlife Conservation Trust</p>' +
               '<p class="govuk-body">' +
               '  A portable spring or gravity operated cage-trap.' +
@@ -134,7 +132,7 @@
           },
           content: {
             html: '' +
-              '<img src="/assets/traps-multi-catch.jpg" alt="A multi-catch cage trap">' +
+              '<img src="dist/traps-multi-catch.jpg" alt="A multi-catch cage trap">' +
               '<p class="govuk-body-s">&copy; The Game &amp; Wildlife Conservation Trust</p>' +
               '<p class="govuk-body">' +
               '  A cage large enough to be entered by the operator.' +
@@ -145,8 +143,7 @@
         }
       ]
     })}}
-    <a class="govuk-link govuk-link--no-visited-state govuk-!-font-size-16" href="#top-of-page">Back to top</a>
-    </div>
-  </div>
+		</div>
+	</div>
 
 {% endblock %}
