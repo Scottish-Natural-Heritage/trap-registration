@@ -174,7 +174,8 @@ if (allowedHostPrefixes.includes(config.hostPrefix)) {
     Page({
       path: 'renewal-login',
       positiveForward: 'renewal-check-answers',
-      controller: renewalLoginController
+      controller: renewalLoginController.post,
+      getController: renewalLoginController.get
     })
   );
 
