@@ -96,7 +96,8 @@ const renderPage = (request, response, options) => {
 const ReturnState = Object.freeze({
   Positive: 1,
   Negative: 2,
-  Error: 3
+  Error: 3,
+  CheckAnswers: 4
 });
 
 /**
@@ -118,6 +119,11 @@ const Page = (options) => {
   const router = express.Router();
 
   router.get(`${config.pathPrefix}/${options.path}`, (request, response) => {
+    // Every time the query param returnToCheckAnswers is added, add it to the session
+    if ((request.query.returnToCheckAnswers &&= true)) {
+      request.session.returnToCheckAnswers = true;
+    }
+
     renderPage(request, response, options);
   });
 
@@ -125,12 +131,25 @@ const Page = (options) => {
     let decision;
     try {
       decision = await options.controller(request, options);
-      if (decision === ReturnState.Positive) {
-        response.redirect(`${config.pathPrefix}/${options.positiveForward}`);
-      } else if (decision === ReturnState.Negative) {
-        response.redirect(`${config.pathPrefix}/${options.negativeForward}`);
-      } else {
-        renderPage(request, response, options);
+      switch (decision) {
+        case ReturnState.Positive: {
+          response.redirect(`${config.pathPrefix}/${options.positiveForward}`);
+          break;
+        }
+
+        case ReturnState.Negative: {
+          response.redirect(`${config.pathPrefix}/${options.negativeForward}`);
+          break;
+        }
+
+        case ReturnState.CheckAnswers: {
+          response.redirect(`${config.pathPrefix}/confirm`);
+          break;
+        }
+
+        default: {
+          renderPage(request, response, options);
+        }
       }
     } catch (error) {
       console.log(error);
