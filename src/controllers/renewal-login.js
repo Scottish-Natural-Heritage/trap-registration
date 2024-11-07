@@ -21,27 +21,21 @@ const getPublicKey = async () => {
  *
  * @param {any} session Our user's session object.
  * @param {string} session.token The user's saved login token.
- * @returns {boolean} True if the token is valid, false otherwise.
+ * @returns {boolean | string | jwt.JwtPayload} Token if the token is valid, false otherwise.
  */
 const validateToken = async (session, token) => {
   const publicKey = await getPublicKey();
   const publicKeyAsPem = jwkToPem(publicKey);
 
   try {
-    // Attempt to validate the user's saved login token.
     const validatedToken = jwt.verify(token, publicKeyAsPem, {algorithms: ['ES256']});
 
-    // Now that we've verified the token, we can save the user's registration
-    // number and clear the token.
     session.loggedInRegNo = validatedToken.sub;
 
-    // Tell the controller that the login is valid.
     return validatedToken;
   } catch (error) {
-    // If anything went wrong during validation, log the error.
     console.error({error});
 
-    // Tell the controller that the login is no good.
     return false;
   }
 };
@@ -83,14 +77,14 @@ const getController = async (request) => {
     const trapRegistrationData = trapRegistration.data;
 
     return {
-      registrations: [
-        [
-          {text: `NS-TRP-${trapRegistrationData.id}`},
-          {text: trapRegistrationData.addressPostcode},
-          {text: formatDateForDisplay(new Date(trapRegistrationData.expiryDate))},
-          {html: getRenewalStatus(new Date(trapRegistrationData.expiryDate))}
-        ]
-      ]
+      registrations: trapRegistrationData.map((registration) => {
+        return [
+          {text: `NS-TRP-${registration.id}`},
+          {text: registration.addressPostcode},
+          {text: formatDateForDisplay(new Date(registration.expiryDate))},
+          {html: getRenewalStatus(new Date(registration.expiryDate))}
+        ];
+      })
     };
   } catch (error) {
     console.error({error});
