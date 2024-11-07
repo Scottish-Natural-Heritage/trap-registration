@@ -35,7 +35,6 @@ const validateToken = async (session, token) => {
     return validatedToken;
   } catch (error) {
     console.error({error});
-
     return false;
   }
 };
