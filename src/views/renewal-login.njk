@@ -1,18 +1,55 @@
 {% extends "_base.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
-
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% block content %}
 
-  <h1 class="govuk-heading-xl">Renewal login</h1>
+  <h1 class="govuk-heading-xl">Select a trap to renew</h1>
 
-<form method="post">
+  <p class="govuk-body">Renewals are available for:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>current registrations due to expire in less than three months</li>
+    <li>previous registrations which expired less than three years ago</li>
+  </ul>
 
-    {{ govukButton({
-      text: "Continue",
-      classes: "naturescot-forward-button"
-    }) }}
+  {{ govukTable({
+    caption: "Trap registrations available to renew",
+    captionClasses: "govuk-table__caption--m",
+    firstCellIsHeader: true,
+    head: [
+      {
+        text: "Registration number"
+      },
+      {
+        text: "Postcode"
+      },
+      {
+        text: "Expiry date"
+      },
+      {
+        text: "Status"
+      }
+    ],
+    rows: registrations
+  }) }}
 
-  </form>
+  {{ govukDetails({
+    summaryText: "Help with renewals",
+    text: "A renewal is unavailable if the expiry date doesn't meet the above criteria. If you need help, or if something is missing, contact the licensing team."
+  }) }}
+
+  <div class="govuk-body">
+    <h2 class="govuk-heading-m">Email</h1>
+    <a class="govuk-link govuk-body" href="mailto:licensing@nature.scot">licensing@nature.scot</a>
+  </div>
+
+  <h2 class="govuk-heading-m">Telephone</h1>
+  <p class="govuk-body">
+    01463 725 364
+    Voicemail service. We aim to respond within 2 working days.
+  </p>
+  
+  <a class="govuk-link govuk-body" href="http://www.gov.uk/call-charges">Find out about call charges (gov.uk)</a>
 
 {% endblock %}

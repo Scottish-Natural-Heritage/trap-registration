@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import jwkToPem from 'jwk-to-pem';
 import config from '../config.js';
 import axios from '../http-request.js';
-import {ReturnState} from './_base.js';
+import {monthsFromNow, yearsAgo} from '../utils/date-utils.js';
 
 /**
  * Get the TR-API's public key.
@@ -21,64 +21,80 @@ const getPublicKey = async () => {
  *
  * @param {any} session Our user's session object.
  * @param {string} session.token The user's saved login token.
- * @returns {boolean} True if the token is valid, false otherwise.
+ * @returns {boolean | string | jwt.JwtPayload} Token if the token is valid, false otherwise.
  */
-const validateToken = async (session) => {
+const validateToken = async (session, token) => {
   const publicKey = await getPublicKey();
   const publicKeyAsPem = jwkToPem(publicKey);
 
   try {
-    // Attempt to validate the user's saved login token.
-    const validatedToken = jwt.verify(session.token, publicKeyAsPem, {algorithms: ['ES256']});
+    const validatedToken = jwt.verify(token, publicKeyAsPem, {algorithms: ['ES256']});
 
-    // Now that we've verified the token, we can save the user's registration
-    // number and clear the token.
     session.loggedInRegNo = validatedToken.sub;
-    session.token = '';
 
-    // Tell the controller that the login is valid.
-    return true;
+    return validatedToken;
   } catch (error) {
-    // If anything went wrong during validation, log the error.
     console.error({error});
-
-    // Tell the controller that the login is no good.
     return false;
   }
 };
 
-const renewalLoginController = async (request) => {
-  // The login page, like the start page is where our cookie banner is placed,
-  // so by progressing past this page, we know the user's seen the banner, so we
-  // don't need to show it again.
-  request.session.seenCookie = true;
-
-  const allowedHostPrefixes = [
-    'https://uat-licensing.nature.scot',
-    'https://dev-licensing.nature.scot',
-    'http://localhost:3000',
-    'http://localhost:3999'
-  ];
-
-  // If the host prefix is not listed, then prevent user from progressing.
-  if (!allowedHostPrefixes.includes(config.hostPrefix)) {
-    return ReturnState.Negative;
+const formatDateForDisplay = (date) => {
+  if (!date) {
+    return 'No data';
   }
 
-  // First of all, check if we've already logged in.
-  if (request.session.loggedInRegNo) {
-    // If so, go right ahead!
-    return ReturnState.Positive;
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = months[date.getMonth()];
+  const year = date.getFullYear().toString();
+  return `${day} ${month} ${year}`;
+};
+
+const getRenewalStatus = (date) => {
+  const renewLink = `${config.pathPrefix}/renewal-success`;
+
+  if (date < monthsFromNow(3) && date > yearsAgo(3)) {
+    return `<a class="govuk-link" href="${renewLink}">Renew</a>`;
   }
 
-  // If we're not already logged in, try to validate the supplied token.
-  if (await validateToken(request.session)) {
-    // If it validates, then we're golden!
-    return ReturnState.Positive;
+  return 'Renewal unavailable';
+};
+
+const getController = async (request) => {
+  const {session} = request;
+  const {token} = request.query;
+
+  if (!session.loggedInRegNo) {
+    const validatedToken = await validateToken(request.session, token);
+    session.loggedInRegNo = validatedToken.sub;
   }
 
-  // If it doesn't validate, or we've not got a token at all, then kick back.
-  return ReturnState.Negative;
+  try {
+    const url = `${config.apiEndpoint}/v2/registrations/${session.loggedInRegNo}?idType=email`;
+    const trapRegistration = await axios.get(url);
+    const trapRegistrationData = trapRegistration.data;
+
+    return {
+      registrations: trapRegistrationData.map((registration) => {
+        return [
+          {text: `NS-TRP-${registration.id}`},
+          {text: registration.addressPostcode},
+          {text: formatDateForDisplay(new Date(registration.expiryDate))},
+          {html: getRenewalStatus(new Date(registration.expiryDate))}
+        ];
+      })
+    };
+  } catch (error) {
+    console.error({error});
+  }
+};
+
+const postController = async (_request) => {};
+
+const renewalLoginController = {
+  get: getController,
+  post: postController
 };
 
 export {renewalLoginController as default};

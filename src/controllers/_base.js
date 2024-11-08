@@ -67,10 +67,11 @@ const guardAllows = (session, options) => {
  * @param {String} options.path The path to this page.
  * @param {String} [options.back] The path to the previous page.
  */
-const renderPage = (request, response, options) => {
+const renderPage = (request, response, options, values) => {
   if (guardAllows(request.session, options)) {
     saveVisitedPage(request.session, options.path);
     response.render(`${options.path}.njk`, {
+      ...values,
       hostPrefix: config.hostPrefix,
       pathPrefix: config.pathPrefix,
       backUrl: options.back,
@@ -117,8 +118,14 @@ const ReturnState = Object.freeze({
 const Page = (options) => {
   const router = express.Router();
 
-  router.get(`${config.pathPrefix}/${options.path}`, (request, response) => {
-    renderPage(request, response, options);
+  router.get(`${config.pathPrefix}/${options.path}`, async (request, response) => {
+    let values;
+
+    if (options.getController) {
+      values = await options.getController(request);
+    }
+
+    renderPage(request, response, options, values);
   });
 
   router.post(`${config.pathPrefix}/${options.path}`, async (request, response) => {
