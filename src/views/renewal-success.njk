@@ -8,7 +8,7 @@
 
 			{{ govukPanel({
         titleText: "Renewal complete",
-         html: "Reference number<br><strong> NS-TRP-" + licenceId + "</strong>"
+         html: "Reference number<br><strong> NS-TRP-" + model.registrationIdToRenew + "</strong>"
       }) }}
 
 			<h2 class="govuk-heading-m">What happens next</h2>
@@ -19,7 +19,7 @@
 
 			<h2 class="govuk-heading-m">Renew another registration</h2>
 
-			<p class="govuk-body"> If you have further registrations to renew, you can now <a href="/renewal-intro" class="govuk-link">begin another application</a>.
+			<p class="govuk-body"> If you have further registrations to renew, you can now <a href="/trap-registration/renewal-login" class="govuk-link">begin another application</a>.
 				</p>
 
 			<h3 class="govuk-heading-s">Email</h3>
