@@ -24,7 +24,7 @@ const formattedDateString = (dateString) => {
     const y = fullDate.getFullYear();
 
     return `${d}/${m}/${y}`;
-  } catch (error) {
+  } catch {
     return undefined;
   }
 };

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import config from '../config.js';
-import {ReturnState} from './_base.js';
 import {formattedDateString} from '../utils/date-utils.js';
+import {ReturnState} from './_base.js';
 
 const confirmController = async (request) => {
   // Grab the form as a json object.
