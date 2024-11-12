@@ -3,6 +3,11 @@ import config from '../config.js';
 import {ReturnState} from './_base.js';
 
 const renewalCheckAnswersController = async (request) => {
+  // Pass the registration id as a query param and set it into session for renewal.
+  request.session.registrationIdToRenew = request.query.id;
+
+  const registrationId = request.session.registrationIdToRenew;
+
   // Grab the form as a json object.
   const formData = request.body;
 
@@ -54,9 +59,6 @@ const renewalCheckAnswersController = async (request) => {
     } else {
       request.session.alreadyReceivedRenewal = true;
     }
-
-    // Pass the registration id as a query param and set it into session for renewal.
-    request.session.registrationIdToRenew = request.query.id;
 
     // Proceed to the next page.
     return ReturnState.Positive;
