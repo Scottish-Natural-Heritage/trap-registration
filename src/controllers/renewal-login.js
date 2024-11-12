@@ -54,7 +54,7 @@ const formatDateForDisplay = (date) => {
 const getRenewalStatus = (date, id) => {
   const renewLink = `${config.pathPrefix}/renewal-check-answers?id=${id}`;
 
-  if (date < monthsFromNow(3) && date > yearsAgo(3)) {
+  if (date && date < monthsFromNow(3) && date > yearsAgo(3)) {
     return `<a class="govuk-link" href="${renewLink}">Renew</a>`;
   }
 
@@ -77,11 +77,12 @@ const getController = async (request) => {
 
     return {
       registrations: trapRegistrationData.map((registration) => {
+        const expiryDate = registration.expiryDate ? new Date(registration.expiryDate) : undefined;
         return [
           {text: `NS-TRP-${registration.id}`},
           {text: registration.addressPostcode},
-          {text: formatDateForDisplay(new Date(registration.expiryDate))},
-          {html: getRenewalStatus(new Date(registration.expiryDate), registration.id)}
+          {text: formatDateForDisplay(expiryDate)},
+          {html: getRenewalStatus(expiryDate, registration.id)}
         ];
       })
     };
