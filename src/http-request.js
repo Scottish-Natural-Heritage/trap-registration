@@ -2,6 +2,7 @@
 import process from 'node:process';
 import axios from 'axios';
 import config from './config.js';
+import {monthsFromNow} from './utils/date-utils.js';
 
 const generalError = {
   status: 500,
@@ -60,6 +61,33 @@ const putReturnResponse = {
   request: undefined
 };
 
+const registrationResponse = {
+  id: 79_553,
+  convictions: false,
+  usingGL01: false,
+  usingGL02: true,
+  usingGL03: null,
+  complyWithTerms: true,
+  meatBaits: false,
+  fullName: 'Nature Scot',
+  addressLine1: 'Great Glen House',
+  addressLine2: '',
+  addressTown: 'Inverness',
+  addressCounty: '',
+  addressPostcode: 'IV3 8NW',
+  phoneNumber: '01463 725 000',
+  emailAddress: 'licensing@nature.scot',
+  createdByLicensingOfficer: null,
+  expiryDate: monthsFromNow(2),
+  uprn: '123456789',
+  createdAt: '2024-11-04T15:23:48.221Z',
+  updatedAt: '2024-11-04T15:23:48.221Z',
+  deletedAt: null,
+  Notes: [],
+  Revocation: null,
+  Returns: []
+};
+
 // This is unused, but is useful for building URLs for testing. As long as the
 // app is started with TR_TEST=true, then this token will validate as a 100
 // year long token for the trap registration number "-1".
@@ -79,6 +107,10 @@ const mockAxios = {
   async get(url) {
     if (url.endsWith('/trap-registration-api/v1/public-key')) {
       return publicKeyResponse;
+    }
+
+    if (url.startsWith(config.apiEndpoint + '/v2/registrations/') && url.endsWith('?idType=email')) {
+      return {data: [registrationResponse, registrationResponse]};
     }
 
     return generalError;

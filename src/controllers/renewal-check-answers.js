@@ -43,7 +43,10 @@ const renewalCheckAnswersController = async (request) => {
     };
 
     // Need to set the `registrationId`.
-    const newRenewalResponse = await axios.post(config.apiEndpoint + `/v2/registrations/${registrationId}/renew`, renewal);
+    const newRenewalResponse = await axios.post(
+      config.apiEndpoint + `/v2/registrations/${registrationId}/renew`,
+      renewal
+    );
 
     if (newRenewalResponse.data) {
       request.session.regNo = `NS-TRP-${String(newRenewalResponse.data.id).padStart(5, '0')}`;
@@ -52,8 +55,11 @@ const renewalCheckAnswersController = async (request) => {
       request.session.alreadyReceivedRenewal = true;
     }
 
-    // Let them know it all went well.
-    return ReturnState.Primary;
+    // Pass the registration id as a query param and set it into session for renewal.
+    request.session.registrationIdToRenew = request.query.id;
+
+    // Proceed to the next page.
+    return ReturnState.Positive;
   } catch (error) {
     // TODO: Do something useful with this error.
     console.log('Error creating renewal: ' + error);

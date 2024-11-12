@@ -62,6 +62,12 @@ const confirmEmailController = (request) => {
     request.session.emailAddress = emailChange;
   }
 
+  // If returnToCheckAnswers is still true, delete it and return to check answers
+  if (request.session.returnToCheckAnswers) {
+    delete request.session.returnToCheckAnswers;
+    return ReturnState.CheckAnswers;
+  }
+
   // The request passed all our validation, we've stored copies of everything we
   // need, so it's time to go on.
   return ReturnState.Positive;

@@ -68,10 +68,11 @@ const guardAllows = (session, options) => {
  * @param {String} options.template An optional template to use.
  * @param {String} [options.back] The path to the previous page.
  */
-const renderPage = (request, response, options) => {
+const renderPage = (request, response, options, values) => {
   if (guardAllows(request.session, options)) {
     saveVisitedPage(request.session, options.path);
     response.render(`${options.template ?? options.path}.njk`, {
+      ...values,
       hostPrefix: config.hostPrefix,
       pathPrefix: config.pathPrefix,
       backUrl: options.back,
@@ -97,7 +98,8 @@ const renderPage = (request, response, options) => {
 const ReturnState = Object.freeze({
   Positive: 1,
   Negative: 2,
-  Error: 3
+  Error: 3,
+  CheckAnswers: 4
 });
 
 /**
@@ -131,25 +133,49 @@ const saveLoginToken = (request) => {
 const Page = (options) => {
   const router = express.Router();
 
-  router.get(`${config.pathPrefix}/${options.path}`, (request, response) => {
+  router.get(`${config.pathPrefix}/${options.path}`, async (request, response) => {
     // Save the user's login token.
     if (options.path === 'renewal-login') {
       saveLoginToken(request);
     }
 
-    renderPage(request, response, options);
+    // Every time the query param returnToCheckAnswers is added, add it to the session
+    if ((request.query.returnToCheckAnswers &&= true)) {
+      request.session.returnToCheckAnswers = true;
+    }
+
+    let values;
+
+    if (options.getController) {
+      values = await options.getController(request);
+    }
+
+    renderPage(request, response, options, values);
   });
 
   router.post(`${config.pathPrefix}/${options.path}`, async (request, response) => {
     let decision;
     try {
       decision = await options.controller(request, options);
-      if (decision === ReturnState.Positive) {
-        response.redirect(`${config.pathPrefix}/${options.positiveForward}`);
-      } else if (decision === ReturnState.Negative) {
-        response.redirect(`${config.pathPrefix}/${options.negativeForward}`);
-      } else {
-        renderPage(request, response, options);
+      switch (decision) {
+        case ReturnState.Positive: {
+          response.redirect(`${config.pathPrefix}/${options.positiveForward}`);
+          break;
+        }
+
+        case ReturnState.Negative: {
+          response.redirect(`${config.pathPrefix}/${options.negativeForward}`);
+          break;
+        }
+
+        case ReturnState.CheckAnswers: {
+          response.redirect(`${config.pathPrefix}/confirm`);
+          break;
+        }
+
+        default: {
+          renderPage(request, response, options);
+        }
       }
     } catch (error) {
       console.log(error);

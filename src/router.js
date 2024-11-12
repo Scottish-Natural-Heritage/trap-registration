@@ -19,7 +19,6 @@ import RenewalCheckAnswersController from './controllers/renewal-check-answers.j
 import RenewalSuccessController from './controllers/renewal-success.js';
 
 // Configure all of the pages and routes.
-
 const router = express.Router();
 
 router.use(
@@ -133,7 +132,7 @@ router.use(
   })
 );
 
-// Renewal start pages
+// Renewal start pages.
 
 router.use(
   Page({
@@ -165,7 +164,8 @@ router.use(
   Page({
     path: 'renewal-login',
     positiveForward: 'renewal-check-answers',
-    controller: renewalLoginController
+    controller: renewalLoginController.post,
+    getController: renewalLoginController.get
   })
 );
 
@@ -186,7 +186,7 @@ router.use(
   })
 );
 
-// Renewal change pages
+// Renewal change pages.
 
 router.use(
   Page({
