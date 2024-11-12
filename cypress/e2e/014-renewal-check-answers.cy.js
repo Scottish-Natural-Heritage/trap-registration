@@ -43,8 +43,6 @@ describe('Navigate to renewal-check-answers', function () {
     cy.get('#main-content form button.naturescot-forward-button').click();
     cy.get('h1').should('contain', 'Select your address');
     cy.get('form button.naturescot-forward-button').click();
-    cy.get('input[type="text"]#addressCounty').type('Highlands');
-    cy.get('form button.naturescot-forward-button').click();
     cy.get('h1').should('contain', 'Check your renewal details');
   });
 
