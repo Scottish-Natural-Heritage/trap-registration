@@ -4,47 +4,51 @@ import {formatAddressForDisplay} from '../utils/form.js';
 import {ReturnState} from './_base.js';
 
 const getController = async (request) => {
-  const registrationId = request.query.id;
+  // We only want to pull data from the DB into the model once.
+  if (!request.session.populatedModel) {
+    const registrationId = request.query.id;
 
-  try {
-    const url = `${config.apiEndpoint}/v2/registrations/${registrationId}`;
-    const trapRegistration = await axios.get(url);
-    const trapRegistrationData = trapRegistration.data;
+    try {
+      // Try to get the registration details we're interested in.
+      const url = `${config.apiEndpoint}/v2/registrations/${registrationId}`;
+      const trapRegistration = await axios.get(url);
+      const trapRegistrationData = trapRegistration.data;
 
-    request.session.conviction = trapRegistrationData.convictions;
-    request.session.general1 = trapRegistrationData.usingGL01;
-    request.session.general2 = trapRegistrationData.usingGL02;
-    request.session.meatBait = trapRegistrationData.meatBaits;
-    request.session.fullName = trapRegistrationData.fullName;
-    const address = {
-      addressLine1: trapRegistrationData.addressLine1,
-      addressLine2: trapRegistrationData.addressLine2,
-      addressTown: trapRegistrationData.addressTown,
-      addressCounty: trapRegistrationData.addressCounty,
-      addressPostcode: trapRegistrationData.addressPostcode
-    };
+      // Save the details to session.
+      request.session.conviction = trapRegistrationData.convictions;
+      request.session.general1 = trapRegistrationData.usingGL01;
+      request.session.general2 = trapRegistrationData.usingGL02;
+      request.session.meatBait = trapRegistrationData.meatBaits;
+      request.session.fullName = trapRegistrationData.fullName;
+      const address = {
+        addressLine1: trapRegistrationData.addressLine1,
+        addressLine2: trapRegistrationData.addressLine2,
+        addressTown: trapRegistrationData.addressTown,
+        addressCounty: trapRegistrationData.addressCounty,
+        addressPostcode: trapRegistrationData.addressPostcode
+      };
 
-    request.session.displayAddress = formatAddressForDisplay(address);
+      request.session.displayAddress = formatAddressForDisplay(address);
 
-    request.session.addressLine1 = trapRegistrationData.addressLine1;
-    request.session.addressLine2 = trapRegistrationData.addressLine2;
-    request.session.addressTown = trapRegistrationData.addressTown;
-    request.session.addressCounty = trapRegistrationData.addressCounty;
-    request.session.addressPostcode = trapRegistrationData.addressPostcode;
-    request.session.phoneNumber = trapRegistrationData.phoneNumber;
-    request.session.emailAddress = trapRegistrationData.emailAddress;
+      request.session.addressLine1 = trapRegistrationData.addressLine1;
+      request.session.addressLine2 = trapRegistrationData.addressLine2;
+      request.session.addressTown = trapRegistrationData.addressTown;
+      request.session.addressCounty = trapRegistrationData.addressCounty;
+      request.session.addressPostcode = trapRegistrationData.addressPostcode;
+      request.session.uprn = trapRegistrationData.uprn;
+      request.session.phoneNumber = trapRegistrationData.phoneNumber;
+      request.session.emailAddress = trapRegistrationData.emailAddress;
 
-    return;
-  } catch (error) {
-    console.log('Error getting registration: ' + error);
+      request.session.registrationId = registrationId;
+      request.session.populatedModel = true;
+    } catch (error) {
+      console.log(`Error getting registration ${registrationId}: ` + error);
+    }
   }
 };
 
 const postController = async (request) => {
-  // Pass the registration id as a query param and set it into session for renewal.
-  request.session.registrationIdToRenew = request.query.id;
-
-  const registrationId = request.session.registrationIdToRenew;
+  const {registrationId} = request.session;
 
   // Grab the form as a json object.
   const formData = request.body;

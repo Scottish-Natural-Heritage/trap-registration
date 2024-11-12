@@ -272,4 +272,12 @@ router.use(
   })
 );
 
+router.use(
+  Page({
+    path: 'renewal-conviction-stop',
+    back: 'renewal-conviction',
+    template: 'conviction-stop'
+  })
+);
+
 export {router as default};
