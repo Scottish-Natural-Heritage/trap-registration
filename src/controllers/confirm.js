@@ -1,6 +1,7 @@
 import axios from 'axios';
 import config from '../config.js';
 import {ReturnState} from './_base.js';
+import {formattedDateString} from '../utils/date-utils.js';
 
 const confirmController = async (request) => {
   // Grab the form as a json object.
@@ -46,7 +47,7 @@ const confirmController = async (request) => {
 
     if (newRegResponse.data) {
       request.session.regNo = `NS-TRP-${String(newRegResponse.data.id).padStart(5, '0')}`;
-      request.session.expiryDate = newRegResponse.data.expiryDate;
+      request.session.expiryDate = formattedDateString(newRegResponse.data.expiryDate);
     } else {
       request.session.alreadyReceivedApplication = true;
     }
