@@ -1,8 +1,46 @@
-import axios from 'axios';
+import axios from '../http-request.js';
 import config from '../config.js';
+import {formatAddressForDisplay} from '../utils/form.js';
 import {ReturnState} from './_base.js';
 
-const renewalCheckAnswersController = async (request) => {
+const getController = async (request) => {
+  const registrationId = request.query.id;
+
+  try {
+    const url = `${config.apiEndpoint}/v2/registrations/${registrationId}`;
+    const trapRegistration = await axios.get(url);
+    const trapRegistrationData = trapRegistration.data;
+
+    request.session.conviction = trapRegistrationData.convictions;
+    request.session.general1 = trapRegistrationData.usingGL01;
+    request.session.general2 = trapRegistrationData.usingGL02;
+    request.session.meatBait = trapRegistrationData.meatBaits;
+    request.session.fullName = trapRegistrationData.fullName;
+    const address = {
+      addressLine1: trapRegistrationData.addressLine1,
+      addressLine2: trapRegistrationData.addressLine2,
+      addressTown: trapRegistrationData.addressTown,
+      addressCounty: trapRegistrationData.addressCounty,
+      addressPostcode: trapRegistrationData.addressPostcode
+    };
+
+    request.session.displayAddress = formatAddressForDisplay(address);
+
+    request.session.addressLine1 = trapRegistrationData.addressLine1;
+    request.session.addressLine2 = trapRegistrationData.addressLine2;
+    request.session.addressTown = trapRegistrationData.addressTown;
+    request.session.addressCounty = trapRegistrationData.addressCounty;
+    request.session.addressPostcode = trapRegistrationData.addressPostcode;
+    request.session.phoneNumber = trapRegistrationData.phoneNumber;
+    request.session.emailAddress = trapRegistrationData.emailAddress;
+
+    return;
+  } catch (error) {
+    console.log('Error getting registration: ' + error);
+  }
+};
+
+const postController = async (request) => {
   // Pass the registration id as a query param and set it into session for renewal.
   request.session.registrationIdToRenew = request.query.id;
 
@@ -73,6 +111,11 @@ const renewalCheckAnswersController = async (request) => {
     // Let the user know it went wrong, and to 'probably' try again?
     return ReturnState.Error;
   }
+};
+
+const renewalCheckAnswersController = {
+  get: getController,
+  post: postController
 };
 
 export {renewalCheckAnswersController as default};

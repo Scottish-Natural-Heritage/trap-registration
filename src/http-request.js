@@ -109,6 +109,10 @@ const mockAxios = {
       return publicKeyResponse;
     }
 
+    if (url.endsWith(config.apiEndpoint + '/v2/registrations/79553')) {
+      return {data: registrationResponse};
+    }
+
     if (url.startsWith(config.apiEndpoint + '/v2/registrations/') && url.endsWith('?idType=email')) {
       return {data: [registrationResponse, registrationResponse]};
     }

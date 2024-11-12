@@ -174,7 +174,8 @@ router.use(
     path: 'renewal-check-answers',
     back: 'renewal-login',
     positiveForward: 'renewal-success',
-    controller: RenewalCheckAnswersController
+    controller: RenewalCheckAnswersController.post,
+    getController: RenewalCheckAnswersController.get
   })
 );
 
