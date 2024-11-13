@@ -75,6 +75,9 @@ const getController = async (request) => {
     const trapRegistration = await axios.get(url);
     const trapRegistrationData = trapRegistration.data;
 
+    // If we've come here from a back link we'll want to reload any data into the model.
+    request.session.populatedModel = false;
+
     return {
       registrations: trapRegistrationData.map((registration) => {
         const expiryDate = registration.expiryDate ? new Date(registration.expiryDate) : undefined;

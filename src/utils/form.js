@@ -62,4 +62,40 @@ const cleanNonNegativeInteger = (dirtyValue) => {
   return valueAsNumber.valueOf();
 };
 
-export {cleanNonNegativeInteger, cleanInputString, cleanRadioBoolean};
+/**
+ * Takes an object of address details and builds an HTML formatted
+ * and displayable string.
+ *
+ * @param {address} address The address object to use to create a
+ * displayable HTML formatted address.
+ * @returns {string} Returns a string formatted as HTML of a given
+ * address.
+ */
+const formatAddressForDisplay = (address) => {
+  // Build the address array, ignoring any blank fields.
+  const displayAddress = [];
+  if (address.addressLine1 !== undefined && address.addressLine1.trim() !== '') {
+    displayAddress.push(address.addressLine1);
+  }
+
+  if (address.addressLine2 !== undefined && address.addressLine2.trim() !== '') {
+    displayAddress.push(address.addressLine2);
+  }
+
+  if (address.addressTown !== undefined && address.addressTown.trim() !== '') {
+    displayAddress.push(address.addressTown);
+  }
+
+  if (address.addressCounty !== undefined && address.addressCounty.trim() !== '') {
+    displayAddress.push(address.addressCounty);
+  }
+
+  if (address.addressPostcode !== undefined && address.addressPostcode.trim() !== '') {
+    displayAddress.push(address.addressPostcode);
+  }
+
+  // Create the display versions of the visitors address and return.
+  return displayAddress.join('<br>');
+};
+
+export {cleanNonNegativeInteger, cleanInputString, cleanRadioBoolean, formatAddressForDisplay};

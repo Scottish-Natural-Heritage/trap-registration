@@ -132,7 +132,7 @@ router.use(
   })
 );
 
-// Renewal start pages
+// Renewal start pages.
 
 router.use(
   Page({
@@ -174,7 +174,8 @@ router.use(
     path: 'renewal-check-answers',
     back: 'renewal-login',
     positiveForward: 'renewal-success',
-    controller: RenewalCheckAnswersController
+    controller: RenewalCheckAnswersController.post,
+    getController: RenewalCheckAnswersController.get
   })
 );
 
@@ -183,6 +184,99 @@ router.use(
     path: 'renewal-success',
     back: 'renewal-check-answers',
     controller: RenewalSuccessController
+  })
+);
+
+// Renewal change pages.
+
+router.use(
+  Page({
+    path: 'renewal-details',
+    back: 'renewal-check-answers',
+    positiveForward: 'renewal-confirm-email',
+    controller: DetailsController,
+    template: 'details'
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-confirm-email',
+    back: 'renewal-details',
+    positiveForward: 'renewal-check-answers',
+    controller: confirmEmailController,
+    template: 'confirm-email'
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-postcode',
+    back: 'renewal-check-answers',
+    positiveForward: 'renewal-address',
+    controller: PostcodeController,
+    template: 'postcode'
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-address',
+    back: 'renewal-postcode',
+    positiveForward: 'renewal-check-answers',
+    negativeForward: 'renewal-manual-address',
+    controller: AddressController,
+    template: 'address'
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-manual-address',
+    back: 'renewal-address',
+    positiveForward: 'renewal-check-answers',
+    controller: ManualAddressController,
+    template: 'manual-address'
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-conviction',
+    back: 'renewal-check-answers',
+    positiveForward: 'renewal-check-answers',
+    negativeForward: 'renewal-conviction-stop',
+    controller: ConvictionController,
+    template: 'conviction'
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-general',
+    back: 'renewal-check-answers',
+    positiveForward: 'renewal-check-answers',
+    controller: GeneralController,
+    template: 'general'
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-meat-bait',
+    back: 'renewal-check-answers',
+    positiveForward: 'renewal-check-answers',
+    negativeForward: 'renewal-check-answers',
+    controller: MeatbaitController,
+    template: 'meat-bait'
+  })
+);
+
+router.use(
+  Page({
+    path: 'renewal-conviction-stop',
+    back: 'renewal-conviction',
+    template: 'conviction-stop'
   })
 );
 

@@ -39,10 +39,12 @@ const publicKeyResponse = {
 };
 
 // A created-ok response to a 'renewal' post made against a registration.
-const postReturnResponse = {
+const postRenewalResponse = {
   status: 201,
   statusText: 'OK',
-  data: {},
+  data: {
+    id: 79_553
+  },
   headers: {
     location: config.apiEndpoint + '/v2/registrations/-1/renewal/-1'
   },
@@ -89,7 +91,7 @@ const registrationResponse = {
 };
 
 // This is unused, but is useful for building URLs for testing. As long as the
-// app is started with TRR_TEST=true, then this token will validate as a 100
+// app is started with TR_TEST=true, then this token will validate as a 100
 // year long token for the trap registration number "-1".
 const counterpart100yearToken =
   'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ3Njc2NzQ1NTgsInN1YiI6Ii0xIn0.XSHX6QB8robVaEuXVeHKbBed13uAdWvLBaNeGCYPAWWlw7Fm7bafXMPUQQE69TNc8DbjUgaRDxKvS2ju5uZziw';
@@ -107,6 +109,10 @@ const mockAxios = {
   async get(url) {
     if (url.endsWith('/trap-registration-api/v1/public-key')) {
       return publicKeyResponse;
+    }
+
+    if (url.endsWith(config.apiEndpoint + '/v2/registrations/79553')) {
+      return {data: registrationResponse};
     }
 
     if (url.startsWith(config.apiEndpoint + '/v2/registrations/') && url.endsWith('?idType=email')) {
@@ -128,7 +134,7 @@ const mockAxios = {
    */
   async post(url) {
     if (url.startsWith(config.apiEndpoint + '/v2/registrations/') && url.endsWith('/renewal')) {
-      return postReturnResponse;
+      return postRenewalResponse;
     }
 
     return generalError;
@@ -158,6 +164,6 @@ const mockAxios = {
   }
 };
 
-const httpRequest = process.env.TRR_TEST ? mockAxios : axios;
+const httpRequest = process.env.TR_TEST ? mockAxios : axios;
 
 export {httpRequest as default, counterpart100yearToken};
