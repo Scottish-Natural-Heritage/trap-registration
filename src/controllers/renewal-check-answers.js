@@ -96,8 +96,7 @@ const postController = async (request) => {
     );
 
     if (newRenewalResponse.data) {
-      request.session.regNo = `NS-TRP-${String(newRenewalResponse.data.id).padStart(5, '0')}`;
-      request.session.expiryDate = newRenewalResponse.data.expiryDate;
+      request.session.renewedRegistrationId = newRenewalResponse.data.id;
     } else {
       request.session.alreadyReceivedRenewal = true;
     }

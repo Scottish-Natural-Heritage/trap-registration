@@ -61,10 +61,16 @@ describe('Navigate to renewal-check-answers', function () {
     cy.get('h1').should('contain', 'Check your renewal details');
   });
 
-  it('should navigate back to renewal-check-answers after updating general licence details', function () {
+  it('should navigate back to renewal-check-answers after updating meat bait details', function () {
     cy.get('a.govuk-link[href*="/renewal-meat-bait#meatbait"]').click();
     cy.get('h1').should('contain', 'intend to use meat baits');
     cy.get('#main-content form button.naturescot-forward-button').click();
     cy.get('h1').should('contain', 'Check your renewal details');
+  });
+
+  it('should navigate back to renewal-success after successful form submission', function () {
+    cy.get('#main-content form input[type="checkbox"]#confirm-declaration').click();
+    cy.get('#main-content form button.naturescot-forward-button').click();
+    cy.get('h1').should('contain', 'Renewal complete');
   });
 });

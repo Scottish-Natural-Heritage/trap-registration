@@ -39,10 +39,12 @@ const publicKeyResponse = {
 };
 
 // A created-ok response to a 'renewal' post made against a registration.
-const postReturnResponse = {
+const postRenewalResponse = {
   status: 201,
   statusText: 'OK',
-  data: {},
+  data: {
+    id: 79_553
+  },
   headers: {
     location: config.apiEndpoint + '/v2/registrations/-1/renewal/-1'
   },
@@ -132,7 +134,7 @@ const mockAxios = {
    */
   async post(url) {
     if (url.startsWith(config.apiEndpoint + '/v2/registrations/') && url.endsWith('/renewal')) {
-      return postReturnResponse;
+      return postRenewalResponse;
     }
 
     return generalError;
