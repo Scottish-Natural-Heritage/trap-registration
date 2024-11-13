@@ -96,10 +96,14 @@ const postController = async (request) => {
     );
 
     if (newRenewalResponse.data) {
+      // Set the registration number for display on the success page.
       request.session.renewedRegistrationId = newRenewalResponse.data.id;
     } else {
       request.session.alreadyReceivedRenewal = true;
     }
+
+    // We may want to renew another registration, so clear the flag.
+    request.session.populatedModel = false;
 
     // Proceed to the next page.
     return ReturnState.Positive;
