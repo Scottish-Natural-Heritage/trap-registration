@@ -16,7 +16,6 @@ import RenewalEmailController from './controllers/renewal-email.js';
 import RenewalEmailSuccessController from './controllers/renewal-email-success.js';
 import renewalLoginController from './controllers/renewal-login.js';
 import RenewalCheckAnswersController from './controllers/renewal-check-answers.js';
-import RenewalSuccessController from './controllers/renewal-success.js';
 
 // Configure all of the pages and routes.
 const router = express.Router();
@@ -181,8 +180,7 @@ router.use(
 
 router.use(
   Page({
-    path: 'renewal-success',
-    controller: RenewalSuccessController
+    path: 'renewal-success'
   })
 );
 
