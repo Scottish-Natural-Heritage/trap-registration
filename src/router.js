@@ -182,7 +182,6 @@ router.use(
 router.use(
   Page({
     path: 'renewal-success',
-    back: 'renewal-check-answers',
     controller: RenewalSuccessController
   })
 );
