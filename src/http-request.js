@@ -43,7 +43,8 @@ const postRenewalResponse = {
   status: 201,
   statusText: 'OK',
   data: {
-    id: 79_553
+    id: 13,
+    trapId: 12_345
   },
   headers: {
     location: config.apiEndpoint + '/v2/registrations/-1/renewal/-1'
@@ -64,7 +65,9 @@ const putReturnResponse = {
 };
 
 const registrationResponse = {
-  id: 79_553,
+  id: 12,
+  trapId: 12_345,
+  registrationType: 'Initial',
   convictions: false,
   usingGL01: false,
   usingGL02: true,
@@ -111,7 +114,7 @@ const mockAxios = {
       return publicKeyResponse;
     }
 
-    if (url.endsWith(config.apiEndpoint + '/v2/registrations/79553')) {
+    if (url.endsWith(config.apiEndpoint + '/v2/registrations/12')) {
       return {data: registrationResponse};
     }
 

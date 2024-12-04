@@ -40,13 +40,15 @@ const confirmController = async (request) => {
       phoneNumber: request.session.phoneNumber,
       emailAddress: request.session.emailAddress,
       uprn: request.session.uprn,
-      uuid: request.session.uuid
+      uuid: request.session.uuid,
+      registrationType: 'Initial',
+      linkedTrapId: null
     };
 
     const newRegResponse = await axios.post(config.apiEndpoint + '/v2/registrations', newReg);
 
     if (newRegResponse.data) {
-      request.session.regNo = `NS-TRP-${String(newRegResponse.data.id).padStart(5, '0')}`;
+      request.session.regNo = `NS-TRP-${String(newRegResponse.data.trapId).padStart(5, '0')}`;
       request.session.expiryDate = formattedDateString(newRegResponse.data.expiryDate);
     } else {
       request.session.alreadyReceivedApplication = true;

@@ -82,7 +82,7 @@ const getController = async (request) => {
       registrations: trapRegistrationData.map((registration) => {
         const expiryDate = registration.expiryDate ? new Date(registration.expiryDate) : undefined;
         return [
-          {text: `NS-TRP-${registration.id}`},
+          {text: `NS-TRP-${registration.trapId}`},
           {text: registration.addressPostcode},
           {text: formatDateForDisplay(expiryDate)},
           {html: getRenewalStatus(expiryDate, registration.id)}
