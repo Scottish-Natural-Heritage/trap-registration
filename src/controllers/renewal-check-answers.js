@@ -1,3 +1,4 @@
+import {randomUUID} from 'node:crypto';
 import axios from '../http-request.js';
 import config from '../config.js';
 import {formatAddressForDisplay} from '../utils/form.js';
@@ -40,7 +41,9 @@ const getController = async (request) => {
       request.session.emailAddress = trapRegistrationData.emailAddress;
 
       request.session.registrationId = registrationId;
+      request.session.trapId = trapRegistrationData.trapId;
       request.session.populatedModel = true;
+      request.session.renewalUUID ??= randomUUID();
     } catch (error) {
       console.log(`Error getting registration ${registrationId}: ` + error);
     }
@@ -48,8 +51,6 @@ const getController = async (request) => {
 };
 
 const postController = async (request) => {
-  const {registrationId} = request.session;
-
   // Grab the form as a json object.
   const formData = request.body;
 
@@ -86,18 +87,17 @@ const postController = async (request) => {
       phoneNumber: request.session.phoneNumber,
       emailAddress: request.session.emailAddress,
       uprn: request.session.uprn,
-      uuid: request.session.uuid
+      uuid: request.session.renewalUUID,
+      registrationType: 'Renewal',
+      linkedTrapId: request.session.trapId
     };
 
     // Need to set the `registrationId`.
-    const newRenewalResponse = await axios.post(
-      config.apiEndpoint + `/v2/registrations/${registrationId}/renew`,
-      renewal
-    );
+    const newRenewalResponse = await axios.post(config.apiEndpoint + '/v2/registrations', renewal);
 
     if (newRenewalResponse.data) {
       // Set the registration number for display on the success page.
-      request.session.renewedRegistrationId = newRenewalResponse.data.id;
+      request.session.renewedRegistrationId = newRenewalResponse.data.trapId;
     } else {
       request.session.alreadyReceivedRenewal = true;
     }
