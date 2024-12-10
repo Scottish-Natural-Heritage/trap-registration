@@ -20,7 +20,7 @@
 	<link rel="apple-touch-icon" sizes="152x152" href="{{pathPrefix}}/dist/icon-152x152.png">
 	<link rel="apple-touch-icon" href="{{pathPrefix}}/dist/icon-120x120.png">
 
-	<link rel="canonical" href="{{pathPrefix}}/start"/>
+	<link rel="canonical" href="{{pathPrefix}}"/>
 	<meta name="description" content="Use this service to register using a Larsen trap, a Larsen mate trap, a Larsen pod trap, or a multi-catch cage trap under NatureScot's General Licences.">
 
 	<!-- OpenGraph Data -->
@@ -71,7 +71,7 @@
     homepageUrl: "https://www.nature.scot/professional-advice/safeguarding-protected-areas-and-species/licensing",
     containerClasses: "govuk-width-container",
     serviceName: "Trap Registration",
-    serviceUrl: pathPrefix if pathPrefix.length > 0 else "/",
+    serviceUrl: pathPrefix + '/start' if pathPrefix.length > 0 else "/",
     attributes: {
       id: "top-of-page"
     }
