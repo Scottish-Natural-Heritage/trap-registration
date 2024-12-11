@@ -75,11 +75,30 @@ const getController = async (request) => {
     const trapRegistration = await axios.get(url);
     const trapRegistrationData = trapRegistration.data;
 
+    // Sort the registration data by trapId and its createdAt date. Renewals will be more recently created.
+    const sortedTrapRegistrationData = trapRegistrationData.sort((a, b) => {
+      if (a.trapId !== b.trapId) {
+        return a.trapId - b.trapId;
+      }
+
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+
+    // Initiate a set, populate with the registrations we have checked.
+    const seen = new Set();
+
+    // As we have sorted by trapId and createdAt date, the first will be the most recent renewal.
+    const filteredTrapRegistrationData = sortedTrapRegistrationData.filter((item) => {
+      const duplicate = seen.has(item.trapId);
+      seen.add(item.trapId);
+      return !duplicate;
+    });
+
     // If we've come here from a back link we'll want to reload any data into the model.
     request.session.populatedModel = false;
 
     return {
-      registrations: trapRegistrationData.map((registration) => {
+      registrations: filteredTrapRegistrationData.map((registration) => {
         const expiryDate = registration.expiryDate ? new Date(registration.expiryDate) : undefined;
         return [
           {text: `NS-TRP-${registration.trapId}`},
