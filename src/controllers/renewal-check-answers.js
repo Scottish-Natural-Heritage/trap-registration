@@ -100,7 +100,6 @@ const postController = async (request) => {
       request.session.renewedRegistrationId = newRenewalResponse.data.trapId;
     } else {
       request.session.alreadyReceivedRenewal = true;
-      request.session.renewedRegistrationId = undefined;
     }
 
     // We may want to renew another registration, so clear the flag.
