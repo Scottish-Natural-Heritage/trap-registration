@@ -6,7 +6,7 @@ import {ReturnState} from './_base.js';
 
 const getController = async (request) => {
   // We only want to pull data from the DB into the model once.
-  if (!request.session.populatedModel) {
+  if (!request.session.populatedModel || request.session.registrationId !== request.query.id) {
     const registrationId = request.query.id;
 
     try {
@@ -43,7 +43,7 @@ const getController = async (request) => {
       request.session.registrationId = registrationId;
       request.session.trapId = trapRegistrationData.trapId;
       request.session.populatedModel = true;
-      request.session.renewalUUID ??= randomUUID();
+      request.session.renewalUUID = randomUUID();
     } catch (error) {
       console.log(`Error getting registration ${registrationId}: ` + error);
     }

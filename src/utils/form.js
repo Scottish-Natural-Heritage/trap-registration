@@ -74,23 +74,23 @@ const cleanNonNegativeInteger = (dirtyValue) => {
 const formatAddressForDisplay = (address) => {
   // Build the address array, ignoring any blank fields.
   const displayAddress = [];
-  if (address.addressLine1 !== undefined && address.addressLine1.trim() !== '') {
+  if (address.addressLine1 && address.addressLine1?.trim() !== '') {
     displayAddress.push(address.addressLine1);
   }
 
-  if (address.addressLine2 !== undefined && address.addressLine2.trim() !== '') {
+  if (address.addressLine2 && address.addressLine2?.trim() !== '') {
     displayAddress.push(address.addressLine2);
   }
 
-  if (address.addressTown !== undefined && address.addressTown.trim() !== '') {
+  if (address.addressTown && address.addressTown?.trim() !== '') {
     displayAddress.push(address.addressTown);
   }
 
-  if (address.addressCounty !== undefined && address.addressCounty.trim() !== '') {
+  if (address.addressCounty && address.addressCounty?.trim() !== '') {
     displayAddress.push(address.addressCounty);
   }
 
-  if (address.addressPostcode !== undefined && address.addressPostcode.trim() !== '') {
+  if (address.addressPostcode && address.addressPostcode?.trim() !== '') {
     displayAddress.push(address.addressPostcode);
   }
 
