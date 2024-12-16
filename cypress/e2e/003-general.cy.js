@@ -30,7 +30,7 @@ describe('General page ', function () {
 
   it('should allow access if the user visits all the pages in order', function () {
     cy.visit('/general');
-    cy.get('h1').should('contain', 'general licences');
+    cy.get('h1').should('contain', 'General Licences');
   });
 
   it('checking no checkboxs + main button should navigate to same page with error', function () {

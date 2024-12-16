@@ -39,13 +39,6 @@ describe('Manual address page ', function () {
     // POST `/details`
     cy.get('#main-content form button.naturescot-forward-button').click();
 
-    // ~GET `/confirm-email`~
-    // FILL the form
-    cy.get('input[type=radio][name=emailValidation][value="yes"]').click();
-
-    // POST `/check-email`
-    cy.get('#main-content form button.naturescot-forward-button').click();
-
     // ~GET `/postcode`~
     cy.get('input[type="text"]#address-postcode').type('IV3 8NW', {delay: 1});
     // POST `/postcode`

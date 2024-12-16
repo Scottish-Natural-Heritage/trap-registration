@@ -1,6 +1,5 @@
 import axios from 'axios';
 import config from '../config.js';
-import {formattedDateString} from '../utils/date-utils.js';
 import {ReturnState} from './_base.js';
 
 const confirmController = async (request) => {
@@ -40,16 +39,14 @@ const confirmController = async (request) => {
       phoneNumber: request.session.phoneNumber,
       emailAddress: request.session.emailAddress,
       uprn: request.session.uprn,
-      uuid: request.session.uuid,
-      registrationType: 'Initial',
-      linkedTrapId: null
+      uuid: request.session.uuid
     };
 
     const newRegResponse = await axios.post(config.apiEndpoint + '/v2/registrations', newReg);
 
     if (newRegResponse.data) {
-      request.session.regNo = `NS-TRP-${String(newRegResponse.data.trapId).padStart(5, '0')}`;
-      request.session.expiryDate = formattedDateString(newRegResponse.data.expiryDate);
+      request.session.regNo = `NS-TRP-${String(newRegResponse.data.id).padStart(5, '0')}`;
+      request.session.expiryDate = newRegResponse.data.expiryDate;
     } else {
       request.session.alreadyReceivedApplication = true;
     }

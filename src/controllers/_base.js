@@ -65,14 +65,12 @@ const guardAllows = (session, options) => {
  * @param {Response} res An express Response object.
  * @param {Object} options An object containing this page's options.
  * @param {String} options.path The path to this page.
- * @param {String} options.template An optional template to use.
  * @param {String} [options.back] The path to the previous page.
  */
-const renderPage = (request, response, options, values) => {
+const renderPage = (request, response, options) => {
   if (guardAllows(request.session, options)) {
     saveVisitedPage(request.session, options.path);
-    response.render(`${options.template ?? options.path}.njk`, {
-      ...values,
+    response.render(`${options.path}.njk`, {
       hostPrefix: config.hostPrefix,
       pathPrefix: config.pathPrefix,
       backUrl: options.back,
@@ -98,8 +96,7 @@ const renderPage = (request, response, options, values) => {
 const ReturnState = Object.freeze({
   Positive: 1,
   Negative: 2,
-  Error: 3,
-  CheckAnswers: 4
+  Error: 3
 });
 
 /**
@@ -114,50 +111,26 @@ const ReturnState = Object.freeze({
  * @param {String} [options.back] The path to the previous page.
  * @param {String} [options.positiveForward] The path to the next page if the controller's opinion is positive.
  * @param {String} [options.negativeForward] The path to the next page if the controller's opinion is negative.
- * @param {Function} [options.controller] The logic.
+ * @param {Function} [options.controller] The logic
  * @returns {Router} An express Router middleware.
  */
 const Page = (options) => {
   const router = express.Router();
 
-  router.get(`${config.pathPrefix}/${options.path}`, async (request, response) => {
-    // Every time the query param returnToCheckAnswers is added, add it to the session
-    if ((request.query.returnToCheckAnswers &&= true)) {
-      request.session.returnToCheckAnswers = true;
-    }
-
-    let values;
-
-    if (options.getController) {
-      values = await options.getController(request);
-    }
-
-    renderPage(request, response, options, values);
+  router.get(`${config.pathPrefix}/${options.path}`, (request, response) => {
+    renderPage(request, response, options);
   });
 
   router.post(`${config.pathPrefix}/${options.path}`, async (request, response) => {
     let decision;
     try {
       decision = await options.controller(request, options);
-      switch (decision) {
-        case ReturnState.Positive: {
-          response.redirect(`${config.pathPrefix}/${options.positiveForward}`);
-          break;
-        }
-
-        case ReturnState.Negative: {
-          response.redirect(`${config.pathPrefix}/${options.negativeForward}`);
-          break;
-        }
-
-        case ReturnState.CheckAnswers: {
-          response.redirect(`${config.pathPrefix}/confirm`);
-          break;
-        }
-
-        default: {
-          renderPage(request, response, options);
-        }
+      if (decision === ReturnState.Positive) {
+        response.redirect(`${config.pathPrefix}/${options.positiveForward}`);
+      } else if (decision === ReturnState.Negative) {
+        response.redirect(`${config.pathPrefix}/${options.negativeForward}`);
+      } else {
+        renderPage(request, response, options);
       }
     } catch (error) {
       console.log(error);
