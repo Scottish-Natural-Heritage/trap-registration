@@ -1,54 +1,9 @@
 {% extends "_base.njk" %}
-{% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
 
 {% block content %}
 
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-two-thirds">
-
-			{{ govukPanel({
-        titleText: "Renewal complete",
-         html: "Reference number<br><strong> NS-TRP-" + model.renewedRegistrationId + "</strong>"
-      }) }}
-
-			<h2 class="govuk-heading-m">What happens next</h2>
-
-			<p class="govuk-body">You will recieve an email with your registration details</p>
-			<p class="govuk-body">You must understand and comply with the terms and conditions of the general licences.</p>
-			<p class="govuk-body">If you are registered to use meat baits, you must submit an annual return on or before 31 January each year.</p>
-
-			<h2 class="govuk-heading-m">Renew another registration</h2>
-
-			<p class="govuk-body"> If you have further registrations to renew, you can now <a href="/trap-registration/renewal-login" class="govuk-link">begin another application</a>.
-				</p>
-
-			<h3 class="govuk-heading-s">Email</h3>
-
-			<ul class="govuk-list">
-				<li>
-					<a class="govuk-link" href="mailto:licensing@nature.scot">licensing@nature.scot</a>
-				</li>
-				<li>
-      		We aim to respond within 2 working days.
-    		</li>
-			</ul>
-
-			<h3 class="govuk-heading-s">Telephone</h3>
-
-			<ul class="govuk-list">
-				<li>
-      		01463 725 364
-   		 </li>
-				<li>
-      		Voicemail service. We aim to respond within 2 working days.
-    		</li>
-			</ul>
-
-			<p class="govuk-body">
-				<a class="govuk-link" href="https://www.gov.uk/call-charges" target="_blank">Find out about call charges</a>
-			</p>
-
-		</div>
-	</div>
+  <h1 class="govuk-heading-xl">Renewal success</h1>
 
 {% endblock %}

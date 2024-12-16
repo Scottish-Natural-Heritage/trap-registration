@@ -1,21 +1,14 @@
 {% extends "_base.njk" %}
 
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
-
-{% set successHtml %}
-  Your registration number is<br><strong>{{model.regNo}}</strong>
-  {% if model.expiryDate %}
-    <br><br>Expiry date<br><strong>{{model.expiryDate}}</strong>
-  {% endif %}
-{% endset %}
-
 {% block content %}
 
   {% if not model.alreadyReceivedApplication %}
 
     {{ govukPanel({
       titleText: "Registration complete",
-      html: successHtml
+      html: "Your registration number is<br><strong>"+model.regNo+"</strong><br><br>" +
+            "Expiry date<br><strong>"+model.expiryDate+"</strong>"
     }) }}
 
   {% endif %}

@@ -6,18 +6,21 @@ import ConvictionController from './controllers/conviction.js';
 import GeneralController from './controllers/general.js';
 import MeatbaitController from './controllers/meat-bait.js';
 import DetailsController from './controllers/details.js';
-import confirmEmailController from './controllers/confirm-email.js';
 import ConfirmController from './controllers/confirm.js';
 import PostcodeController from './controllers/postcode.js';
 import AddressController from './controllers/address.js';
 import ManualAddressController from './controllers/manual-address.js';
 import RenewalIntroController from './controllers/renewal-intro.js';
-import RenewalEmailController from './controllers/renewal-email.js';
+import RenewalRegistrationController from './controllers/renewal-registration.js';
+import RenewalPostcodeController from './controllers/renewal-postcode.js';
 import RenewalEmailSuccessController from './controllers/renewal-email-success.js';
 import renewalLoginController from './controllers/renewal-login.js';
 import RenewalCheckAnswersController from './controllers/renewal-check-answers.js';
+import RenewalSuccessController from './controllers/renewal-success.js';
+import config from './config.js';
 
 // Configure all of the pages and routes.
+
 const router = express.Router();
 
 router.use(
@@ -61,24 +64,15 @@ router.use(
   Page({
     path: 'details',
     back: 'meat-bait',
-    positiveForward: 'confirm-email',
+    positiveForward: 'postcode',
     controller: DetailsController
   })
 );
 
 router.use(
   Page({
-    path: 'confirm-email',
-    back: 'details',
-    positiveForward: 'postcode',
-    controller: confirmEmailController
-  })
-);
-
-router.use(
-  Page({
     path: 'postcode',
-    back: 'confirm-email',
+    back: 'details',
     positiveForward: 'address',
     controller: PostcodeController
   })
@@ -131,150 +125,81 @@ router.use(
   })
 );
 
-// Renewal start pages.
-
 router.use(
   Page({
-    path: 'renewal-intro',
-    positiveForward: 'renewal-email',
-    controller: RenewalIntroController
+    path: 'privacy-policy'
   })
 );
 
-router.use(
-  Page({
-    path: 'renewal-email',
-    back: 'renewal-intro',
-    positiveForward: 'renewal-email-success',
-    controller: RenewalEmailController
-  })
-);
+// Renewal start pages
 
-router.use(
-  Page({
-    path: 'renewal-email-success',
-    back: 'renewal-email',
-    positiveForward: 'renewal-login',
-    controller: RenewalEmailSuccessController
-  })
-);
+const allowedHostPrefixes = [
+  'https://uat-licensing.nature.scot',
+  'https://dev-licensing.nature.scot',
+  'http://localhost:3000',
+  'http://localhost:3999'
+];
 
-router.use(
-  Page({
-    path: 'renewal-login',
-    positiveForward: 'renewal-check-answers',
-    controller: renewalLoginController.post,
-    getController: renewalLoginController.get
-  })
-);
+if (allowedHostPrefixes.includes(config.hostPrefix)) {
+  router.use(
+    Page({
+      path: 'renewal-intro',
+      positiveForward: 'renewal-registration',
+      controller: RenewalIntroController
+    })
+  );
 
-router.use(
-  Page({
-    path: 'renewal-check-answers',
-    back: 'renewal-login',
-    positiveForward: 'renewal-success',
-    controller: RenewalCheckAnswersController.post,
-    getController: RenewalCheckAnswersController.get
-  })
-);
+  router.use(
+    Page({
+      path: 'renewal-registration',
+      back: 'renewal-intro',
+      positiveForward: 'renewal-postcode',
+      controller: RenewalRegistrationController
+    })
+  );
 
-router.use(
-  Page({
-    path: 'renewal-success'
-  })
-);
+  router.use(
+    Page({
+      path: 'renewal-postcode',
+      back: 'renewal-registration',
+      positiveForward: 'renewal-email-success',
+      controller: RenewalPostcodeController
+    })
+  );
 
-// Renewal change pages.
+  router.use(
+    Page({
+      path: 'renewal-email-success',
+      back: 'renewal-postcode',
+      positiveForward: 'renewal-login',
+      controller: RenewalEmailSuccessController
+    })
+  );
 
-router.use(
-  Page({
-    path: 'renewal-details',
-    back: 'renewal-check-answers',
-    positiveForward: 'renewal-confirm-email',
-    controller: DetailsController,
-    template: 'details'
-  })
-);
+  router.use(
+    Page({
+      path: 'renewal-login',
+      positiveForward: 'renewal-check-answers',
+      controller: renewalLoginController
+    })
+  );
 
-router.use(
-  Page({
-    path: 'renewal-confirm-email',
-    back: 'renewal-details',
-    positiveForward: 'renewal-check-answers',
-    controller: confirmEmailController,
-    template: 'confirm-email'
-  })
-);
+  router.use(
+    Page({
+      path: 'renewal-check-answers',
+      back: 'renewal-login',
+      positiveForward: 'renewal-success',
+      controller: RenewalCheckAnswersController
+    })
+  );
 
-router.use(
-  Page({
-    path: 'renewal-postcode',
-    back: 'renewal-check-answers',
-    positiveForward: 'renewal-address',
-    controller: PostcodeController,
-    template: 'postcode'
-  })
-);
-
-router.use(
-  Page({
-    path: 'renewal-address',
-    back: 'renewal-postcode',
-    positiveForward: 'renewal-check-answers',
-    negativeForward: 'renewal-manual-address',
-    controller: AddressController,
-    template: 'address'
-  })
-);
-
-router.use(
-  Page({
-    path: 'renewal-manual-address',
-    back: 'renewal-address',
-    positiveForward: 'renewal-check-answers',
-    controller: ManualAddressController,
-    template: 'manual-address'
-  })
-);
-
-router.use(
-  Page({
-    path: 'renewal-conviction',
-    back: 'renewal-check-answers',
-    positiveForward: 'renewal-check-answers',
-    negativeForward: 'renewal-conviction-stop',
-    controller: ConvictionController,
-    template: 'conviction'
-  })
-);
-
-router.use(
-  Page({
-    path: 'renewal-general',
-    back: 'renewal-check-answers',
-    positiveForward: 'renewal-check-answers',
-    controller: GeneralController,
-    template: 'general'
-  })
-);
-
-router.use(
-  Page({
-    path: 'renewal-meat-bait',
-    back: 'renewal-check-answers',
-    positiveForward: 'renewal-check-answers',
-    negativeForward: 'renewal-check-answers',
-    controller: MeatbaitController,
-    template: 'meat-bait'
-  })
-);
-
-router.use(
-  Page({
-    path: 'renewal-conviction-stop',
-    back: 'renewal-conviction',
-    template: 'conviction-stop'
-  })
-);
+  router.use(
+    Page({
+      path: 'renewal-success',
+      back: 'renewal-check-answers',
+      controller: RenewalSuccessController
+    })
+  );
+}
 
 export {router as default};
