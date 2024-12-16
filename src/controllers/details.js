@@ -24,15 +24,11 @@ const cleanInput = (body) => {
 };
 
 const detailsController = (request) => {
-  // Take a copy of the existing email to compare
-  const existingEmailAddress = Boolean(request.session.emailAddress) && `${request.session.emailAddress}`;
   // Clean up the user's input before we store it in the session.
   const cleanForm = cleanInput(request.body);
   request.session.fullName = cleanForm.fullName;
   request.session.phoneNumber = cleanForm.phoneNumber;
   request.session.emailAddress = cleanForm.emailAddress;
-  // Check if the email has changed
-  const hasEmailChanged = existingEmailAddress && cleanForm.emailAddress !== existingEmailAddress;
 
   // Clear the general error...
   request.session.detailsError = false;
@@ -92,12 +88,6 @@ const detailsController = (request) => {
 
   // Create the display version of the visitors contact info.
   request.session.displayContact = `${request.session.phoneNumber}<br>${request.session.emailAddress}`;
-
-  // If email hasn't changed and returnToCheckAnswers is true, delete it and return to check answers
-  if (request.session.returnToCheckAnswers && !hasEmailChanged) {
-    delete request.session.returnToCheckAnswers;
-    return ReturnState.CheckAnswers;
-  }
 
   // The request passed all our validation, we've stored copies of everything we
   // need, so it's time to go on.
