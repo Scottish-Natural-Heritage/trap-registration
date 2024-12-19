@@ -7,7 +7,7 @@
   <h1 class="govuk-heading-xl">Trap Registration</h1>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <p class="govuk-body">Use this service to register as a trap user and if you plan to use a:</p>
+      <p class="govuk-body">Use this service to register to use the following traps under general licence (GL01 and GL02):</p>
 
       <ul class="govuk-list govuk-list--bullet">
         <li>Larsen trap</li>
@@ -16,25 +16,29 @@
         <li>multi-catch cage trap</li>
       </ul>
 
-      <p class="govuk-body">under NatureScot's General Licences:</p>
+      <p class="govuk-body">
+        <a class="govuk-link" href="https://www.nature.scot/professional-advice/protected-areas-and-species/licensing/species-licensing-z-guide/birds/general-licences-birds">
+          View general licences for birds.
+        </a>
+      </p>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li>
-          <a class="govuk-link" href="https://gateway.snh.gov.uk/go/?id=18">GL01 - To kill or take certain birds for the conservation of wild birds</a>
-        </li>
-        <li>
-          <a class="govuk-link" href="https://gateway.snh.gov.uk/go/?id=19">GL02 - To kill or take certain birds for the prevention of serious damage</a>
-        </li>
-      </ul>
+      <h2 class="govuk-heading-l">Who can apply</h2>
 
-      <p class="govuk-body">Registration takes around 5 minutes.</p>
+      <p class="govuk-body">You need 1 registration per trap user. This registration will be valid for any property you have permission to set traps on.</p>
 
-      {{ govukWarningText({
-        text: '' +
-          'If you previously registered with Police Scotland, you must ' +
-          're-register with NatureScot to continue to use traps.',
-        iconFallbackText: "Warning"
-      }) }}
+      <h2 class="govuk-heading-l">Trap registrations are changing</h2>
+      
+      <p class="govuk-body">A new licence is being introduced by the Wildlife Management and Muirburn (Scotland) Act 2024. This will replace the current trap registration process.</p>
+
+      <p class="govuk-body">Scottish Parliament have yet to confirm the commencement date for the new licence.</p>
+
+      <p class="govuk-body">You will need to complete a training course before applying for a wildlife trap licence to use traps to catch birds or spring traps to catch mammals.</p>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="https://www.nature.scot/professional-advice/protected-areas-and-species/licensing/trap-registration">
+          Find out more about trap registration and training.
+        </a>
+      </p>
 
       <form method="post">
         {{ govukButton({
