@@ -45,12 +45,13 @@ const sessionDuration = 20.1 * 60 * 60 * 1000;
 app.set('trust proxy', 1); // Trust first proxy
 
 // Disabling as makes the code's intention more obvious.
+/* eslint-disable no-unneeded-ternary */
 
 app.use(
   session({
     // Using the __Secure- prefix to protect our cookies as per
     // https://scotthelme.co.uk/tough-cookies/#__secure
-    name: `_trap-registration-session`,
+    name: `${config.cookiePrefix}trap-registration-session`,
     cookie: {
       sameSite: true,
       maxAge: sessionDuration,
@@ -59,7 +60,7 @@ app.use(
       // We need to set the secure attribute to true as Caddy doesn't
       // currently rewrite the attribute for us in the way Nginx did.
       // If we're running tests don't set it as it'll break Cypress.
-      secure: false // Process.env.TRR_TEST ? false : true
+      secure: process.env.TRR_TEST ? false : true
     },
     store: new MemoryStore({
       checkPeriod: sessionDuration
@@ -69,6 +70,8 @@ app.use(
     saveUninitialized: false
   })
 );
+
+/* eslint-enable no-unneeded-ternary */
 
 app.use(`${config.pathPrefix}/dist`, express.static(path.join(__dirname, '..', '/dist')));
 app.use(
