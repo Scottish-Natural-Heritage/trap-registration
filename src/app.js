@@ -50,7 +50,7 @@ app.use(
   session({
     // Using the __Secure- prefix to protect our cookies as per
     // https://scotthelme.co.uk/tough-cookies/#__secure
-    name: `${config.cookiePrefix}trap-registration-session`,
+    name: `_trap-registration-session`,
     cookie: {
       sameSite: true,
       maxAge: sessionDuration,
