@@ -24,18 +24,18 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
-    "axios": "^1.7.2",
+    "axios": "^1.10.0",
     "express": "^4.18.1",
     "express-session": "^1.17.3",
     "govuk-frontend": "3.6.0",
-    "jimp": "^0.13.0",
+    "jimp": "^1.6.0",
     "jsonwebtoken": "^8.5.1",
     "jwk-to-pem": "^2.0.4",
     "memorystore": "^1.6.2",
     "morgan": "^1.10.0",
     "naturescot-frontend": "^2.0.2",
     "naturescot-utils": "^1.2.0",
-    "node-sass-package-importer": "^5.3.3",
+    "node-sass-package-importer": "^3.0.4",
     "nunjucks": "^3.2.3",
     "sass": "^1.77.5",
     "winston": "^3.8.0"
