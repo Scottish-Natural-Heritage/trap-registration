@@ -1,4 +1,4 @@
-import { Jimp } from 'jimp';
+import {Jimp} from 'jimp';
 
 /**
  * Create a 'small' version of the NatureScot logo as a favicon or for when
@@ -8,7 +8,7 @@ const buildIcon = async (fileName, size) => {
   const orig = await Jimp.read(fileName);
   const logo = orig.crop({x: 0, y: 0, w: 259, h: 166});
   const square = logo.contain({w: size - 8 * 2, h: size - 8 * 2});
-  const transparent = new Jimp({width: size,  height: size, color: '#ffffff00'});
+  const transparent = new Jimp({width: size, height: size, color: '#ffffff00'});
   const newLogo = transparent.composite(square, 8, 8);
   return newLogo;
 };
@@ -24,7 +24,7 @@ const buildSocial = async (fileName) => {
   const socialHeight = origSize + 16 * 2;
   const socialWidth = Math.floor(socialHeight * 1.91);
 
-  const white = new Jimp({width: socialWidth,  height: socialHeight, color: '#ffffffff'});
+  const white = new Jimp({width: socialWidth, height: socialHeight, color: '#ffffffff'});
   const newSocial = white.composite(orig, (socialWidth - origSize) / 2, (socialHeight - orig.height) / 2);
   return newSocial;
 };
