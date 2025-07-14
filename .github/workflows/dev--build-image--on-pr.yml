@@ -1,4 +1,4 @@
-name: On-commit build of image
+name: On-PR build of image
 
 on:
   pull_request:
