@@ -7,6 +7,7 @@ import app from './app.js';
 // Run it.
 app.listen(config.port, () => {
   console.log('FAKE CRASH!!!');
+  // eslint-disable-next-line unicorn/no-process-exit
   process.exit(1);
   console.log(`Server listening on http://localhost:${config.port}${config.pathPrefix}.`);
   if (process.env.TRR_TEST) {
