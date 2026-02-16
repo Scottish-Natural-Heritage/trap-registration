@@ -1,5 +1,4 @@
 // Load the config.
-import {exit} from 'node:process';
 import config from './config.js';
 import {counterpart100yearToken} from './http-request.js';
 // Load the app.
@@ -8,7 +7,7 @@ import app from './app.js';
 // Run it.
 app.listen(config.port, () => {
   console.log('FAKE CRASH!!!');
-  exit(1);
+  process.exit(1);
   console.log(`Server listening on http://localhost:${config.port}${config.pathPrefix}.`);
   if (process.env.TRR_TEST) {
     console.log(
