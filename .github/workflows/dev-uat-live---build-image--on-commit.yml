@@ -56,9 +56,9 @@ jobs:
         run: |
           npm run lint
 
-      # - name: Check the integration tests
-      #   run: |
-      #     npm run test
+      - name: Check the integration tests
+        run: |
+          npm run test
 
       - name: Remove all the dev-only pre-requisites
         run: |
