@@ -1,5 +1,5 @@
 // Load the config.
-import { exit } from 'node:process';
+import {exit} from 'node:process';
 import config from './config.js';
 import {counterpart100yearToken} from './http-request.js';
 // Load the app.
