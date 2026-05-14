@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
 import createPublicKey from 'node:crypto';
+import jwt from 'jsonwebtoken';
 import config from '../config.js';
 import axios from '../http-request.js';
 import {ReturnState} from './_base.js';
