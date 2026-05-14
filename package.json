@@ -30,7 +30,6 @@
     "govuk-frontend": "3.6.0",
     "jimp": "^1.6.0",
     "jsonwebtoken": "^9.0.2",
-    "jwk-to-pem": "^2.0.4",
     "memorystore": "^1.6.2",
     "morgan": "^1.10.0",
     "naturescot-frontend": "^2.0.2",

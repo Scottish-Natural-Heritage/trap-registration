@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import jwkToPem from 'jwk-to-pem';
+import createPublicKey from 'node:crypto';
 import config from '../config.js';
 import axios from '../http-request.js';
 import {ReturnState} from './_base.js';
@@ -25,7 +25,7 @@ const getPublicKey = async () => {
  */
 const validateToken = async (session) => {
   const publicKey = await getPublicKey();
-  const publicKeyAsPem = jwkToPem(publicKey);
+  const publicKeyAsPem = createPublicKey({format: 'jwk', key: publicKey});
 
   try {
     // Attempt to validate the user's saved login token.
