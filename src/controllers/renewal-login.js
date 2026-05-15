@@ -1,4 +1,4 @@
-import createPublicKey from 'node:crypto';
+import {createPublicKey} from 'node:crypto';
 import jwt from 'jsonwebtoken';
 import config from '../config.js';
 import axios from '../http-request.js';
