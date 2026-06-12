@@ -2,6 +2,8 @@
 
 Register to use traps under General Licences
 
+Adding some text to show Morag how we deploy our applications to AWS
+
 ## Build
 
 ```sh
