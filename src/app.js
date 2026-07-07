@@ -45,7 +45,6 @@ const sessionDuration = 20.1 * 60 * 60 * 1000;
 app.set('trust proxy', 2); // Trust first (ALB) and second (Caddy) proxy.
 
 // Disabling as makes the code's intention more obvious.
-/* eslint-disable no-unneeded-ternary */
 
 app.use(
   session({
@@ -70,8 +69,6 @@ app.use(
     saveUninitialized: false
   })
 );
-
-/* eslint-enable no-unneeded-ternary */
 
 app.use(`${config.pathPrefix}/dist`, express.static(path.join(__dirname, '..', '/dist')));
 app.use(
