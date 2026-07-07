@@ -42,7 +42,7 @@ nunjucks.configure(['src/views', 'node_modules/naturescot-frontend', 'node_modul
  */
 const sessionDuration = 20.1 * 60 * 60 * 1000;
 
-app.set('trust proxy', 1); // Trust first proxy
+app.set('trust proxy', 2); // Trust first (ALB) and second (Caddy) proxy.
 
 // Disabling as makes the code's intention more obvious.
 /* eslint-disable no-unneeded-ternary */
