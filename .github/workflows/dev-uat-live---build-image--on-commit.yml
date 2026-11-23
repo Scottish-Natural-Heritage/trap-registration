@@ -67,10 +67,15 @@ jobs:
         run: |
           npm prune --production
 
+      - name: Dump GitHub context
+        run: |
+          echo "Repository: ${{ github.repository }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "Actor: ${{ github.actor }}"
+
       - name: Configure AWS Credentials with OIDC
         uses: aws-actions/configure-aws-credentials@v6
         with:
-          with:
           role-to-assume: arn:aws:iam::742078964914:role/app-ecr-push-role
           role-session-name: gha-${{ github.run_id }}
           aws-region: eu-west-2
