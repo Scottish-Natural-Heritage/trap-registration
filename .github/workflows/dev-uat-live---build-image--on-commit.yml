@@ -37,6 +37,9 @@ jobs:
     name: Build and Push the Image
     needs: determine-environment
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # required to request the OIDC JWT
+      contents: read    # required for actions/checkout
 
     env:
       ENVIRONMENT: ${{ needs.determine-environment.outputs.environment }}
@@ -64,11 +67,12 @@ jobs:
         run: |
           npm prune --production
 
-      - name: Configure AWS Credentials
+      - name: Configure AWS Credentials with OIDC
         uses: aws-actions/configure-aws-credentials@v6
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          with:
+          role-to-assume: arn:aws:iam::742078964914:role/app-ecr-push-role
+          role-session-name: gha-${{ github.run_id }}
           aws-region: eu-west-2
 
       - name: Login to Amazon ECR
