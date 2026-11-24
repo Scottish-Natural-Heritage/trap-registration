@@ -45,9 +45,9 @@ jobs:
       ENVIRONMENT: ${{ needs.determine-environment.outputs.environment }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7.0.1
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version: '24'
 
@@ -68,7 +68,7 @@ jobs:
           npm prune --production
 
       - name: Configure AWS Credentials with OIDC
-        uses: aws-actions/configure-aws-credentials@v6
+        uses: aws-actions/configure-aws-credentials@v6.3.0
         with:
           role-to-assume: arn:aws:iam::742078964914:role/app-deploy-role
           role-session-name: gha-${{ github.run_id }}
@@ -76,7 +76,7 @@ jobs:
 
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
+        uses: aws-actions/amazon-ecr-login@v2.2.0
 
       - name: Build and tag the Docker Image
         env:
