@@ -71,7 +71,7 @@ jobs:
       - name: Configure AWS Credentials with OIDC
         uses: aws-actions/configure-aws-credentials@v6.3.0
         with:
-          role-to-assume: arn:aws:iam::${AWS_DEV_ACCOUNT_ID}:role/app-deploy-role
+          role-to-assume: arn:aws:iam::${{env.AWS_DEV_ACCOUNT_ID}}:role/app-deploy-role
           role-session-name: gha-${{ github.run_id }}
           aws-region: eu-west-2
 
